@@ -8,7 +8,7 @@ permalink: /:slug.html
 
 favicon: "./assets/images/favicon.png" # relative path to site's favicon
 
-theme: no-style-please # if you are using GitHub Pages, change it to remote_theme: riggraz/no-style-please
+theme: riggraz/no-style-please # if you are using GitHub Pages, change it to remote_theme: riggraz/no-style-please
 
 theme_config:
   appearance: "auto" # can be "light", "dark" or "auto"
