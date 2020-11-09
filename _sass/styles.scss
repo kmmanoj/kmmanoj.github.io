@@ -1,24 +1,25 @@
 // -------------- THEME SWITCHER -------------- //
-@mixin dark-appearance {
-  filter: invert(1);
-  img {
-    filter: invert(1);
+// @mixin dark-appearance {
+//   filter: invert(1);
+//   img {
+//     filter: invert(1);
 
-    &.ioda { filter: invert(0); }
-  }
-}
+//     &.ioda { filter: invert(0); }
+//   }
+// }
 
-body[a="dark"] { @include dark-appearance; }
+// body[a="dark"] { @include dark-appearance; }
 
 
-@media (prefers-color-scheme: dark) {
-  body[a="auto"] { @include dark-appearance; }
-}
+// @media (prefers-color-scheme: dark) {
+//   body[a="auto"] { @include dark-appearance; }
+// }
 // -------------------------------------------- //
 
 // bg color is also needed in html in order to
 // block body's background propagation
 // see: https://stackoverflow.com/a/61265706
+
 html, body { background-color: white; }
 
 html { height: 100%; }
@@ -43,7 +44,7 @@ li { margin: 0.4rem 0; }
 *:target { background-color: yellow; }
 
 .w {
-  max-width: 640px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 4rem 2rem;
 }
@@ -51,9 +52,11 @@ li { margin: 0.4rem 0; }
 hr {
   text-align: center;
   border: 0;
+  margin-top: 5rem;
+  font-size: xx-large;
 
-  &:before { content: '/////' }
-  &:after { content: attr(data-content) '/////' }
+  &:before { content: '///// '; }
+  &:after { content: attr(data-content) ' /////' }
 }
 
 table, th, td {
@@ -66,6 +69,8 @@ table, th, td {
 code {
   color: white;
   background-color: black;
+  padding: 5px 30px;
+  border-radius: 5px;  
 }
 
 div.highlighter-rouge code {
@@ -82,8 +87,34 @@ blockquote {
   p { margin: 0; }
 }
 
+figure {
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
 img {
   max-width: 100%;
   display: block;
   margin: 0 auto;
+  margin-top: 2rem;
+}
+
+figcaption {
+  text-align: center;
+  font-size: large;
+  color: gray;
+}
+
+.post-date {
+  font-size: 1rem;
+}
+
+.post-list, .post-list-item {
+  border: 1px solid black;
+}
+
+.post-list-item {
+  color: green;
+  width: 50px;
 }

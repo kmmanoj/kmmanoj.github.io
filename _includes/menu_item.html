@@ -1,8 +1,10 @@
-<ul>
+<ul type="none">
   {% for item in include.collection %}
     <li>
-    {% if item.url != false %}
-      <a href="{{ item.url }}">{{ item.title }}</a>
+    {% if item.url %}
+      $ <a href="{{ item.url }}">{{ item.title }}</a>
+    {% elsif item.command %}
+      $ {{ item.title }}
     {% else %}
       {{ item.title }}
     {% endif %}

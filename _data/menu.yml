@@ -2,36 +2,23 @@
 # https://github.com/riggraz/no-style-please#customize-the-menu
 
 entries:
-  - title: info
-    url: false
+  - title: cat about.txt
+    command: true
     entries:
-      - title: a (nearly) no-CSS, fast, minimalist Jekyll theme.
-        url: false
-      - title: github
-        url: https://github.com/riggraz/no-style-please
-      - title: used by riggraz.dev
-        url: https://riggraz.dev/
+      - title: Software Engineer by day, Security Researcher by night
+      - title: Network Automation Engineer at Intuit Inc. Since 2018
+      - title: Computer Science Engineer from PES University
 
-  - title: thoughts
+  - title: ls -l ~/blogs/
+    command: true
     post_list: true
-    url: false
     entries: false
 
-  - title: rss
+  - title: cd ~/subscribe/
     url: feed.xml
   
-  - title: another list
-    url: false
-    entries:
-      - title: with subitems
-        url: false
-        entries:
-          - title: with subsubitems
-            url: false
-          - title: example page
-            url: about
-  - title: PRO TIP
-    url: false
-    entries:
-      - title: to edit this menu, edit _data/menu.yml file
-        url: false
+  - title: cd ~/twitter/
+    url: https://twitter.com/kmmanojv96/
+  
+  - title: cd ~/linkedin/
+    url: https://www.linkedin.com/in/kmmanoj/
