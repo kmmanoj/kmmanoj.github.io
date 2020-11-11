@@ -15,7 +15,7 @@ entries:
   #   entries: false
   
   - title: cd ~/blogs/
-    url: https://medium.com/@kmmanoj
+    url: https://kmmanoj.medium.com
 
   - title: cd ~/subscribe/
     url: feed.xml
