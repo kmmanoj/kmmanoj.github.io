@@ -110,11 +110,6 @@ figcaption {
   font-size: 1rem;
 }
 
-.post-list, .post-list-item {
-  border: 1px solid black;
-}
-
-.post-list-item {
-  color: green;
-  width: 50px;
+.post-list {
+    max-width: 100%;
 }

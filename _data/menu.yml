@@ -9,10 +9,13 @@ entries:
       - title: Network Automation Engineer at Intuit Inc. Since 2018
       - title: Computer Science Engineer from PES University
 
-  - title: ls -l ~/blogs/
-    command: true
-    post_list: true
-    entries: false
+  # - title: ls -l ~/blogs/
+  #   command: true
+  #   post_list: true
+  #   entries: false
+  
+  - title: cd ~/blogs/
+    url: https://medium.com/@kmm4n0j
 
   - title: cd ~/subscribe/
     url: feed.xml
