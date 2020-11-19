@@ -13,12 +13,11 @@ entries:
   #   command: true
   #   post_list: true
   #   entries: false
-  
+  - title: open ~/resume.pdf
+    url: assets/resume.pdf
+
   - title: cd ~/blogs/
     url: https://kmmanoj.medium.com
-
-  - title: cd ~/subscribe/
-    url: feed.xml
   
   - title: cd ~/twitter/
     url: https://twitter.com/kmmanojv96/
