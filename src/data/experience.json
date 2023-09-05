@@ -1,0 +1,58 @@
+[
+    {
+        "type": "work",
+        "organization": "Juniper Networks",
+        "role": "Security Engineering Intern",
+        "period": "May 2023 - Present",
+        "description": "OSS Vulnerability Management tool to prevent Supply chain attacks;Developed and conducted CTF; Penetration testing of JunOS/EVO"
+    },
+    {
+        "type": "education",
+        "organization": "Georgia Institute of Technology",
+        "role": "MS in Computer Science",
+        "period": "Aug 2021 - Present",
+        "description": "Specialisation in Computing Systems"
+    },
+    {
+        "type": "work",
+        "organization": "Georgia Institute of Technology",
+        "role": "Graduate Teaching Assistant",
+        "period": "Aug 2022 - May 2023",
+        "description": "CS 6211: System Design for Cloud Computing"
+    },
+    {
+        "type": "work",
+        "organization": "Postman Inc",
+        "role": "Security Engineer - 2",
+        "period": "Aug 2021 - Aug 2022",
+        "description": "Web Application Penetration testing;Security Controls for Postman Infrastructure;Vendor Assessment;Threat modeling programme;Incident Response"
+    },
+    {
+        "type": "work",
+        "organization": "Intuit Inc",
+        "role": "Software Engineer",
+        "period": "Aug 2018 - Aug 2021",
+        "description": "Monitoring, Alerting and Inventory management system for network devices;NLU powered chatbot to interface with system;Identity and Access Management: Authorization"
+    },
+    {
+        "type": "education",
+        "organization": "PES University",
+        "role": "BE in Computer Science and Engineering",
+        "period": "Aug 2014 - Aug 2018",
+        "description": "Gold medalist with a cumulative score of 9.69/10 and rank 5"
+    },
+    {
+        "type": "work",
+        "organization": "Intuit Inc",
+        "role": "Network Automation Co-op",
+        "period": "Jan 2018 - Jul 2018",
+        "description": "Developed a system to aid video conference troubleshooting"
+    },
+    {
+        "type": "work",
+        "organization": "Intuit Inc",
+        "role": "Network Automation Intern",
+        "period": "May 2017 - Jul 2017",
+        "description": "Developed a CLI utility to troubleshoot VPN issue at an endpoint"
+    }
+]

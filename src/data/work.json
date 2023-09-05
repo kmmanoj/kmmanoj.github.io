@@ -1,0 +1,106 @@
+[
+    {
+          "date": "May 2023",
+          "description": "Learn how to travel and stroll around a web application built in the web3 world!",
+          "key": "00014",
+          "title": "A visit to the web3.0 world",
+          "type": "blog",
+          "url": "https://kmmanoj.hashnode.dev/a-visit-to-the-web30-world"
+    },
+    {
+          "date": "May 2023",
+          "description": "Understand what a web3.0's smart contract is.",
+          "key": "00013",
+          "title": "What is a smart contract?",
+          "type": "blog",
+          "url": "https://kmmanoj.hashnode.dev/what-is-a-smart-contract"
+    },
+    {
+          "date": "Mar 2022",
+          "description": "Builds on the Authorization component of Identity and Access Management system from zero to how systems are implemented today",
+          "key": "00011",
+          "title": "How complex can authorization get?",
+          "type": "blog",
+          "url": "https://kmmanoj.hashnode.dev/how-complex-can-authorization-get"
+    },
+    {
+          "date": "Dec 2021",
+          "description": "Learn what is API security and how Postman can be used in automatic security testing of APIs",
+          "key": "00010",
+          "title": "Introduction to API Security",
+          "type": "video",
+          "url": "https://youtu.be/XlOEq9CBlr8"
+    },
+    {
+          "date": "Dec 2021",
+          "description": "Learn how a user can act like a hoax DHCP server and situate himself as a man in the middle, and how one can prevent such attacks",
+          "key": "00009",
+          "title": "Man-in-the-middle: A tale of a hoax DHCP server",
+          "type": "blog",
+          "url": "https://kmmanoj.hashnode.dev/man-in-the-middle-a-tale-of-a-hoax-dhcp-server-1"
+    },
+    {
+          "date": "Sep 2021",
+          "description": "Learn API security testing in action using Postman",
+          "key": "00008",
+          "title": "How Secure are your APIs?",
+          "type": "video",
+          "url": "https://www.youtube.com/watch?v=shT-Obfo-uk"
+    },
+    {
+          "date": "May 2021",
+          "description": "Mathematically modelling human instinctive trust among systems to communicate security based trust reduction and redemption message",
+          "key": "00007",
+          "title": "Modelling Trust Frameworks for Network-IDS",
+          "type": "research",
+          "url": "https://doi.org/10.1109/INCET51464.2021.9456381"
+    },
+    {
+          "date": "Mar 2021",
+          "description": "A method used among group of data scientists to identify and refine feature set for a machine learning problem",
+          "key": "00006",
+          "title": "How I do Machine Learning at work",
+          "type": "blog",
+          "url": "https://kmmanoj.hashnode.dev/how-i-do-machine-learning-at-work"
+    },
+    {
+          "date": "Dec 2020",
+          "description": "Efficiently identifying and patching malicious software using merkle trees before the first execution by the user",
+          "key": "00005",
+          "title": "Tamper Detection and Correction of ELF Binaries by Remote Parties via via Merkle Trees",
+          "type": "research",
+          "url": "https://doi.org/10.1007/978-3-030-66763-4_14"
+    },
+    {
+          "date": "Aug 2020",
+          "description": "Most defense systems filter out repeated DHCP requests. What if you could perform DHCP starvation without sending a DCHP request?",
+          "key": "00004",
+          "title": "DHCP starvation attack without making any DHCP requests",
+          "type": "blog",
+          "url": "https://kmmanoj.hashnode.dev/dhcp-starvation-attack-without-making-any-dhcp-requests"
+    },
+    {
+          "date": "Aug 2020",
+          "description": "Set up a penetration testing environment using docker containers in docker networks to learn various types of port forwarding techniques",
+          "key": "00003",
+          "title": "Gain access to an internal machine using Port forwarding: Penetration testing",
+          "type": "blog",
+          "url": "https://kmmanoj.hashnode.dev/gain-access-to-an-internal-machine-using-port-forwarding-penetration-testing"
+    },
+    {
+          "date": "Aug 2020",
+          "description": "Learn and try out ARP spoofing all by yourself in a Docker network using Scapy!",
+          "key": "00002",
+          "title": "ARP Spoofing using Scapy",
+          "type": "blog",
+          "url": "https://kmmanoj.hashnode.dev/arp-spoofing-using-scapy"
+    },
+    {
+          "date": "Apr 2020",
+          "description": "Wondered why Euclid's GCD theorem works?",
+          "key": "00001",
+          "title": "Math Behind Euclid's Theorem",
+          "type": "blog",
+          "url": "https://kmmanoj.hashnode.dev/math-behind-euclids-theorem"
+    }
+]
