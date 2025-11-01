@@ -1,28 +1,27 @@
-import { useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { Container, Tab } from "semantic-ui-react";
 
-import Introduction from "./components/Introduction.js";
-import Experience from "./components/Experience.js";
-import Work from "./components/Work.js";
-import SiteFooter from "./components/SiteFooter.js";
-import SiteHeader from "./components/SiteHeader.js";
+import Introduction from "./components/Introduction";
+import Experience from "./components/Experience";
+import Work from "./components/Work";
+import SiteFooter from "./components/SiteFooter";
+import SiteHeader from "./components/SiteHeader";
 
 import "semantic-ui-css/semantic.min.css";
 
-function getLastActiveIndex() {
-    let index = localStorage.getItem("activeIndex");
-    return index || 0;
-}
+const getLastActiveIndex = () => {
+    const index = localStorage.getItem("activeIndex");
+    return parseInt(index) || 0;
+};
 
-function setLastActiveIndex(e, data) {
-    let activeIndex = data.activeIndex;
-    localStorage.setItem("activeIndex", activeIndex);
-}
+const setLastActiveIndex = (activeIndex) => {
+    localStorage.setItem("activeIndex", activeIndex.toString());
+};
 
-export default function App() {
-    let [activeIndex, setActiveIndex] = useState(getLastActiveIndex());
+const App = () => {
+    const [activeIndex, setActiveIndex] = useState(getLastActiveIndex);
 
-    let panes = [
+    const panes = useMemo(() => [
         {
             menuItem: "Experience",
             render: () => <Experience />
@@ -31,7 +30,13 @@ export default function App() {
             menuItem: "Work",
             render: () => <Work />
         }
-    ]
+    ], []);
+
+    const handleTabChange = useCallback((e, data) => {
+        const newActiveIndex = data.activeIndex;
+        setActiveIndex(newActiveIndex);
+        setLastActiveIndex(newActiveIndex);
+    }, []);
 
     return (
         <div>
@@ -41,14 +46,13 @@ export default function App() {
                 <Tab 
                     menu={{ secondary: true }} 
                     panes={panes} 
-                    onTabChange={(e, data) => { 
-                        setActiveIndex(data.activeIndex); 
-                        setLastActiveIndex(e, data); 
-                    }} 
+                    onTabChange={handleTabChange}
                     activeIndex={activeIndex}
                 />
             </Container>
             <SiteFooter />
         </div>
     );
-}           
+};
+
+export default App;           

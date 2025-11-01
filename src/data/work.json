@@ -5,7 +5,7 @@
           "key": "00014",
           "title": "A visit to the web3.0 world",
           "type": "blog",
-          "url": "https://kmmanoj.hashnode.dev/a-visit-to-the-web30-world"
+          "url": "https://medium.com/coinmonks/a-visit-to-the-web3-0-world-3278e2716496"
     },
     {
           "date": "May 2023",
@@ -13,7 +13,7 @@
           "key": "00013",
           "title": "What is a smart contract?",
           "type": "blog",
-          "url": "https://kmmanoj.hashnode.dev/what-is-a-smart-contract"
+          "url": "https://coinsbench.com/what-is-a-smart-contract-6895da46c46a"
     },
     {
           "date": "Mar 2022",
@@ -21,7 +21,7 @@
           "key": "00011",
           "title": "How complex can authorization get?",
           "type": "blog",
-          "url": "https://kmmanoj.hashnode.dev/how-complex-can-authorization-get"
+          "url": "https://medium.com/better-practices/how-complex-can-authorization-get-5011c9dfb0fa"
     },
     {
           "date": "Dec 2021",
@@ -37,7 +37,7 @@
           "key": "00009",
           "title": "Man-in-the-middle: A tale of a hoax DHCP server",
           "type": "blog",
-          "url": "https://kmmanoj.hashnode.dev/man-in-the-middle-a-tale-of-a-hoax-dhcp-server-1"
+          "url": "https://kmmanoj.medium.com/man-in-the-middle-a-tale-of-a-hoax-dhcp-server-c3d26f51b308"
     },
     {
           "date": "Sep 2021",
@@ -61,7 +61,7 @@
           "key": "00006",
           "title": "How I do Machine Learning at work",
           "type": "blog",
-          "url": "https://kmmanoj.hashnode.dev/how-i-do-machine-learning-at-work"
+          "url": "https://kmmanoj.medium.com/how-i-do-machine-learning-at-work-736a107a264f"
     },
     {
           "date": "Dec 2020",
@@ -77,7 +77,7 @@
           "key": "00004",
           "title": "DHCP starvation attack without making any DHCP requests",
           "type": "blog",
-          "url": "https://kmmanoj.hashnode.dev/dhcp-starvation-attack-without-making-any-dhcp-requests"
+          "url": "https://infosecwriteups.com/dhcp-starvation-attack-without-making-any-dhcp-requests-bef0022133c9"
     },
     {
           "date": "Aug 2020",
@@ -85,7 +85,7 @@
           "key": "00003",
           "title": "Gain access to an internal machine using Port forwarding: Penetration testing",
           "type": "blog",
-          "url": "https://kmmanoj.hashnode.dev/gain-access-to-an-internal-machine-using-port-forwarding-penetration-testing"
+          "url": "https://infosecwriteups.com/gain-access-to-an-internal-machine-using-port-forwarding-penetration-testing-518c0b6a4a0e"
     },
     {
           "date": "Aug 2020",
@@ -93,7 +93,7 @@
           "key": "00002",
           "title": "ARP Spoofing using Scapy",
           "type": "blog",
-          "url": "https://kmmanoj.hashnode.dev/arp-spoofing-using-scapy"
+          "url": "https://kmmanoj.medium.com/arp-spoofing-using-scapy-92a330cce64b"
     },
     {
           "date": "Apr 2020",
@@ -101,6 +101,6 @@
           "key": "00001",
           "title": "Math Behind Euclid's Theorem",
           "type": "blog",
-          "url": "https://kmmanoj.hashnode.dev/math-behind-euclids-theorem"
+          "url": "https://medium.com/swlh/math-behind-euclids-theorem-f8e43ae5e56e"
     }
 ]

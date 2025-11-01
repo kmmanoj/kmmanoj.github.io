@@ -1,24 +1,33 @@
+import React, { memo } from "react";
 import { Container, Segment, Button, Icon } from "semantic-ui-react";
 
 import "semantic-ui-css/semantic.min.css";
 
-function Social(props) {
-    let icon = props.site.toLowerCase();
-    let iconText = props.site;
-    let link = "";
-    switch(icon) {
-        case "twitter": link = `https://twitter.com/${props.handle}`; break;
-        case "linkedin": link = `https://linkedin.com/in/${props.handle}`; break;
-        default: link = "";
-    }
+const Social = memo(({ site, handle }) => {
+    const icon = site.toLowerCase();
+    const iconText = site;
+    
+    const getLink = () => {
+        switch(icon) {
+            case "twitter": 
+                return `https://twitter.com/${handle}`;
+            case "linkedin": 
+                return `https://linkedin.com/in/${handle}`;
+            default: 
+                return "";
+        }
+    };
+
     return (
-        <Button color={icon} as="a" href={link} target="_blank">
+        <Button color={icon} as="a" href={getLink()} target="_blank">
             <Icon name={icon} /> {iconText}
         </Button>
     );
-}
+});
 
-export default function SiteFooter() {
+Social.displayName = 'Social';
+
+const SiteFooter = memo(() => {
     return (
         <Segment size="massive">
             <Container text fluid>
@@ -27,4 +36,8 @@ export default function SiteFooter() {
             </Container>
         </Segment>
     );
-}
+});
+
+SiteFooter.displayName = 'SiteFooter';
+
+export default SiteFooter;

@@ -4,7 +4,7 @@
         "organization": "Meta",
         "role": "Security Engineer",
         "period": "Jan 2024 - Present",
-        "description": "Working on ensuring Meta AI is secure and trustable"
+        "description": "Remediation of Agentic AI and LLM based applications vulnerabilities at scale; Threat modeling and code review; Agentic tools to automate reconnaissance and vulnerability discovery"
     },
     {
         "type": "work",
@@ -39,7 +39,7 @@
         "organization": "Postman Inc",
         "role": "Security Engineer - 2",
         "period": "Aug 2021 - Aug 2022",
-        "description": "Web Application Penetration testing;Security Controls for Postman Infrastructure;Vendor Assessment;Threat modeling programme;Incident Response"
+        "description": "Web Application Security Engineering;Security Controls for Postman Infrastructure;Vendor Assessment;Threat modeling programme;Incident Response"
     },
     {
         "type": "work",
