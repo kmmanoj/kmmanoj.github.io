@@ -1,0 +1,19 @@
+title: Manoj's Blog
+description: "Writing on ML, engineering, and research."
+baseurl: "/blog"
+url: "https://kmmanoj.github.io"
+
+markdown: kramdown
+highlighter: rouge
+permalink: /:year/:month/:day/:title/
+destination: ../docs/blog
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+
+plugins:
+  - jekyll-feed
+
+sass:
+  style: compressed

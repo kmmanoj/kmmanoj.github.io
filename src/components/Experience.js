@@ -69,7 +69,6 @@ const Experience = () => {
         <div>
             <Container text textAlign="justified">
                 <Header as="h1">Experience</Header>
-                <a href="./CV.pdf">Download CV</a>
             </Container>
             {loading ? (
                 <Loader active size="medium" inline style={{ margin: "100px 0px" }}>

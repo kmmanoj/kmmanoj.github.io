@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="http://localhost:4000/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/blog/" rel="alternate" type="text/html" /><updated>2026-05-10T15:11:26-07:00</updated><id>http://localhost:4000/blog/feed.xml</id><title type="html">Manoj’s Blog</title><subtitle>Writing on ML, engineering, and research.</subtitle><entry><title type="html">Hello World</title><link href="http://localhost:4000/blog/2026/05/09/hello-world/" rel="alternate" type="text/html" title="Hello World" /><published>2026-05-09T23:30:00-07:00</published><updated>2026-05-09T23:30:00-07:00</updated><id>http://localhost:4000/blog/2026/05/09/hello-world</id><content type="html" xml:base="http://localhost:4000/blog/2026/05/09/hello-world/"><![CDATA[<p>This is the first post on my new blog. I’ll be writing about machine learning,
+systems engineering, and research topics I find interesting.</p>
+
+<h2 id="why-a-blog-here">Why a blog here?</h2>
+
+<p>I already publish to <a href="https://kmmanoj.medium.com">Medium</a>, but I wanted
+a space that lives alongside my portfolio — no paywalls, full control.</p>
+
+<h2 id="what-to-expect">What to expect</h2>
+
+<p>Posts on topics like:</p>
+
+<ul>
+  <li>ML systems and infrastructure</li>
+  <li>Security engineering</li>
+  <li>Research I find worth unpacking</li>
+  <li>Things I built and what I learned</li>
+</ul>
+
+<p>Stay tuned.</p>]]></content><author><name></name></author><category term="meta" /><category term="engineering" /><summary type="html"><![CDATA[This is the first post on my new blog. I’ll be writing about machine learning, systems engineering, and research topics I find interesting.]]></summary></entry></feed>

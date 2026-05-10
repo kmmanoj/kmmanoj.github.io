@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ page.title }} — Manoj Vignesh K M</title>
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | prepend: site.baseurl }}" />
+</head>
+<body>
+  <header class="blog-header">
+    <a href="/" class="back-link">← Portfolio</a>
+    <a href="{{ site.baseurl }}/" class="blog-title">{{ site.title }}</a>
+  </header>
+  <main class="blog-content">
+    {{ content }}
+  </main>
+  <footer class="blog-footer">
+    <p>Manoj Vignesh K M · <a href="/">Portfolio</a></p>
+  </footer>
+</body>
+</html>

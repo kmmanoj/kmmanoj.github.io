@@ -4,6 +4,7 @@ import { Container, Tab } from "semantic-ui-react";
 import Introduction from "./components/Introduction";
 import Experience from "./components/Experience";
 import Work from "./components/Work";
+import Blog from "./components/Blog";
 import SiteFooter from "./components/SiteFooter";
 import SiteHeader from "./components/SiteHeader";
 
@@ -29,6 +30,10 @@ const App = () => {
         {
             menuItem: "Work",
             render: () => <Work />
+        },
+        {
+            menuItem: "Blog",
+            render: () => <Blog />
         }
     ], []);
 
