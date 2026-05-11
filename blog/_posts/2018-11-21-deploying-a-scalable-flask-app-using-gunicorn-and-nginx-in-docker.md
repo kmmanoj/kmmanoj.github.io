@@ -40,6 +40,7 @@ if __name__ == "__main__":
 
 The above code assumes that there is a template named *index.html*. Let's prove the assumption by fulfilling it. Create a directory called *templates*/, under the *flask_app*/ directory. Create a file *index.html* under the *templates*/ directory.
 
+{% raw %}
 ```html
 <!DOCTYPE html>
 <html>
@@ -51,6 +52,7 @@ The above code assumes that there is a template named *index.html*. Let's prove 
     </body>
 </html>
 ```
+{% endraw %}
 
 ### STEP #3: Create the static files
 
