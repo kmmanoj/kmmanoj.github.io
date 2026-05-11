@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A visit to the web3.0 world — Manoj Vignesh K M</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/blog/assets/css/style.css" />
+</head>
+<body>
+  <header class="blog-header">
+    <a href="/" class="back-link">← Portfolio</a>
+    <a href="/blog/" class="blog-title">Manoj's Blog</a>
+  </header>
+  <main class="blog-content">
+    <article class="post">
+  <header class="post-header">
+    <h1>A visit to the web3.0 world</h1>
+    <time datetime="2023-05-07T23:30:00-07:00">
+      May 7, 2023
+    </time>
+    
+    <div class="post-tags">
+      <span class="tag">blockchain</span><span class="tag">web3</span>
+    </div>
+    
+  </header>
+
+  <div class="post-layout">
+    <aside class="post-toc" id="toc">
+      <p class="toc-title">Contents</p>
+      <nav id="toc-nav"></nav>
+    </aside>
+
+    <div class="post-body" id="post-body">
+      <blockquote>
+  <p>Learn how to travel and stroll around a web application built in the web3 world!</p>
+</blockquote>
+
+<p>Before you enter the world of Web3.0, you need a passport, some money and a wallet to keep it. Don’t panic! Trust me, it is going to be a cake walk. Let us begin preparing for the trip.</p>
+
+<h3 id="get-awallet">Get a wallet</h3>
+
+<p>There are various brands of wallet out there that you choose from. One of them is <a href="https://metamask.io/">Metamask</a>. Go ahead and get one. Navigate to <a href="https://metamask.io/">https://metamask.io/</a> and install the metamask browser extension for your favorite browser.</p>
+
+<p><img src="/blog/assets/res/a_visit_to_the_web30_world/metamask_setup.png" alt="Metamask setup" />
+<em>Metamask setup</em></p>
+
+<p>Once the Metamask extension is installed you should see a window as shown in the screenshot above. Select ‘Create a new wallet’ and follow through the procedure. By the end of the procedure, you should observe a page displaying your current balance and the account number.</p>
+
+<h3 id="passport">Passport?</h3>
+
+<p>Your wallet already has a new passport in it. Metamask has already provided you with a new identity. You can choose to create more identities if you need, or use the one provided by metamask. In the world of web3.0, a single person can have multiple identities. That is what makes one <a href="https://www.techtarget.com/whatis/definition/pseudonymity">pseudonymous</a> in web3 world.</p>
+
+<h3 id="choose-your-destination">Choose your destination</h3>
+
+<p>Let us visit Sepolia! Sepolia is a blockchain network for testing and development purposes, built on the Ethereum blockchain.</p>
+
+<p>In the home page of your metamask wallet click on the dropdown menu where ‘Ethereum Mainnet’ is selected and click on ‘show/hide test networks’. Configure to show test networks. Now, you should be able to observe a test network by the name ‘Sepolia test network’. Select that network to go ahead.</p>
+
+<p><img src="/blog/assets/res/a_visit_to_the_web30_world/metamask_dashboard.png" alt="Metamask dashboard" />
+<em>Metamask dashboard</em></p>
+
+<h3 id="money">Money?</h3>
+
+<p>It is optional to take money along with you if you are simply going to stroll around Web3.0. You need to buy real money to visit and explore the ethereum mainnet. But, since we are going to Sepolia you can take (yes, I meant ‘take’ and not ‘borrow’) some money from the faucet service. Go to <a href="https://sepolia-faucet.pk910.de/">https://sepolia-faucet.pk910.de/</a>, enter your account address found in Metmask dashboard page (<code class="language-plaintext highlighter-rouge">0xa4E…CB22</code> in the screenshot shown above) in the faucet service ETH address field and start mining some coins.</p>
+
+<blockquote>
+  <p>You need not mine 100s of SepoliaETH coins. A mere 0.01 or less coins are enough for a single interaction as of May 2023.</p>
+</blockquote>
+
+<p>You are ready to enter the world of Web3.0!</p>
+
+<p>You have all the things required to visit more Web3.0 applications. Enjoy your stay at Web3 world!</p>
+
+<h2 id="for-curious-folks">For curious folks …</h2>
+
+<p>Web3.0 is a term used to describe the next evolution of the internet where applications are being built on decentralized technologies such as blockchain. I wrote a <a href="https://blog.kmmanoj.me/web-1-0-2-0-3-0-70d0ac0844bc">blog article</a> describing the evolution of internet from Web1.0, to Web2.0 and now to Web3.0.</p>
+
+<p>Further, the business logic in web3.0 applications is implemented in the form of smart contracts in the blockchain network. I wrote a <a href="https://blog.kmmanoj.me/what-is-a-smart-contract-6895da46c46a">blog article</a> that describes what a web3.0’s smart contract is with respect to a known web2.0 technology.</p>
+
+<p>The Experience and Featured works are smart contracts that stores a list of my experience and my featured works. Only I have the authority to edit the list while anyone in the blockchain network have access to read it. The authentication is enforced by blockchain’s cryptography while the authorization is enforced by the smart contract logic.</p>
+
+    </div>
+  </div>
+</article>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('#post-body h2, #post-body h3, #post-body h4');
+  if (headings.length === 0) {
+    document.getElementById('toc').style.display = 'none';
+    return;
+  }
+
+  var nav = document.getElementById('toc-nav');
+  var ul = document.createElement('ul');
+  ul.className = 'toc-list';
+
+  headings.forEach(function (h, i) {
+    if (!h.id) h.id = 'heading-' + i;
+
+    var li = document.createElement('li');
+    li.className = 'toc-item toc-' + h.tagName.toLowerCase();
+
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc-link';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  nav.appendChild(ul);
+
+  // Move leading blockquote to header as subtitle
+  var body = document.getElementById('post-body');
+  var first = body.firstElementChild;
+  if (first && first.tagName === 'BLOCKQUOTE') {
+    var subtitle = document.createElement('p');
+    subtitle.className = 'post-subtitle';
+    subtitle.textContent = first.textContent.trim();
+    document.querySelector('.post-header').appendChild(subtitle);
+    first.remove();
+  }
+
+  // Highlight active heading on scroll
+  var links = nav.querySelectorAll('.toc-link');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        links.forEach(function (l) { l.classList.remove('active'); });
+        var active = nav.querySelector('a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '0px 0px -80% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+}());
+</script>
+
+  </main>
+  <footer class="blog-footer">
+    <p>Manoj Vignesh K M · <a href="/">Portfolio</a></p>
+  </footer>
+</body>
+</html>

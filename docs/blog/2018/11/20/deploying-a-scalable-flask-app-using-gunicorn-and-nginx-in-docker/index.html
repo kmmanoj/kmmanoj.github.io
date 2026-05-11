@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deploying a scalable Flask app using Gunicorn and Nginx, in Docker — Manoj Vignesh K M</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/blog/assets/css/style.css" />
+</head>
+<body>
+  <header class="blog-header">
+    <a href="/" class="back-link">← Portfolio</a>
+    <a href="/blog/" class="blog-title">Manoj's Blog</a>
+  </header>
+  <main class="blog-content">
+    <article class="post">
+  <header class="post-header">
+    <h1>Deploying a scalable Flask app using Gunicorn and Nginx, in Docker</h1>
+    <time datetime="2018-11-20T22:30:00-08:00">
+      November 20, 2018
+    </time>
+    
+    <div class="post-tags">
+      <span class="tag">flask</span><span class="tag">docker</span><span class="tag">devops</span><span class="tag">python</span>
+    </div>
+    
+  </header>
+
+  <div class="post-layout">
+    <aside class="post-toc" id="toc">
+      <p class="toc-title">Contents</p>
+      <nav id="toc-nav"></nav>
+    </aside>
+
+    <div class="post-body" id="post-body">
+      <blockquote>
+  <p>Flask + Gunicorn + Nginx + Docker Swarm, step by step.</p>
+</blockquote>
+
+<p>Docker has certainly made things simple. I still remember my first days in college. I had to dual boot my machine just to learn Linux. It was time-consuming, and rather a risky task. With the advent of cloud technologies, I could sign up with a vendor, and get a Linux based instance and practice there. And, now with docker, I don’t even need a constant internet connection or a dual-boot system to practice Linux. Download the docker image (hardly a Gigabyte), spawn a container and start using it. As easy as plug and play.
+New technology such as Elastic search, or complicated setup such as for OpenStack. Try your hands on it, by downloading docker images from the hub and use it.</p>
+
+<p>In this post, we will go through “dockerizing” a simple Flask application interfaced by Gunicorn, then configure Nginx as a reverse proxy and load balancer across multiple replicas.</p>
+
+<p><img src="/blog/assets/res/deploying_a_scalable_flask_app_using_gunicorn_and_nginx_in_docker_part_1/objective_architecture.png" alt="Objective architecture" />
+<em>Objective architecture</em></p>
+
+<p>To keep the story short, I assume that docker is already installed in the system. If you do not have docker, follow this link to setup dockers in your machine: <a href="https://docs.docker.com/install/">https://docs.docker.com/install</a></p>
+
+<h2 id="dockerizing-the-flask-app">Dockerizing the Flask app</h2>
+
+<h3 id="step-1-create-flask-apppy"><strong>STEP #1: Create Flask app.py</strong></h3>
+
+<p>Start by creating a directory, say <em>flask_app</em>/. And, the main application program, say <em>app.py</em>, under the <em>flask_app</em>/ directory.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">render_template</span>
+
+<span class="n">application</span> <span class="o">=</span> <span class="nc">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="nd">@application.route</span><span class="p">(</span><span class="sh">"</span><span class="s">/</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="k">return</span> <span class="nf">render_template</span><span class="p">(</span><span class="sh">"</span><span class="s">index.html</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="n">application</span><span class="p">.</span><span class="nf">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="sh">"</span><span class="s">0.0.0.0</span><span class="sh">"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="step-2-create-the-required-template">STEP #2: Create the required template</h3>
+
+<p>The above code assumes that there is a template named <em>index.html</em>. Let’s prove the assumption by fulfilling it. Create a directory called <em>templates</em>/, under the <em>flask_app</em>/ directory. Create a file <em>index.html</em> under the <em>templates</em>/ directory.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">""</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">""</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="step-3-create-the-static-files">STEP #3: Create the static files</h3>
+
+<p>Finally, create the static JS and CSS files. Create a directory called <em>static</em>/ under the <em>flask_app</em>/ directory, and <em>js</em>/ and <em>css</em>/ directory under it. Create the js file under the <em>js</em>/ directory, and name it <em>index.js</em>.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">document</span><span class="p">.</span><span class="nf">writeln</span><span class="p">(</span><span class="dl">"</span><span class="s2">&lt;h1&gt;Hello world&lt;/h1&gt;</span><span class="dl">"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Create the css file under the <em>css</em>/ directory and name it <em>styles.css</em>.</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">h1</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="nx">red</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="step-4-test-drive">STEP #4: Test drive</h3>
+
+<p>This is an optional step. If you do not have python already installed, you may not take the fuss to install it in your machine.</p>
+
+<p>Navigate into the <em>flask_app</em>/ directory.
+Run the flask application:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>python app.py
+</code></pre></div></div>
+
+<p>Open your browser and type in <em>localhost:80</em>:</p>
+
+<p><img src="/blog/assets/res/deploying_a_scalable_flask_app_using_gunicorn_and_nginx_in_docker_part_1/expected_output.png" alt="Expected output" />
+<em>Expected output</em></p>
+
+<p>Run the flask application with Gunicorn.
+To install Gunicorn:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>gunicorn
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>NOTE</strong>: Gunicorn will look for a WSGI callable named <code class="language-plaintext highlighter-rouge">application</code> if not specified. Hence, the app.py contains the variable named <code class="language-plaintext highlighter-rouge">application</code> on purpose.</p>
+</blockquote>
+
+<p>Run the flask application interfaced by Gunicorn:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>gunicorn <span class="nt">-b</span> 0.0.0.0:80 app
+</code></pre></div></div>
+
+<p>The same output is expected as above.</p>
+
+<h3 id="step-5-the-dockerfile">STEP #5: The dockerfile</h3>
+
+<p>Now, that we are ready with the flask app. It is time to “dockerize” it. To “dockerize” your application we need to create a docker image of the application first.</p>
+
+<p>Create a file called <em>dockerfile</em> in the <em>flask_app</em>/ directory.</p>
+
+<div class="language-dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> python:3.6</span>
+<span class="k">ADD</span><span class="s"> . /app</span>
+<span class="k">WORKDIR</span><span class="s"> /app</span>
+<span class="k">RUN </span>pip <span class="nb">install </span>flask gunicorn
+<span class="k">EXPOSE</span><span class="s"> 8000</span>
+<span class="k">CMD</span><span class="s"> ["gunicorn", "-b", "0.0.0.0:8000", "app"]</span>
+</code></pre></div></div>
+
+<p>To summarize the content of the <em>dockerfile</em>; beginning from python:3.6 docker image, add the contents in the current directory to /<em>app</em> in the container. Change the working directory to /<em>app</em>, install the required python modules, expose port 8000 in the container. And the primary process of the container is to run: <code class="language-plaintext highlighter-rouge">gunicorn -b 0.0.0.0:8000 app</code>
+All the commands run exactly once, i.e during docker image creation. Except for the CMD command. It runs when the container is spawned.</p>
+
+<h3 id="step-6-build-the-docker-image-and-spawn-a-container">STEP #6: Build the docker image and spawn a container</h3>
+
+<p>To build the docker image, navigate to the <em>flask_app</em>/ directory and run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker build <span class="nt">--tag</span> flask_gunicorn_app <span class="nb">.</span> 
+</code></pre></div></div>
+
+<p>Once the command runs successfully, you are ready with a portable flask app docker image. You can upload this image to the docker hub, and download and deploy it anywhere.</p>
+
+<p>To spawn a container of the built image. Run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">--detach</span> <span class="nt">-p</span> 80:8000 flask_gunicorn_app
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">--detach</code> : runs the container in the background</p>
+
+<p><code class="language-plaintext highlighter-rouge">-p</code> : maps port 80 in the host to port 8000 in the container</p>
+
+<p>Open your browser and type in <em>localhost:80</em> — and you have your flask application rendering the HTML page, and serving the static files.</p>
+
+<h2 id="scaling-with-nginx-and-docker-swarm">Scaling with Nginx and Docker Swarm</h2>
+
+<p>Now that the flask app is running in a docker container, we will configure Nginx as a reverse proxy and set it up to handle multiple replicas for scalability.</p>
+
+<p><img src="/blog/assets/res/deploying_a_scalable_flask_app_using_gunicorn_and_nginx_in_docker_part_2/objective_architecture.png" alt="Objective architecture" />
+<em>Objective architecture</em></p>
+
+<p><strong>Observations:</strong></p>
+
+<ul>
+  <li>Let the static files be placed in a volume, that is accessible by both Nginx and flask app. Flask app, to write; Nginx, to read.</li>
+  <li>We are going to create 3 replicas of the flask_gunicorn_app, and make the load balancer handle the requests distribution.</li>
+  <li>All the components are part of the same virtual network. (For a particular reason, we will explore it eventually #same-vnet)</li>
+</ul>
+
+<p>Let us begin by configuring the Nginx server. There are two options to configure the Nginx server:</p>
+
+<ul>
+  <li>Create a new image, with the new configuration.</li>
+  <li>Use the existing base image, and mount the configuration folder in the host to conf.d/ in the nginx container.</li>
+</ul>
+
+<p>I will go ahead with the latter option.</p>
+
+<p>Create a directory, say <em>nginx_conf</em>/, and create a file called <em>app.conf</em> under it.</p>
+
+<noscript><pre>server {
+    listen  80;
+    server_name localhost;
+
+    location / {
+        proxy_pass http://webapp:8000/;
+    }
+
+    location /static {
+        alias /var/www-data;
+    }
+}</pre></noscript>
+<script src="https://gist.github.com/kmmanoj/1a4d6cca71828f75ea6dc4716a5c26f1.js"> </script>
+
+<p>What is <a href="http://webapp:8000/">http://webapp:8000/</a>? It is the name of the service which runs the flask app in replicas behind the load balancer. We will soon see that docker handles creating a load balancer for us, for the replicas we create. Therefore, when creating a load balancer is not in our control, we eventually do not have control over the IP address that gets assigned to the load balancer. Hence, we can refer to the load balancer by the name of the service, if the service and the nginx server are in the same virtual subnet #same-vnet.</p>
+
+<p>To start a Docker service, the machine should be a part of the swarm. Swarm is a cluster of machines that work together. To know more about docker swarm follow this link: <a href="https://docs.docker.com/get-started/part4/">https://docs.docker.com/get-started/part4/</a></p>
+
+<p>To make the machine a part of the swarm, as the first node (manager node), run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker swarm init
+</code></pre></div></div>
+
+<p>The acknowledgement output gives more details about how to add more nodes to the swarm.</p>
+
+<h3 id="step-1-create-a-virtual-network"><strong>Step #1: Create a virtual network</strong></h3>
+
+<p>Let’s now create a virtual network where all the service components will be placed. To create a docker network, run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network create web_network <span class="se">\</span>
+  <span class="nt">--driver</span> overlay <span class="se">\</span>
+  <span class="nt">--subnet</span><span class="o">=</span>192.168.100.0/24
+</code></pre></div></div>
+
+<p>An overlay network is created having subnet 192.168.100.0/24.</p>
+
+<h3 id="step-2-create-a-docker-volume"><strong>Step #2: Create a docker volume</strong></h3>
+
+<p>Next, we create a docker volume that holds the static files. To create a docker volume, run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume create web_static
+</code></pre></div></div>
+
+<h3 id="step-3-create-the-web-application-service">Step #3: Create the web application service</h3>
+
+<p>In this step, we will have to create 3 replicas of the flask_gunicorn_app, and put it behind the load balancer.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker service create <span class="se">\</span>
+  <span class="nt">--name</span> webapp <span class="se">\</span>
+  <span class="nt">--replicas</span> 3 <span class="se">\</span>
+  <span class="nt">--mount</span> <span class="nv">src</span><span class="o">=</span>web_static,dst<span class="o">=</span>/app/static <span class="se">\</span>
+  <span class="nt">--network</span> web_network <span class="se">\</span>
+  kmmanoj/flask_gunicorn_app
+</code></pre></div></div>
+
+<p>How easy it is to create three replicas, behind a load balancer.</p>
+
+<h3 id="step-4-create-the-web-proxy-service">Step #4: Create the web proxy service</h3>
+
+<p>Finally, we are going to setup the webproxy server.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker service create <span class="se">\</span>
+  <span class="nt">--name</span> webproxy <span class="se">\</span>
+  <span class="nt">--network</span> web_network <span class="se">\</span>
+  <span class="nt">--mount</span> <span class="nv">src</span><span class="o">=</span>web_static,dst<span class="o">=</span>/var/www-data <span class="se">\</span>
+  <span class="nt">--mount</span> <span class="nb">type</span><span class="o">=</span><span class="nb">bind</span>,src<span class="o">=</span>/path/to/nginx_conf,dst<span class="o">=</span>/etc/nginx/conf.d <span class="se">\</span>
+  <span class="nt">-p</span> 8080:80 <span class="se">\</span>
+  nginx
+</code></pre></div></div>
+
+<p>That’s it! We are ready with the objective architecture.</p>
+
+<p>Verify by running:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network inspect web_network
+</code></pre></div></div>
+
+<p>to see the list of containers running. You may find a container that has a substring ‘endpoint’, that happens to be the load balancer created by the docker.</p>
+
+<h3 id="step-5-test">Step #5: Test</h3>
+
+<p>Open up your browser and point to <a href="http://localhost:8080/">http://localhost:8080/</a></p>
+
+<p><img src="/blog/assets/res/deploying_a_scalable_flask_app_using_gunicorn_and_nginx_in_docker_part_2/browser_output.png" alt="Browser output at localhost:8080" />
+<em>Browser output at localhost:8080</em></p>
+
+<p>Thank you! Hope this was helpful!</p>
+
+    </div>
+  </div>
+</article>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('#post-body h2, #post-body h3, #post-body h4');
+  if (headings.length === 0) {
+    document.getElementById('toc').style.display = 'none';
+    return;
+  }
+
+  var nav = document.getElementById('toc-nav');
+  var ul = document.createElement('ul');
+  ul.className = 'toc-list';
+
+  headings.forEach(function (h, i) {
+    if (!h.id) h.id = 'heading-' + i;
+
+    var li = document.createElement('li');
+    li.className = 'toc-item toc-' + h.tagName.toLowerCase();
+
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc-link';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  nav.appendChild(ul);
+
+  // Move leading blockquote to header as subtitle
+  var body = document.getElementById('post-body');
+  var first = body.firstElementChild;
+  if (first && first.tagName === 'BLOCKQUOTE') {
+    var subtitle = document.createElement('p');
+    subtitle.className = 'post-subtitle';
+    subtitle.textContent = first.textContent.trim();
+    document.querySelector('.post-header').appendChild(subtitle);
+    first.remove();
+  }
+
+  // Highlight active heading on scroll
+  var links = nav.querySelectorAll('.toc-link');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        links.forEach(function (l) { l.classList.remove('active'); });
+        var active = nav.querySelector('a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '0px 0px -80% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+}());
+</script>
+
+  </main>
+  <footer class="blog-footer">
+    <p>Manoj Vignesh K M · <a href="/">Portfolio</a></p>
+  </footer>
+</body>
+</html>

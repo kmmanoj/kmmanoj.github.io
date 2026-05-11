@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How complex can Authorization get? — Manoj Vignesh K M</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/blog/assets/css/style.css" />
+</head>
+<body>
+  <header class="blog-header">
+    <a href="/" class="back-link">← Portfolio</a>
+    <a href="/blog/" class="blog-title">Manoj's Blog</a>
+  </header>
+  <main class="blog-content">
+    <article class="post">
+  <header class="post-header">
+    <h1>How complex can Authorization get?</h1>
+    <time datetime="2022-03-19T23:30:00-07:00">
+      March 19, 2022
+    </time>
+    
+    <div class="post-tags">
+      <span class="tag">security</span><span class="tag">authorization</span>
+    </div>
+    
+  </header>
+
+  <div class="post-layout">
+    <aside class="post-toc" id="toc">
+      <p class="toc-title">Contents</p>
+      <nav id="toc-nav"></nav>
+    </aside>
+
+    <div class="post-body" id="post-body">
+      <blockquote>
+  <p>Builds on the Authorization component of Identity and Access Management system from zero to how systems implement today</p>
+</blockquote>
+
+<p><strong>I</strong>dentity and <strong>A</strong>ccess <strong>M</strong>anagement system deals with “who” should get “what” level of access to an object (entity) or a function. The subsystem that defines “who” is called Authentication (Identity), while the subsystem that defines “what” level of access is called <strong>Authorization</strong> (Access).</p>
+
+<p>Building an IAM system can get very complex quickly. No wonder “Broken Authentication” and “Broken Authorization” are listed in <a href="https://owasp.org/www-project-top-ten/">OWASP Top Ten WebApp Security risks</a> and <a href="https://owasp.org/www-project-api-security/">OWASP Top Ten API Security risks</a>. Security risks in IAM system arises due to flawed or missed logic, or due to gap in the implementation and design due to it’s complexity.</p>
+
+<p>This article explains the evolution of the Authorization component of an IAM system with the growth of the software. Let us consider a content management system (such as <a href="https://medium.com">Medium</a>) for example while we build it up. Here,</p>
+
+<ul>
+  <li>Let <em>V1</em> be the visitor (unauthenticated) user, and <em>M1 … M3</em> be the member (authenticated) users.</li>
+  <li>Let <em>B1 … B5</em> be the Blog entities</li>
+  <li>Let Read (<em>R</em>), Write (<em>W</em>) and Clap (<em>C</em>) be the actions that can be performed on the entities</li>
+</ul>
+
+<p>The notation:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{u, v} can {a, b} on {m, n}
+</code></pre></div></div>
+
+<p>Implies, a nested Cartesian product:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{Set of users} can (perform) {Set of actions} on {Set of Entities}
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>u can a on m, u can a on n, u can b on m, u can b on n, v can a on m, v can a on n, v can b on m, v can b on n
+</code></pre></div></div>
+
+<h2 id="unprotected-systems">Unprotected systems</h2>
+
+<p>Let us begin from zero. A system in which anyone has access to anything. There is no authentication nor authorization in place. A system with such characteristics defines the starting point for IAM. IAM does not exist or does nothing in such a system.</p>
+
+<p>The CMS in this state has all the blogs readable, writable and clap-able by any visitor and/or member.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{V1, M1, M2, M3} can {R, W, C} on {B1, B2, B3, B4, B5}
+</code></pre></div></div>
+
+<h2 id="all-or-nothing">All-or-Nothing</h2>
+
+<p>In such systems, there are two access levels for entities: public and private. Certain entities may be tagged public which implies that this entity can be acted upon by any user. While, certain entities can be tagged private which implies that this entity can be acted only upon by a specific user. To identify a specific user authentication is required.</p>
+
+<p>Let, blog <em>B1</em> be a private blog to <em>M1</em>,* B2* be a private blog to <em>M2</em> while the rest be public. Then,</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{V1, M1, M2, M3} can {R, W, C} on {B3, B4, B5}, or
+{M1} can {R, W, C} on {B1}, or
+{M2} can {R, W, C} on {B2}
+</code></pre></div></div>
+
+<h2 id="controlled-sharing">Controlled Sharing</h2>
+
+<p>This is where IAM starts to become complex. To enable collaboration and feedback, restricting access levels for entities to only public and private may not be valuable. To better understand the build up of controlled sharing let us break it down into the multiple sub-phases.</p>
+
+<h3 id="controlled-sharing-all-or-nothing">Controlled Sharing: All-or-Nothing</h3>
+
+<p>Customers of CMS complain that private blogs are too restrictive. They want to be able to share the blog(s) only to a certain specific set of users for collaboration.</p>
+
+<p>In such systems, there are three access levels for entities: public, shared and private. Public and private continue to hold the definitions from All-or-Nothing system. A shared entity is an entity that can be acted upon only by a specific set of users.</p>
+
+<p>Let <em>B1</em> be a private blog to <em>M1</em>, <em>B2</em> be a private blog to <em>M2</em>, <em>B3</em> be a shared blog to <em>M2</em> and <em>M3</em>, while the rest be public. Then,</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{V1, M1, M2, M3} can {R, W, C} on {B4, B5}, or
+{M1} can {R, W, C} on {B1}, or
+{M2} can {R, W, C} on {B2, B3}, or
+{M3} can {R, W, C} on {B3}
+</code></pre></div></div>
+
+<h3 id="nested-controlled-sharing">Nested Controlled Sharing</h3>
+
+<p>Customers now complain of shared blogs being too open to the authorized set of users. They want to be able to restrict the set of actions a specific subset of the authorized users can perform. For example, “while I have full access to the blog, I want my peer(s) to only read it and not be able to edit it.”</p>
+
+<p>In such systems, there again exists three levels of access: public, private and shared, with private and public continuing to hold it’s definition from All-or-Nothing system. The shared access level, which used to deal with only one parameter i.e Entity, now deals with two parameters i.e. Action and Entity. <strong>Side Note</strong>: The (Action, Entity) tuple is called a permission.</p>
+
+<p>Let <em>B1</em> be a private blog to <em>M1</em>, <em>B2</em> be a private blog to <em>M2</em>, <em>B3</em> be a shared blog to <em>M2</em> and <em>M3</em>, with <em>M2</em> having the ability to perform only <em>R</em>, and <em>C</em> actions, while <em>M3</em> be able to perform <em>R</em>, <em>W</em> and <em>C</em> actions on it. Meanwhile, let the rest of the entities be public. Then,</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{V1, M1, M2, M3} can {R, W, C} on {B4, B5}, or
+{M1} can {R, W, C} on {B2}, or
+{M2} can {R, W, C} on {B2}, or
+{M2} can {R, C} on {B3}, or
+{M3} can {R, W, C} on {B3}
+</code></pre></div></div>
+
+<h3 id="dynamic-nested-controlled-sharing">Dynamic Nested Controlled Sharing</h3>
+
+<p>All this while we have been looking at static rules to define authorization. It would be unmanageable and cumbersome to contact the service provider to edit the authorization rules with new entities, new users and new requirements (changing users/entities).</p>
+
+<p>This introduces a new action, Grant (<em>G</em>), on actions that can be performed on an entity. For example, Grant Read (<em>GR</em>) is defined as the ability to grant read access to the entity in reference to any other user.</p>
+
+<p>Consider the same scenario as mentioned in the Nested Controlled Sharing case. The new set of authorization rules would then be,</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{V1, M1, M2, M3} can {R, W, C, GR, GW, GC} on {B4, B5}, or
+{M1} can {R, W, C, GR, GW, GC} on {B2}, or
+{M2} can {R, W, C, GR, GW, GC} on {B2}, or
+{M2} can {R, C} on {B3}, or
+{M3} can {R, W, C, GR, GW, GC} on {B3}
+</code></pre></div></div>
+
+<h3 id="conclusion-on-controlled-sharing">Conclusion on Controlled Sharing</h3>
+
+<p>At this point, it is worth mentioning about different Access Control schemes.</p>
+
+<ul>
+  <li><strong>Discretionary Access Control (DAC)</strong>: The owner (creator) of the entity possess grant permissions (Recall, permission is (Action, Entity) tuple).
+For example, in the CMS system with <code class="language-plaintext highlighter-rouge">{V1, M1, M2, M3}</code> users, <code class="language-plaintext highlighter-rouge">{R, W, C}</code> actions and <code class="language-plaintext highlighter-rouge">{}</code> blogs, when <em>M1</em> creates a blog <em>B1</em>, the authorization rules are:</li>
+</ul>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{V1, M1, M2, M3} can {R, W, C, GR, GW, GC} on {}, or
+{M1} can {R, W, C, GR, GW, GC} on {B1}
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Mandatory Access Control (MAC)</strong>: A specific administrator has access to grant permissions.
+For example, in the CMS system with <code class="language-plaintext highlighter-rouge">{V1, M1, M2, M3}</code> users, <code class="language-plaintext highlighter-rouge">{R, W, C}</code> actions and <code class="language-plaintext highlighter-rouge">{}</code> blogs, and <em>M1</em> being the administrator, when <em>M2</em> creates a blog <em>B1</em>, the authorization rules are:</li>
+</ul>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{V1, M1, M2, M3} can {R, W, C, GR, GW, GC} on {}, or
+{M1} can {GR, GW, GC} on {B1}
+{M2} can {R, W, C} on {B1}
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Role-Based Access Control (RBAC)</strong>: A complex access control scheme that includes Role as an Entity, in addition to blog. The actions on the Role are: assume (A) (For simplicity) (Other actions on the role includes read, write, update, delete etc.). Similar to any other actions, assume action can also be granted (GA). In this scheme, a user/role cannot act independently on entities. A user can independently only assume a role. A user on assuming a role can act on an entity, including another role.
+For example, in the CMS system with <code class="language-plaintext highlighter-rouge">{V1, M1, M2, M3}</code> users, <code class="language-plaintext highlighter-rouge">{R, W, C}</code> actions on blogs and <code class="language-plaintext highlighter-rouge">{A}</code> actions on roles, <code class="language-plaintext highlighter-rouge">{}</code> blogs and <code class="language-plaintext highlighter-rouge">{R1, R2}</code> roles.
+Let <em>R1 *be a role that can perform anything to any role, while *R2</em> be a role that can perform anything on any blog. Let <em>R1 *be assumable only by *M1</em>, <em>R2 *be assumable by any authenticated user, *M2</em> assumes <em>R2</em> and creates a blog <em>B1</em>.</li>
+</ul>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{R1} can {GA} on {R1, R2}
+{R2} can {R, W, C, GR, GW, GC} on {B1}, or
+---
+{V1} can {R, W, C, A} on {}, or
+{M1, M2, M3} can {R, W, C} on {}, or
+{M1, M2, M3} can {A} on {R2}, or
+{M1} can {A} on {R1}
+</code></pre></div></div>
+
+<h2 id="user-programmed-controlled-sharing">User-programmed controlled sharing</h2>
+
+<p>So far we have been looking at permissions to those entities that are stored. Consider the case when the CMS wants to display the total number of blogs that exists in their system be it public, shared or private to any visitor/member. Further, it wants to display the total number of public, private and shared blogs individually. Though a visitor (unauthenticated) user is not allowed to access the private and shared blogs, he/she should be able to see the above statistics. Moreover, these statistics may or may not be stored. It may be calculated on demand. Access control to such “actions” on such “entities” are categorized into User-programmed controlled sharing.</p>
+
+<p><strong>Side note</strong>: Hence there exists two different security risks in OWASP top ten, namely: Broken “object” level authorization and broken “function” level authorization.</p>
+
+<p><strong>Attribute Based Access Control</strong> <strong>(ABAC)</strong> is an access control scheme that involves user-programmed controlled sharing. Consider the case when access to a specific object is given only during a certain time period, say between 9 am to 5 pm IST. And/Or, access to a specific object is given only when the user is located in a specific area, say in a circle with center at (37.7858846, -122.4074781) coordinates and radius 250 m.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Designing an access control system highly depends on the customer’s needs. Most mature products have dynamic nested controlled sharing capabilities while there are certain features that uses User-programmed controlled sharing. However, critical systems such as military, government, healthcare and finance technology software do have advanced access control systems implemented and enforced. One such advanced access control is “<a href="https://csrc.nist.gov/glossary/term/separation_of_duty">Separation of duty</a>”: A single user cannot individually execute a critical action.</p>
+
+<p>The complexity in designing an access control system is present in identifying:</p>
+
+<ul>
+  <li>The access control scheme (DAC, MAC, RBAC, ABAC, hybrid or custom?)</li>
+  <li>The entities and the granularity to which it needs to be access controlled</li>
+  <li>The actions that can be performed on the entity</li>
+  <li>The storage schema for the identified entities, actions, and users</li>
+  <li>Sequence flow to perform authorization rule check, and</li>
+  <li>Other system design choices</li>
+</ul>
+
+<h2 id="reference">Reference</h2>
+
+<p>J. H. Saltzer and M. D. Schroeder, “<a href="https://ieeexplore.ieee.org/document/1451869">The protection of information in computer systems</a>,” in Proceedings of the IEEE, vol. 63, no. 9, pp. 1278–1308, Sept. 1975, doi: 10.1109/PROC.1975.9939.</p>
+
+    </div>
+  </div>
+</article>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('#post-body h2, #post-body h3, #post-body h4');
+  if (headings.length === 0) {
+    document.getElementById('toc').style.display = 'none';
+    return;
+  }
+
+  var nav = document.getElementById('toc-nav');
+  var ul = document.createElement('ul');
+  ul.className = 'toc-list';
+
+  headings.forEach(function (h, i) {
+    if (!h.id) h.id = 'heading-' + i;
+
+    var li = document.createElement('li');
+    li.className = 'toc-item toc-' + h.tagName.toLowerCase();
+
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc-link';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  nav.appendChild(ul);
+
+  // Move leading blockquote to header as subtitle
+  var body = document.getElementById('post-body');
+  var first = body.firstElementChild;
+  if (first && first.tagName === 'BLOCKQUOTE') {
+    var subtitle = document.createElement('p');
+    subtitle.className = 'post-subtitle';
+    subtitle.textContent = first.textContent.trim();
+    document.querySelector('.post-header').appendChild(subtitle);
+    first.remove();
+  }
+
+  // Highlight active heading on scroll
+  var links = nav.querySelectorAll('.toc-link');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        links.forEach(function (l) { l.classList.remove('active'); });
+        var active = nav.querySelector('a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '0px 0px -80% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+}());
+</script>
+
+  </main>
+  <footer class="blog-footer">
+    <p>Manoj Vignesh K M · <a href="/">Portfolio</a></p>
+  </footer>
+</body>
+</html>

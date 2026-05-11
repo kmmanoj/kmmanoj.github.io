@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What can go wrong in a cryptographic system? — Manoj Vignesh K M</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/blog/assets/css/style.css" />
+</head>
+<body>
+  <header class="blog-header">
+    <a href="/" class="back-link">← Portfolio</a>
+    <a href="/blog/" class="blog-title">Manoj's Blog</a>
+  </header>
+  <main class="blog-content">
+    <article class="post">
+  <header class="post-header">
+    <h1>What can go wrong in a cryptographic system?</h1>
+    <time datetime="2022-10-29T23:30:00-07:00">
+      October 29, 2022
+    </time>
+    
+    <div class="post-tags">
+      <span class="tag">security</span><span class="tag">cryptography</span>
+    </div>
+    
+  </header>
+
+  <div class="post-layout">
+    <aside class="post-toc" id="toc">
+      <p class="toc-title">Contents</p>
+      <nav id="toc-nav"></nav>
+    </aside>
+
+    <div class="post-body" id="post-body">
+      <blockquote>
+  <p>An enumeration and brief description of parameters that should be considered while designing and developing a secure cryptographic system.</p>
+</blockquote>
+
+<p>Recall, cryptography is the study of techniques to securely exchange information between sender and an intended recipient. Encryption is the act of converting plain text into cipher text based on the input key and one or more parameters that make the cipher text non-deterministic. While, decryption is the act of converting a given cipher text back to plain text based on the key that was used for encryption to evaluate the cipher text.</p>
+
+<h2 id="how-cryptographic-systemswork">How cryptographic systems work?</h2>
+
+<p><em>The scope of this article is limited to symmetric key block cipher cryptography.</em></p>
+
+<p>A <strong>key</strong>, which is known both to the sender and the receiver is used as an input to a <strong>block cipher</strong>. A block cipher can be thought of as a function that takes message block and key as input and returns a (pseudo-)random string of 0s and 1s as output. (“Pseudo-” random, because during the decryption process this string with the key should return the message block back). The message that needs to be transferred securely is broken down into blocks of specific size known as the <strong>block size</strong>. The last block is <strong>padded</strong> to fit the block size. Each message block is optionally-preprocessed using “some <strong>randomization</strong>”. The processed message block is the other input to the block cipher. The output of the block cipher is a part of the cipher text. A <strong>mode</strong> is defined that dictates how multiple block ciphers combine to provide the complete cipher text for the long message.</p>
+
+<p><img src="/blog/assets/res/what_can_go_wrong_in_a_cryptographic_system/general_cryptographic_system_encryption.jpeg" alt="General cryptographic system (Encryption)" />
+<em>General cryptographic system (Encryption)</em></p>
+
+<h3 id="example-aes-256-cbc-using-randomiv">Example: AES-256-CBC using random IV</h3>
+
+<p><img src="/blog/assets/res/what_can_go_wrong_in_a_cryptographic_system/aes_cbc_with_random_iv_encryption.jpeg" alt="AES CBC with random IV (Encryption)" />
+<em>AES CBC with random IV (Encryption)</em></p>
+
+<p>The above image shows the block diagram of AES CBC using a random IV. Here,</p>
+
+<ul>
+  <li><strong>AES</strong> is the encryption algorithm used by the <strong>block cipher</strong>.</li>
+  <li><strong>256</strong> is the <strong>key size</strong>. In other words, the length of the key is 256 bits.</li>
+  <li><strong>CBC</strong> stands for Cipher Block Chaining mode. It is a <strong>mode</strong> wherein the previous cipher text block is used as randomization vector for the following block.</li>
+  <li><strong>Random IV</strong> stands for <strong>random</strong> Initialization Vector. The initialization vector is chosen in random by the sender. This randomly chosen IV is used for preprocessing with the first message block.</li>
+  <li>The block size for AES is 128 bits. Each message block and the Initialization Vector is 128 bits long.</li>
+</ul>
+
+<h2 id="it-is-easy-said-thandone">It is easy said than done!</h2>
+
+<p>Now that we understand different building blocks of a cryptographic system and certain terminologies, let us now look into what can go wrong in such systems.</p>
+
+<h3 id="the-blockcipher">The block cipher</h3>
+
+<p>The concepts of Pseudo Random Function (PRF) and Pseudo Random Permutation (PRP) are key to understanding security of block ciphers. <a href="https://crypto.stanford.edu/~dabo/cs255/lectures/PRP-PRF.pdf#page=13">https://crypto.stanford.edu/~dabo/cs255/lectures/PRP-PRF.pdf#page=13</a></p>
+
+<p>A block cipher (also known as PRP) is considered secure if it is indistinguishable from a PRF. The experiment focused on distinguishing the output as an output of a block cipher or that of a random function is known by the term Secure PRF test. 
+<a href="https://crypto.stanford.edu/~dabo/cs255/lectures/PRP-PRF.pdf#page=16">https://crypto.stanford.edu/~dabo/cs255/lectures/PRP-PRF.pdf#page=16</a></p>
+
+<p>DES, 3DES and AES algorithms are considered to be PRF secure (As of October 30, 2022). However, DES is not used in practice due to its small key size.</p>
+
+<h3 id="the-pesudo-random-generators">The pesudo random generators</h3>
+
+<p>Pseudo random generators (PRGs) are functions that output series of 0s and 1s that can be reproducible, but at the same time random enough to disallow an adversary to reproduce it. Similar to block ciphers PRG functions accept a seed and a key to generate a streaming bit string. In fact, secure PRF block ciphers are used to generate random bit strings.</p>
+
+<p>But, what happens if an adversary is able to guess the bit string generated by PRGs? Recall the use of “random” IV in certain modes of encryption. If the random IV is guessable then the fact of considering such encryption mode to be more secure than a mode that uses predefined IV is pointless.</p>
+
+<h3 id="the-mode">The mode</h3>
+
+<p>Similar to Secure PRF test for block ciphers and PRGs, modes are tested for Indistinguishably under Chosen Plain text Attack (IND-CPA) and Indistinguishably under Chosen Cipher text Attack (IND-CCA). This experiment focuses on identifying which of the two input message got encrypted based on the output cipher text returned by an “oracle” ( = E(K,.)) that encrypts one of the two input messages. Intuitively, it means that the experiment ensures that the cipher text does not leak any information regarding the input message(s).</p>
+
+<p>Consider Electronic Code Book (ECB) mode. In this mode of operation, equal messages output the same cipher text. It implies that an adversary collecting a considerable amount of plain text-cipher text pairs can evaluate plain text for future cipher texts. The following slide shows the weakness of ECB mode. <a href="https://crypto.stanford.edu/~dabo/cs255/lectures/PRP-PRF.pdf#page=24">https://crypto.stanford.edu/~dabo/cs255/lectures/PRP-PRF.pdf#page=24</a>. Here is a working example guide for breaking AES ECB mode: <a href="https://cryptopals.com/sets/2/challenges/12">https://cryptopals.com/sets/2/challenges/12</a></p>
+
+<p>With evolving security research new schemes are designed and broken, new provable security notions are developed continuously. However, for adoption by industry CBC mode, its variants or better are used. Even though there exists vulnerabilities and weakness in these schemes the exploitation of such systems are handled by the defense in depth, such as by the Intrusion Detection Systems and similar.</p>
+
+<h3 id="the-keys">The keys</h3>
+
+<p>Study of symmetric cryptography assumes that the sender and the receiver already have a shared secret. The shared secret is the key component of the symmetric cryptographic system. Compromise of the key implies compromise of the whole symmetric key cryptographic system.</p>
+
+<p>The challenges that industry faces in terms of storing, using and exchanging keys securely is handled by asymmetric key cryptography and Key Management Systems domains.</p>
+
+<h2 id="concluding-thoughts">Concluding thoughts</h2>
+
+<p>In summary, the challenges faced by industry in using symmetric key cryptographic systems are:</p>
+
+<ul>
+  <li>Use of a secure proven block cipher, pseudo random generators and encryption/decryption modes.</li>
+  <li>Handling and managing keys and other parameters (such as random IV) used in symmetric key encryption and decryption.</li>
+</ul>
+
+<p>The field of security is ever changing. It is demanding for organizations to keep up with the latest weaknesses and attacks on cryptographic system. Similar to any vulnerabilities and exploitation, the organization would first respond to it by installing detection rules in its monitoring and detection systems, develop (or) identify a patch to resolve the vulnerability, and develop and deploy the solution across all the subsystem of the organization. It takes days to months to control a vulnerability to its stable state depending on its severity and priority. However, the focus of the organization is to keep the business running while ensuring trust with its customers.</p>
+
+    </div>
+  </div>
+</article>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('#post-body h2, #post-body h3, #post-body h4');
+  if (headings.length === 0) {
+    document.getElementById('toc').style.display = 'none';
+    return;
+  }
+
+  var nav = document.getElementById('toc-nav');
+  var ul = document.createElement('ul');
+  ul.className = 'toc-list';
+
+  headings.forEach(function (h, i) {
+    if (!h.id) h.id = 'heading-' + i;
+
+    var li = document.createElement('li');
+    li.className = 'toc-item toc-' + h.tagName.toLowerCase();
+
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc-link';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  nav.appendChild(ul);
+
+  // Move leading blockquote to header as subtitle
+  var body = document.getElementById('post-body');
+  var first = body.firstElementChild;
+  if (first && first.tagName === 'BLOCKQUOTE') {
+    var subtitle = document.createElement('p');
+    subtitle.className = 'post-subtitle';
+    subtitle.textContent = first.textContent.trim();
+    document.querySelector('.post-header').appendChild(subtitle);
+    first.remove();
+  }
+
+  // Highlight active heading on scroll
+  var links = nav.querySelectorAll('.toc-link');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        links.forEach(function (l) { l.classList.remove('active'); });
+        var active = nav.querySelector('a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '0px 0px -80% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+}());
+</script>
+
+  </main>
+  <footer class="blog-footer">
+    <p>Manoj Vignesh K M · <a href="/">Portfolio</a></p>
+  </footer>
+</body>
+</html>

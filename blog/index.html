@@ -3,12 +3,84 @@ layout: default
 title: Blog
 ---
 <h1>Posts</h1>
-<ul class="post-list">
-  {% for post in site.posts %}
-  <li>
-    <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-    <div class="post-meta">{{ post.date | date: "%B %-d, %Y" }}</div>
-    <p class="excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
-  </li>
-  {% endfor %}
-</ul>
+
+<div class="blog-layout">
+  <aside class="blog-sidebar">
+    <input type="search" id="search" placeholder="Search posts…" autocomplete="off" />
+    <div class="tag-filter" id="tag-filter">
+      <button class="tag active" data-tag="all" data-count="{{ site.posts | size }}">All</button>
+      {% for tag in site.tags %}
+      <button class="tag" data-tag="{{ tag[0] }}" data-count="{{ tag[1] | size }}">
+        {{ tag[0] }}<span class="tag-badge">{{ tag[1] | size }}</span>
+      </button>
+      {% endfor %}
+    </div>
+  </aside>
+
+  <ul class="post-list" id="post-list">
+    {% for post in site.posts %}
+    <li data-tags="{{ post.tags | join: ',' }}">
+      <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+      <div class="post-meta">
+        {{ post.date | date: "%B %-d, %Y" }}
+        {% if post.tags.size > 0 %}
+        <span class="post-tags">
+          {% for tag in post.tags %}<button class="tag" data-tag="{{ tag }}">{{ tag }}</button>{% endfor %}
+        </span>
+        {% endif %}
+      </div>
+      <p class="excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<script>
+(function () {
+  var activeTag = 'all';
+  var searchQuery = '';
+
+  function applyFilters() {
+    document.querySelectorAll('#post-list li').forEach(function (li) {
+      var tags = li.dataset.tags ? li.dataset.tags.split(',') : [];
+      var tagMatch = activeTag === 'all' || tags.indexOf(activeTag) !== -1;
+      var searchMatch = !searchQuery || li.dataset.search.indexOf(searchQuery) !== -1;
+      li.style.display = (tagMatch && searchMatch) ? '' : 'none';
+    });
+  }
+
+  function setActiveTag(tag) {
+    activeTag = tag;
+    document.querySelectorAll('.tag-filter .tag').forEach(function (btn) {
+      btn.classList.toggle('active', btn.dataset.tag === tag);
+    });
+    applyFilters();
+  }
+
+  // Sort tag filter buttons by count descending (keep All first)
+  var filterBar = document.getElementById('tag-filter');
+  var tagBtns = Array.from(filterBar.querySelectorAll('[data-tag]:not([data-tag="all"])'));
+  tagBtns.sort(function (a, b) { return +b.dataset.count - +a.dataset.count; });
+  tagBtns.forEach(function (btn) { filterBar.appendChild(btn); });
+
+  // Build search index from title + excerpt text
+  document.querySelectorAll('#post-list li').forEach(function (li) {
+    var title = li.querySelector('a').textContent;
+    var excerpt = li.querySelector('.excerpt') ? li.querySelector('.excerpt').textContent : '';
+    var tags = li.dataset.tags || '';
+    li.dataset.search = (title + ' ' + excerpt + ' ' + tags).toLowerCase();
+  });
+
+  document.getElementById('search').addEventListener('input', function () {
+    searchQuery = this.value.toLowerCase().trim();
+    applyFilters();
+  });
+
+  document.querySelectorAll('.tag[data-tag]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var tag = this.dataset.tag;
+      setActiveTag(tag === activeTag && tag !== 'all' ? 'all' : tag);
+    });
+  });
+}());
+</script>

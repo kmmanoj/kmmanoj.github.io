@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Man-in-the-middle: A tale of a hoax DHCP server — Manoj Vignesh K M</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/blog/assets/css/style.css" />
+</head>
+<body>
+  <header class="blog-header">
+    <a href="/" class="back-link">← Portfolio</a>
+    <a href="/blog/" class="blog-title">Manoj's Blog</a>
+  </header>
+  <main class="blog-content">
+    <article class="post">
+  <header class="post-header">
+    <h1>Man-in-the-middle: A tale of a hoax DHCP server</h1>
+    <time datetime="2021-12-06T22:30:00-08:00">
+      December 6, 2021
+    </time>
+    
+    <div class="post-tags">
+      <span class="tag">networking</span><span class="tag">security</span><span class="tag">dhcp</span>
+    </div>
+    
+  </header>
+
+  <div class="post-layout">
+    <aside class="post-toc" id="toc">
+      <p class="toc-title">Contents</p>
+      <nav id="toc-nav"></nav>
+    </aside>
+
+    <div class="post-body" id="post-body">
+      <blockquote>
+  <p>Learn how a user can act like a hoax DHCP server and situate himself as a man in the middle, and how one can prevent such attacks.</p>
+</blockquote>
+
+<p>DHCP, Dynamic Host Configuration Protocol, is a network protocol that offers IP address and additional details such as the gateway IP and the DNS IP to a host requesting to be a part of the network. A detailed description of the protocol and its structure is documented in <a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol">this</a> wiki page. A DHCP server is a management server that maintains a pool of IP addresses, listens to requests for IP address from client joining the network and responds to them with an IP address offer on demand.</p>
+
+<p>In a curious experiment where two independent DHCP servers are setup in the same physical network to observe how the system behaves led to an interesting outcome. This article explains the behavior of this system when two independently working DHCP servers are in the same physical network, how can a malicious user exploit by leveraging this opportunity, and what can network administrators do to prevent exploitation by this method.</p>
+
+<h2 id="story">Story</h2>
+
+<p>There was a peaceful network where clients frequently join and leave, and the DHCP server serves new incoming clients with IP address for them to be a part of the network. One day a rogue client entered the network. As a routine the DHCP server served the client an IP address. As soon as it set itself up, the rogue client began executing its evil plans. It claimed itself to be a DHCP server too! But poor clients! They have been taught that when they enter a network the one who serves them the IP address is the DHCP server. The rogue client is leveraging this principle to try and be the first one to present the client with an IP address. This way the rogue client can let the incoming client know that the gateway to the internet and the domain name resolution server is itself. But, in fact this rogue client is forwarding the requests to the actual gateway and DNS server of the network, which it learned from the genuine DHCP server thus fulfilling client’s communication needs. The rogue client has successfully set itself up as a man-in-the-middle, overhearing the client’s communication with the internet and possibly manipulating them in transit!</p>
+
+<h2 id="setup">Setup</h2>
+
+<p><img src="/blog/assets/res/maninthemiddle_a_tale_of_a_hoax_dhcp_server/setup.png" alt="setup" />
+<em>setup</em></p>
+
+<p>GNS3 is used in setting up the required infrastructure. Ubuntu docker containers are used as clients, while DHCP servers are Ubuntu docker containers with ISC DHCP server module installed. A simple switch is used to connect the four components of the network.</p>
+
+<h3 id="the-genuine-dhcpserver">The genuine DHCP server</h3>
+
+<ul>
+  <li>Navigate to <code class="language-plaintext highlighter-rouge">/etc/dhcp</code> directory in the DHCP server console, once it starts up.</li>
+  <li>Append the following contents to the <code class="language-plaintext highlighter-rouge">dhcpd.conf</code> file:</li>
+</ul>
+
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">subnet</span> <span class="m">192</span>.<span class="m">168</span>.<span class="m">1</span>.<span class="m">0</span> <span class="n">netmask</span> <span class="m">255</span>.<span class="m">255</span>.<span class="m">255</span>.<span class="m">0</span> {
+ <span class="n">range</span> <span class="m">192</span>.<span class="m">168</span>.<span class="m">1</span>.<span class="m">150</span> <span class="m">192</span>.<span class="m">168</span>.<span class="m">1</span>.<span class="m">160</span>;
+ <span class="n">option</span> <span class="n">routers</span> <span class="m">192</span>.<span class="m">168</span>.<span class="m">1</span>.<span class="m">1</span>;
+ <span class="n">option</span> <span class="n">domain</span>-<span class="n">name</span>-<span class="n">servers</span> <span class="m">192</span>.<span class="m">168</span>.<span class="m">1</span>.<span class="m">1</span>;
+ <span class="n">option</span> <span class="n">domain</span>-<span class="n">name</span> <span class="s2">"example.org"</span>;
+}
+</code></pre></div></div>
+
+<ul>
+  <li>Create an empty file, for the DHCP server to hold the leased IP addresses, by running the command: <code class="language-plaintext highlighter-rouge">touch /var/lib/dhcp/dhcpd.lease</code>.</li>
+  <li>Then assign a static IP address(within the same subnet as in the DHCP configuration) to the primary network interface:
+<code class="language-plaintext highlighter-rouge">ifconfig eth0 192.168.1.1/24</code></li>
+  <li>Finally, start the DHCP server by running: <code class="language-plaintext highlighter-rouge">dhcpd</code></li>
+</ul>
+
+<h3 id="the-malicious-dhcpserver">The malicious DHCP server</h3>
+
+<p><img src="/blog/assets/res/maninthemiddle_a_tale_of_a_hoax_dhcp_server/image.png" alt="" /></p>
+
+<ul>
+  <li>Before starting up this DHCP server, ensure that this device has at least 2 network interfaces. And, one of the interfaces is configured to fetch IP address via DHCP (from the genuine DHCP server).</li>
+  <li>Start the server.</li>
+  <li>Observe that the <code class="language-plaintext highlighter-rouge">eth1</code> interface obtained IP address from the genuine DHCP server.</li>
+  <li>Follow similar steps as mentioned in the genuine DHCP server for configuration, but with a different subnet, say <code class="language-plaintext highlighter-rouge">192.168.2.1/24</code> . Ensure range, routers and domain-name-server fields are aligned to the subnet.</li>
+  <li>Assign the primary network interface with a static IP address (within the same subnet as in the DHCP configuration):
+<code class="language-plaintext highlighter-rouge">ifconfig eth0 192.168.2.1/24</code></li>
+  <li>Then start the DHCP server by running: <code class="language-plaintext highlighter-rouge">dhcpd</code></li>
+</ul>
+
+<h2 id="run">Run</h2>
+
+<p>Start up multiple clients in the network. Ensure that their network interfaces are configured to fetch IP address via DHCP. Observe the IP address of each client.</p>
+
+<p><img src="/blog/assets/res/maninthemiddle_a_tale_of_a_hoax_dhcp_server/ip_address_of_different_clients.png" alt="IP address of different clients" />
+<em>IP address of different clients</em></p>
+
+<p>Client-1 obtained 192.168.1.154 from the genuine DHCP server, while Client-2 obtained 192.168.2.160 from the rogue DHCP server. Client-2 has fallen victim!</p>
+
+<p>Observe that in spite of the two clients being in the same collision domain, they will not be able to communicate with each other. The reason is that these two subnets (one maintained by the genuine DHCP server and the other by the rogue DHCP server) form <strong>different overlay networks</strong> over the same L2 network.</p>
+
+<p>Soon one may realize that this is an <strong>opportunistic</strong> attack. It is a race between the genuine DHCP server and the rogue DHCP server as to whose DHCP offer the client will accept. The following image shows the filtered network capture of a new client joining the network. Observe the packet number 4 and 5. Both the rogue DHCP server and the genuine DHCP server race to serve the client. In this fortunate and unfortunate case, the client accepted the IP address offer from the genuine DHCP server (evident from packet number 7).</p>
+
+<p><img src="/blog/assets/res/maninthemiddle_a_tale_of_a_hoax_dhcp_server/dhcp_filtered_network_capture_of_a_new_incoming_client.png" alt="DHCP filtered network capture of a new incoming client" />
+<em>DHCP filtered network capture of a new incoming client</em></p>
+
+<h2 id="inherent-defenses-and-prevention-techniques">Inherent defenses and Prevention techniques</h2>
+
+<p>A malicious user situation himself as a man-in-the-middle lets him overhear all the communication the victim is in with the internet.</p>
+
+<p>However, with today’s secure systems most of the applications communicate over encrypted channels. The key exchange also happens over a secured channel. For example, TLS is used for setting up a HTTPS connection with a server while browsing, and similarly TLS is used for setting up a secure shell with a remote server. Hence, <strong>the risk of this attack is low</strong>.</p>
+
+<p>When building a network, the DHCP server are placed in a predictable and static location. They are connected to a specific port in a switch and the connection rarely changes. Hence, to explicitly prevent such attacks, network switches should be configured to accept DHCP offer and DHCP ACK packets only from a <strong>specified port</strong>. The switch can easily filter off the DHCP offer and ACK packets from other ports, thereby stopping the attack from happening at all.</p>
+
+    </div>
+  </div>
+</article>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('#post-body h2, #post-body h3, #post-body h4');
+  if (headings.length === 0) {
+    document.getElementById('toc').style.display = 'none';
+    return;
+  }
+
+  var nav = document.getElementById('toc-nav');
+  var ul = document.createElement('ul');
+  ul.className = 'toc-list';
+
+  headings.forEach(function (h, i) {
+    if (!h.id) h.id = 'heading-' + i;
+
+    var li = document.createElement('li');
+    li.className = 'toc-item toc-' + h.tagName.toLowerCase();
+
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc-link';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  nav.appendChild(ul);
+
+  // Move leading blockquote to header as subtitle
+  var body = document.getElementById('post-body');
+  var first = body.firstElementChild;
+  if (first && first.tagName === 'BLOCKQUOTE') {
+    var subtitle = document.createElement('p');
+    subtitle.className = 'post-subtitle';
+    subtitle.textContent = first.textContent.trim();
+    document.querySelector('.post-header').appendChild(subtitle);
+    first.remove();
+  }
+
+  // Highlight active heading on scroll
+  var links = nav.querySelectorAll('.toc-link');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        links.forEach(function (l) { l.classList.remove('active'); });
+        var active = nav.querySelector('a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '0px 0px -80% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+}());
+</script>
+
+  </main>
+  <footer class="blog-footer">
+    <p>Manoj Vignesh K M · <a href="/">Portfolio</a></p>
+  </footer>
+</body>
+</html>

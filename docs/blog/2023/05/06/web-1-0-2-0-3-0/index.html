@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web 1.0, 2.0, 3.0 … — Manoj Vignesh K M</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/blog/assets/css/style.css" />
+</head>
+<body>
+  <header class="blog-header">
+    <a href="/" class="back-link">← Portfolio</a>
+    <a href="/blog/" class="blog-title">Manoj's Blog</a>
+  </header>
+  <main class="blog-content">
+    <article class="post">
+  <header class="post-header">
+    <h1>Web 1.0, 2.0, 3.0 …</h1>
+    <time datetime="2023-05-06T23:30:00-07:00">
+      May 6, 2023
+    </time>
+    
+    <div class="post-tags">
+      <span class="tag">web3</span><span class="tag">blockchain</span>
+    </div>
+    
+  </header>
+
+  <div class="post-layout">
+    <aside class="post-toc" id="toc">
+      <p class="toc-title">Contents</p>
+      <nav id="toc-nav"></nav>
+    </aside>
+
+    <div class="post-body" id="post-body">
+      <blockquote>
+  <p>What is Web1.0, Web 2.0 and Web 3.0 and how is Web2.0 different from Web3.0?</p>
+</blockquote>
+
+<p>Since the inception of the internet computers and hence users have been interacting with it in different ways. It transformed from Web 1.0, which was static and one-way, to Web 2.0, which was interactive and user-generated, to Web 3.0, which promises to be decentralized and secure.</p>
+
+<p>This article describes the difference between Web1.0, Web2.0 and Web3.0. Further, it describes how the current Web2.0 technology is different from the prospective Web3.0 technology.</p>
+
+<h2 id="web10">Web1.0</h2>
+
+<p>Internet was born in late 1960s with the name ARPANET. It was initially used only for military and research purposes. The natural extension was to make some content available to the world. Hence, certain users of the internet with authority had the power to generate, store and distribute content to the world. These authoritative users maintained servers addressed by IP address (and domain names) which had the content accessible by the world.</p>
+
+<p><img src="/blog/assets/res/web_10_20_30/web1_0_illustration.png" alt="Web1.0: Illustration" />
+<em>Web1.0: Illustration</em></p>
+
+<p>For example, consider the <a href="https://ieeexplore.ieee.org/Xplore/home.jsp">IEEE xplore</a> website. The content present in it are posted by IEEE scholars. The content is accessible to all the users of the internet (behind a paywall).</p>
+
+<h2 id="web20">Web2.0</h2>
+
+<p>Soon, with introduction of web applications such as GMail, Facebook and Twitter the power of generating content reached every user of the internet. Any user of the internet could draft an email and send it to anyone across the internet. Any user of the internet could click a picture and upload it to the internet. Any user of the internet could voice his/her thoughts to the world over the internet. The web applications are now dynamic, interactive and anyone could generate content.</p>
+
+<p><img src="/blog/assets/res/web_10_20_30/web2_0_illustration.png" alt="Web2.0: Illustration" />
+<em>Web2.0: Illustration</em></p>
+
+<h2 id="web30">Web3.0</h2>
+
+<p>To allow users to have more control over the data they generate, and to avoid interacting and paying the intermediaries between two parties that have mutual benefit, and for users favoring democracy over communism, web3.0 was introduced.</p>
+
+<p><img src="/blog/assets/res/web_10_20_30/web3_0_illustration.png" alt="Web3.0: Illustration" />
+<em>Web3.0: Illustration</em></p>
+
+<h2 id="web20-vsweb30">Web2.0 vs Web3.0</h2>
+
+<ul>
+  <li><strong>Technology</strong>: In web2.0, web application frameworks such as Java Spring boot, Python Django and PHP Laravel enabled development. In web3.0, blockchain forms the core technology that enables development. In addition to blockchain, technologies such as Solidity and Vyper enable development of business logic to process data.</li>
+  <li><strong>Data</strong>: In web2.0, the user generated data are stored in databases owned and maintained by the organization. While, in web3.0 the user generated data is stored in blockchain.</li>
+  <li>**Interaction: **In web2.0, any action (or processing of data) is performed by the server owned and maintained by the organization. A user communicates with the internet through APIs. APIs are exposed by the servers that are capable of processing data. While, in web3.0 most (if not all) the nodes in the blockchain perform the action. A user communicates with the internet through smart contract functions.</li>
+</ul>
+
+<p><img src="/blog/assets/res/web_10_20_30/image.png" alt="" /></p>
+
+<p>In web2.0, any dynamic data is stored in the database. This data is retrieved by a computer running a web server such as Java Spring Boot or Python Django. This backend service constitutes business logic that defines rules to process and retrieve data from the database. The frontend built using HTML, CSS and various forms of JS communicates with the backend server through REST APIs (typically JSON) to retrieve data and render them aesthetically to the web users.</p>
+
+<p>Whereas in web3.0, any dynamic data is stored in the blockchain network. Any participant node in the blockchain network can retrieve data. Smart contracts is a mechanism to define rules to process and retrieve data from the blockchain network. The frontend built using HTML, CSS and various forms of JS communicates with the nearest/configured blockchain node to retrieve information and render them aesthetically to the web users.</p>
+
+    </div>
+  </div>
+</article>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('#post-body h2, #post-body h3, #post-body h4');
+  if (headings.length === 0) {
+    document.getElementById('toc').style.display = 'none';
+    return;
+  }
+
+  var nav = document.getElementById('toc-nav');
+  var ul = document.createElement('ul');
+  ul.className = 'toc-list';
+
+  headings.forEach(function (h, i) {
+    if (!h.id) h.id = 'heading-' + i;
+
+    var li = document.createElement('li');
+    li.className = 'toc-item toc-' + h.tagName.toLowerCase();
+
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc-link';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  nav.appendChild(ul);
+
+  // Move leading blockquote to header as subtitle
+  var body = document.getElementById('post-body');
+  var first = body.firstElementChild;
+  if (first && first.tagName === 'BLOCKQUOTE') {
+    var subtitle = document.createElement('p');
+    subtitle.className = 'post-subtitle';
+    subtitle.textContent = first.textContent.trim();
+    document.querySelector('.post-header').appendChild(subtitle);
+    first.remove();
+  }
+
+  // Highlight active heading on scroll
+  var links = nav.querySelectorAll('.toc-link');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        links.forEach(function (l) { l.classList.remove('active'); });
+        var active = nav.querySelector('a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '0px 0px -80% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+}());
+</script>
+
+  </main>
+  <footer class="blog-footer">
+    <p>Manoj Vignesh K M · <a href="/">Portfolio</a></p>
+  </footer>
+</body>
+</html>

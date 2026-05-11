@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Setting up a local ethereum blockchain network — Manoj Vignesh K M</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/blog/assets/css/style.css" />
+</head>
+<body>
+  <header class="blog-header">
+    <a href="/" class="back-link">← Portfolio</a>
+    <a href="/blog/" class="blog-title">Manoj's Blog</a>
+  </header>
+  <main class="blog-content">
+    <article class="post">
+  <header class="post-header">
+    <h1>Setting up a local ethereum blockchain network</h1>
+    <time datetime="2023-05-04T23:30:00-07:00">
+      May 4, 2023
+    </time>
+    
+    <div class="post-tags">
+      <span class="tag">blockchain</span><span class="tag">ethereum</span><span class="tag">web3</span>
+    </div>
+    
+  </header>
+
+  <div class="post-layout">
+    <aside class="post-toc" id="toc">
+      <p class="toc-title">Contents</p>
+      <nav id="toc-nav"></nav>
+    </aside>
+
+    <div class="post-body" id="post-body">
+      <blockquote>
+  <p>Setup an ethereum blockchain network in your local computer using geth to learn and develop smart contracts for dApps and more</p>
+</blockquote>
+
+<p>The Ethereum blockchain is similar to the Bitcoin blockchain in that it is a distributed ledger that records all transactions. However, ethereum blockchain provides a platform to build decentralized apps in the form of smart contracts.</p>
+
+<p>Given that the ethereum blockchain is a platform to build decentralized applications, it is key to learn this technology as it may revolutionize the way applications are built.</p>
+
+<p>In this article, we shall go through how to setup a local blockchain network to learn, experiment and build on Ethereum.</p>
+
+<h2 id="installing-geth">Installing geth</h2>
+
+<p>Geth (go-ethereum) is a Go implementation of Ethereum. It is an easy to setup ethereum client. Download and install geth from <a href="https://geth.ethereum.org/downloads">https://geth.ethereum.org/downloads</a></p>
+
+<h2 id="create-the-firstnode">Create the first node</h2>
+
+<p>An ethereum blockchain node is any system that has a storage and is able to perform computation (using processor and memory). In geth world, each geth process can be considered the compute scope of a node, and a directory can be considered as an isolated storage space for that node. Hence, we create first node by creating a directory. Let us call it <code class="language-plaintext highlighter-rouge">node00</code>.</p>
+
+<blockquote>
+  <p><em>For ease of reference,</em> <code class="language-plaintext highlighter-rouge">/rootnet</code> <em>shall be used as the base directory</em></p>
+</blockquote>
+
+<p>Create a directory in the base directory by the name <code class="language-plaintext highlighter-rouge">node00</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> /rootnet/node00
+</code></pre></div></div>
+
+<h2 id="create-the-firstaccount">Create the first account</h2>
+
+<p>An account, technically, is a cryptographic public-private key pair. An account is referenced by a 40-digit (20 bytes) hex code that is derived from the public key.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>address = sha3(publicKey)[-40:]
+</code></pre></div></div>
+
+<p>While, the private key is kept safe and secret by the account holder.</p>
+
+<p>To create an account, run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>geth <span class="nt">--datadir</span> /rootnet/node00 account new
+</code></pre></div></div>
+
+<p>Note down the address of the account displayed.</p>
+
+<h2 id="configure-the-genesisblock">Configure the genesis block</h2>
+
+<p>A genesis block is the very first block in a blockchain network. To create such a block for the blockchain in setup, create a file called <code class="language-plaintext highlighter-rouge">genesis.json</code> in the base directory with the following content:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"config"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"chainId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1337</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"homesteadBlock"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"eip155Block"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"eip158Block"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"eip150Block"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"difficulty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"400000"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"gasLimit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2100000"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"alloc"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"&lt;Acc1 Addr&gt;"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000000000000000000"</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Replace <code class="language-plaintext highlighter-rouge">&lt;Acc1 Addr&gt;</code> with the address of the account created in the previous step. The above configuration allocates <code class="language-plaintext highlighter-rouge">1 ether</code> to the account.</p>
+
+<blockquote>
+  <p>chainId 1337 is typically used for geth private chains</p>
+</blockquote>
+
+<blockquote>
+  <p>EIP stands for Ethereum Improvement Proposal. It is analogous to RFCs in internet world. Refer <a href="https://github.com/ethereum/EIPs/tree/master/EIPS">EIPs github repository</a> to learn more about EIPs.</p>
+</blockquote>
+
+<h2 id="initialize-the-firstnode">Initialize the first node</h2>
+
+<p>Initialise the ethereum blockchain by running geth and feeding it with the genesis block.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>geth <span class="nt">--datadir</span> /rootnet/node00 init /rootnet/genesis.json
+</code></pre></div></div>
+
+<h2 id="optional-ethereum-network-stats-dashboard">[Optional] Ethereum network stats dashboard</h2>
+
+<p>Ethereum network statistics dashboard allows one to visualise the health of different nodes in the ethereum blockchain network. Download ethereum network stats dashboard from github and set it up:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/cubedro/eth-netstats
+<span class="nb">cd </span>eth-netstats
+npm <span class="nb">install
+sudo </span>npm <span class="nb">install</span> <span class="nt">-g</span> grunt-cli
+</code></pre></div></div>
+
+<p>Run the ethereum network stats dashboard:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">WS_SECRET</span><span class="o">=</span>eth-netstats-password npm start
+</code></pre></div></div>
+
+<blockquote>
+  <p><em>You could use a different</em> <code class="language-plaintext highlighter-rouge">WS_SECRET</code> <em>if necessary.</em></p>
+</blockquote>
+
+<p>The ethereum network stats dashboard should be running at <a href="http://localhost:3000">http://localhost:3000</a></p>
+
+<h2 id="optional-block-explorerblockscout">[Optional] Block explorer — Blockscout</h2>
+
+<p>Block explorer helps visualise the blocks created and its related information in the ethereum blockchain. Download blockscout from github:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/blockscout/blockscout.git
+</code></pre></div></div>
+
+<p>Before starting the visualizer, change all occurence of <code class="language-plaintext highlighter-rouge">host.docker.internal</code> under the blockscout directory to the IP address of your computer. Then, run blockscout:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>blockscout/docker-compose
+docker-compose <span class="nt">-f</span> docker-compose-no-build-geth.yml up
+</code></pre></div></div>
+
+<p>The block explorer dashboard should be running at <a href="http://localhost:4000">http://localhost:4000</a></p>
+
+<h2 id="start-thenode">Start the node</h2>
+
+<p>Now run the first node</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>geth <span class="nt">--identity</span> <span class="s2">"node00"</span> <span class="nt">--datadir</span><span class="o">=</span>./node00 <span class="se">\</span>
+    <span class="nt">--networkid</span><span class="o">=</span>1337 <span class="nt">--syncmode</span><span class="o">=</span>full <span class="se">\</span>
+    <span class="nt">--gcmode</span><span class="o">=</span>archive <span class="nt">--http</span> <span class="nt">--http</span>.corsdomain<span class="o">=</span><span class="s2">"*"</span> <span class="se">\</span>
+    <span class="nt">--http</span>.api<span class="o">=</span>web3,eth,debug,personal,net,miner,admin <span class="se">\</span>
+    <span class="nt">--allow-insecure-unlock</span> <span class="nt">--http</span>.addr <span class="s2">"0.0.0.0"</span> <span class="nt">--http</span>.port 8000 <span class="se">\</span>
+    <span class="nt">--authrpc</span>.port 30000 <span class="nt">--port</span> 33000 <span class="se">\</span>
+    <span class="nt">--ethstats</span><span class="o">=</span>node00:eth-netstats-password@localhost:3000 <span class="nt">--mine</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><em>Remove</em> <code class="language-plaintext highlighter-rouge">--ethstats</code> <em>option if you skipped Ethereum network stats dashboard setup.</em></p>
+</blockquote>
+
+<p>Note down the enode number in the logs of the process</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...Started P2P networking self=enode://0123456789abcdef0123456...@127.0.0.1:33000...
+</code></pre></div></div>
+
+<h2 id="setup-and-create-othernodes">Setup and create other nodes</h2>
+
+<p>The other nodes could use <code class="language-plaintext highlighter-rouge">node00</code> as a peer to learn about the blockchain built so far. Hence, in the previous step enode number was noted down so that the new node being created can use <code class="language-plaintext highlighter-rouge">node00</code> as the peer. The <code class="language-plaintext highlighter-rouge">geth.sh</code> file for the node:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+geth <span class="nt">--identity</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="nt">--datadir</span><span class="o">=</span>./<span class="nv">$1</span> <span class="nt">--networkid</span><span class="o">=</span>1337 <span class="se">\</span>
+    <span class="nt">--syncmode</span><span class="o">=</span>full <span class="nt">--gcmode</span><span class="o">=</span>archive <span class="se">\</span>
+    <span class="nt">--http</span> <span class="nt">--http</span>.corsdomain<span class="o">=</span><span class="s2">"*"</span> <span class="nt">--http</span>.api<span class="o">=</span>web3,eth,debug,personal,net,miner <span class="se">\</span>
+    <span class="nt">--allow-insecure-unlock</span> <span class="se">\</span>
+    <span class="nt">--bootnodes</span><span class="o">=</span>enode://&lt;the-saved-enode-addr&gt;@127.0.0.1:33000 <span class="se">\</span>
+    <span class="nt">--http</span>.port <span class="k">$((</span><span class="m">8000</span><span class="o">+</span><span class="nv">$2</span><span class="k">))</span> <span class="nt">--authrpc</span>.port <span class="k">$((</span><span class="m">30000</span><span class="o">+</span><span class="nv">$2</span><span class="k">))</span> <span class="se">\</span>
+    <span class="nt">--port</span> <span class="k">$((</span><span class="m">33000</span><span class="o">+</span><span class="nv">$2</span><span class="k">))</span> <span class="se">\</span>
+    <span class="nt">--ethstats</span><span class="o">=</span><span class="nv">$1</span>:eth-netstats-password@localhost:3000 <span class="nt">--mine</span>
+</code></pre></div></div>
+
+<p>Replace <code class="language-plaintext highlighter-rouge">&lt;the-saved-enode-addr&gt;</code> with the saved enode address.</p>
+
+<p>To create node n (say node n is identified as node0n):</p>
+
+<ul>
+  <li>Create a directory <code class="language-plaintext highlighter-rouge">node0n</code></li>
+  <li>Initialize the node with genesis block:
+<code class="language-plaintext highlighter-rouge">geth --datadir /rootnet/node0n init /rootnet/genesis.json</code></li>
+  <li>Create an account
+<code class="language-plaintext highlighter-rouge">geth --datadir /rootnet/node0n account new</code></li>
+  <li>Run the node
+<code class="language-plaintext highlighter-rouge">./geth.sh node0n</code></li>
+</ul>
+
+<blockquote>
+  <p><em>To get CLI access to a node, say node00, one could run *<code class="language-plaintext highlighter-rouge">*geth attach http://localhost:8000*</code></em>. Identify the HTTP port in which the node is running to connect to that node.*</p>
+</blockquote>
+
+<h2 id="setup-metamask">Setup metamask</h2>
+
+<p>MetaMask is a popular cryptocurrency wallet that enables users to interact with decentralized applications (dApps) on the Ethereum blockchain. It is available in the form of browser extension too.</p>
+
+<p>Download metamask extension for your favorite browser. Then,</p>
+
+<ul>
+  <li>Navigate to <code class="language-plaintext highlighter-rouge">Settings &gt; Networks &gt; Add Network</code></li>
+  <li>Set <code class="language-plaintext highlighter-rouge">New RPC URL</code> to be <code class="language-plaintext highlighter-rouge">http://localhost:8000</code> [ Recall that this is the http server endpoint served by <code class="language-plaintext highlighter-rouge">node00</code> ]</li>
+  <li>Set <code class="language-plaintext highlighter-rouge">Chain ID</code> to be <code class="language-plaintext highlighter-rouge">1337</code></li>
+  <li>Set <code class="language-plaintext highlighter-rouge">Network Name</code> and <code class="language-plaintext highlighter-rouge">Currency symbol</code> of your interest.</li>
+  <li>Set <code class="language-plaintext highlighter-rouge">Block explorer URL</code> to be <code class="language-plaintext highlighter-rouge">http://localhost:4000</code> [ Ensure you followed the steps to setup <code class="language-plaintext highlighter-rouge">blockscout</code> ]</li>
+</ul>
+
+<p>Now, import the account in <code class="language-plaintext highlighter-rouge">node00</code> to metamask.</p>
+
+<ul>
+  <li>Select <code class="language-plaintext highlighter-rouge">Import account</code> option displayed in the dropdown menu when clicked on the profile logo on the right top corner of the window.</li>
+  <li>Find the private key:</li>
+  <li>Install <code class="language-plaintext highlighter-rouge">web3</code> module in python as: <code class="language-plaintext highlighter-rouge">pip3 install web3
+</code>- In a python interpreter, run the following to retrieve the private key:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">web3.auto</span> <span class="kn">import</span> <span class="n">w3</span>
+<span class="n">keyfile</span> <span class="o">=</span> <span class="sh">'</span><span class="s">UTC--...</span><span class="sh">'</span>
+<span class="n">password</span> <span class="o">=</span> <span class="sh">'</span><span class="s">&lt;password&gt;</span><span class="sh">'</span>
+<span class="n">w3</span><span class="p">.</span><span class="n">eth</span><span class="p">.</span><span class="n">account</span><span class="p">.</span><span class="nf">decrypt</span><span class="p">(</span><span class="nf">open</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">/rootnet/node00/keystore/</span><span class="si">{</span><span class="n">keyfile</span><span class="si">}</span><span class="sh">'</span><span class="p">).</span><span class="nf">read</span><span class="p">(),</span> <span class="n">password</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Paste the obtained private key in the dialog box that popped up on metamask as <code class="language-plaintext highlighter-rouge">Import account</code> was clicked.</li>
+</ul>
+
+<h2 id="write-and-deploy-contract-usingremix">Write and deploy contract using remix</h2>
+
+<p>Remix is a web application that allows users to write, compile and deploy smart contracts to ethereum blockchain networks interactively. It is an IDE for decentralized application development.</p>
+
+<ul>
+  <li>Navigate to <a href="https://remix.ethereum.org/">https://remix.ethereum.org/</a></li>
+  <li>Select the <code class="language-plaintext highlighter-rouge">Deploy &amp; run transactions</code> option on the left navigation bar</li>
+  <li>From the <code class="language-plaintext highlighter-rouge">Environment</code> dropdown, select <code class="language-plaintext highlighter-rouge">Injected Provider - MetaMask</code> option</li>
+  <li>The metamask window should pop up asking consent to provide access to remix. Approve it.</li>
+  <li>Observe that your account address is seen in the <code class="language-plaintext highlighter-rouge">account</code> field of the <code class="language-plaintext highlighter-rouge">Deploy &amp; run transactions</code> sub-window.</li>
+</ul>
+
+<p>Now, you can write a contract or use a pre-existing one in the remix IDE, compile and deploy them to your blockchain network.</p>
+
+<h2 id="reference">Reference</h2>
+
+<p>[1] <a href="https://medium.com/datawallet-blog/how-to-deploy-a-local-private-ethereum-blockchain-c2b497f068f4">https://medium.com/datawallet-blog/how-to-deploy-a-local-private-ethereum-blockchain-c2b497f068f4</a></p>
+
+    </div>
+  </div>
+</article>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('#post-body h2, #post-body h3, #post-body h4');
+  if (headings.length === 0) {
+    document.getElementById('toc').style.display = 'none';
+    return;
+  }
+
+  var nav = document.getElementById('toc-nav');
+  var ul = document.createElement('ul');
+  ul.className = 'toc-list';
+
+  headings.forEach(function (h, i) {
+    if (!h.id) h.id = 'heading-' + i;
+
+    var li = document.createElement('li');
+    li.className = 'toc-item toc-' + h.tagName.toLowerCase();
+
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc-link';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  nav.appendChild(ul);
+
+  // Move leading blockquote to header as subtitle
+  var body = document.getElementById('post-body');
+  var first = body.firstElementChild;
+  if (first && first.tagName === 'BLOCKQUOTE') {
+    var subtitle = document.createElement('p');
+    subtitle.className = 'post-subtitle';
+    subtitle.textContent = first.textContent.trim();
+    document.querySelector('.post-header').appendChild(subtitle);
+    first.remove();
+  }
+
+  // Highlight active heading on scroll
+  var links = nav.querySelectorAll('.toc-link');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        links.forEach(function (l) { l.classList.remove('active'); });
+        var active = nav.querySelector('a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '0px 0px -80% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+}());
+</script>
+
+  </main>
+  <footer class="blog-footer">
+    <p>Manoj Vignesh K M · <a href="/">Portfolio</a></p>
+  </footer>
+</body>
+</html>

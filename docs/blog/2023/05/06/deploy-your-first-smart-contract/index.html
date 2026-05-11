@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deploy your first smart contract — Manoj Vignesh K M</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/blog/assets/css/style.css" />
+</head>
+<body>
+  <header class="blog-header">
+    <a href="/" class="back-link">← Portfolio</a>
+    <a href="/blog/" class="blog-title">Manoj's Blog</a>
+  </header>
+  <main class="blog-content">
+    <article class="post">
+  <header class="post-header">
+    <h1>Deploy your first smart contract</h1>
+    <time datetime="2023-05-06T23:30:00-07:00">
+      May 6, 2023
+    </time>
+    
+    <div class="post-tags">
+      <span class="tag">blockchain</span><span class="tag">ethereum</span><span class="tag">web3</span><span class="tag">solidity</span>
+    </div>
+    
+  </header>
+
+  <div class="post-layout">
+    <aside class="post-toc" id="toc">
+      <p class="toc-title">Contents</p>
+      <nav id="toc-nav"></nav>
+    </aside>
+
+    <div class="post-body" id="post-body">
+      <blockquote>
+  <p>With simplest setup possible, deploy your first smart contract in the Ethereum’s official test network!</p>
+</blockquote>
+
+<p>This article describes how to deploy your first smart contract with the simplest setup possible. The following are the steps to be performed, in brief:</p>
+
+<ul>
+  <li>Install and setup Metamask</li>
+  <li>Mine some coins for Sepolia network using faucet service</li>
+  <li>Develop, compile and deploy a smart contract using Remix</li>
+</ul>
+
+<blockquote>
+  <p>I strongly recommend you to read <a href="https://blog.kmmanoj.me/what-is-a-smart-contract-6895da46c46a">my blog article that explains what is a smart contract</a></p>
+</blockquote>
+
+<h2 id="install-and-setupmetamask">Install and setup Metamask</h2>
+
+<p>To interact with a blockchain network you would need a public-private key pair. Your account number is derived from the public key, while you would use the private key to sign and send transactions.</p>
+
+<blockquote>
+  <p>Function calls to smart contracts are also transactions</p>
+</blockquote>
+
+<p>It is important to store your private key information securely. If it is stolen, it is as good as the robber owning all the money you have in that account. If lost, you will not be able to use any money in that account.</p>
+
+<p><a href="https://metamask.io/">Metamask</a> is a wallet application that manages your public-private key pairs. It allows you to interact with web3 applications i.e. with the blockchain network(s).</p>
+
+<p>Navigate to <a href="https://metamask.io/">https://metamask.io/</a> and install the metamask browser extension for your favorite browser.</p>
+
+<p><img src="/blog/assets/res/deploy_your_first_smart_contract/metamask_setup_page.png" alt="Metamask setup page" />
+<em>Metamask setup page</em></p>
+
+<p>Once the Metamask extension is installed you should see a page as shown in the picture above. Select ‘Create a new wallet’ and follow through the procedure. By the end of the procedure, you should observe a page displaying your current balance and the account number, as shown below.</p>
+
+<p><img src="/blog/assets/res/deploy_your_first_smart_contract/image.png" alt="" /></p>
+
+<p>Then, click on the dropdown menu where ‘Ethereum Mainnet’ is selected and click on ‘show/hide test networks’. Configure to show test networks. Now, you should be able to observe a test network by the name ‘Sepolia test network’. Select that network to go ahead.</p>
+
+<h2 id="mine-some-coins-from-faucetservice">Mine some coins from faucet service</h2>
+
+<p>You need virtual money to interact with the blockchain. For test network like Sepolia network, you need SepoliaETH coins to write into the blockchain network. To earn SepoliaETH coins, one can find multiple websites that provide some coins. The service that provides coins is known as the faucet service. One of the services that provide SepoliaETH coins is <a href="https://sepolia-faucet.pk910.de/">https://sepolia-faucet.pk910.de/</a> . Enter your account address found in Metmask dashboard page in the faucet service ETH address field and start mining some coins.</p>
+
+<blockquote>
+  <p>You need not mine 100s of SepoliaETH coins. A mere 0.01 or less coins are enough to deploy a simple smart contract as of May 2023.</p>
+</blockquote>
+
+<h2 id="develop-compile-and-deploy-a-smart-contract-usingremix">Develop, compile and deploy a smart contract using Remix</h2>
+
+<p><a href="https://remix.ethereum.org/">Remix</a> is an web-based IDE that requires no-setup and provides a GUI for developing, compiling and deploying smart contracts.</p>
+
+<h3 id="develop">Develop</h3>
+
+<p>Let us deploy the default provided <code class="language-plaintext highlighter-rouge">1_Storage.sol</code> to SepoliaETH network.</p>
+
+<p><img src="/blog/assets/res/deploy_your_first_smart_contract/remix_ide_1_storage_sol.png" alt="Remix IDE: 1_Storage.sol" />
+<em>Remix IDE: 1_Storage.sol</em></p>
+
+<h3 id="compile">Compile</h3>
+
+<p>Select the third icon on the left vertical navigation bar that says ‘Solidity compiler’ on hover. Click on ‘Compile 1_Storage.sol’ to compile the contract.</p>
+
+<p><img src="/blog/assets/res/deploy_your_first_smart_contract/remix_ide_compiling_1_storage_sol.png" alt="Remix IDE: compiling 1_Storage.sol" />
+<em>Remix IDE: compiling 1_Storage.sol</em></p>
+
+<h3 id="deploy">Deploy</h3>
+
+<p>Then, select the forth icon on the left vertical navigation bar that says ‘Deploy &amp; run transactions’. Select ‘Injected Provider — Metamask’ for the Environment field. Once, an account is connected, the account number should be visible in the dropdown under Account field (marked in red in the picture below). Then, click ‘Deploy’.</p>
+
+<p><img src="/blog/assets/res/deploy_your_first_smart_contract/remix_ide_deploying_1_storage_sol.png" alt="Remix IDE: deploying 1_Storage.sol" />
+<em>Remix IDE: deploying 1_Storage.sol</em></p>
+
+<p>A metamask notification should pop up asking you to sign the transaction to authorize the transaction. The transaction here is deployment of the contract. Once you authorize the transaction, the contract should get deployed in sometime (about less than 30 seconds as of May 2023).</p>
+
+<p>You should be able to observe your contract under the ‘Deployed Contracts’ section. You can interact with the smart contract through the <code class="language-plaintext highlighter-rouge">store</code> and <code class="language-plaintext highlighter-rouge">retrieve</code> functions.</p>
+
+<p>Play with it!</p>
+
+    </div>
+  </div>
+</article>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('#post-body h2, #post-body h3, #post-body h4');
+  if (headings.length === 0) {
+    document.getElementById('toc').style.display = 'none';
+    return;
+  }
+
+  var nav = document.getElementById('toc-nav');
+  var ul = document.createElement('ul');
+  ul.className = 'toc-list';
+
+  headings.forEach(function (h, i) {
+    if (!h.id) h.id = 'heading-' + i;
+
+    var li = document.createElement('li');
+    li.className = 'toc-item toc-' + h.tagName.toLowerCase();
+
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc-link';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  nav.appendChild(ul);
+
+  // Move leading blockquote to header as subtitle
+  var body = document.getElementById('post-body');
+  var first = body.firstElementChild;
+  if (first && first.tagName === 'BLOCKQUOTE') {
+    var subtitle = document.createElement('p');
+    subtitle.className = 'post-subtitle';
+    subtitle.textContent = first.textContent.trim();
+    document.querySelector('.post-header').appendChild(subtitle);
+    first.remove();
+  }
+
+  // Highlight active heading on scroll
+  var links = nav.querySelectorAll('.toc-link');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        links.forEach(function (l) { l.classList.remove('active'); });
+        var active = nav.querySelector('a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '0px 0px -80% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+}());
+</script>
+
+  </main>
+  <footer class="blog-footer">
+    <p>Manoj Vignesh K M · <a href="/">Portfolio</a></p>
+  </footer>
+</body>
+</html>

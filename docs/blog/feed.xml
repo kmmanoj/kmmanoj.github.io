@@ -1,20 +1,983 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="http://localhost:4000/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/blog/" rel="alternate" type="text/html" /><updated>2026-05-10T15:11:26-07:00</updated><id>http://localhost:4000/blog/feed.xml</id><title type="html">Manoj’s Blog</title><subtitle>Writing on ML, engineering, and research.</subtitle><entry><title type="html">Hello World</title><link href="http://localhost:4000/blog/2026/05/09/hello-world/" rel="alternate" type="text/html" title="Hello World" /><published>2026-05-09T23:30:00-07:00</published><updated>2026-05-09T23:30:00-07:00</updated><id>http://localhost:4000/blog/2026/05/09/hello-world</id><content type="html" xml:base="http://localhost:4000/blog/2026/05/09/hello-world/"><![CDATA[<p>This is the first post on my new blog. I’ll be writing about machine learning,
-systems engineering, and research topics I find interesting.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="http://localhost:4000/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/blog/" rel="alternate" type="text/html" /><updated>2026-05-10T17:12:41-07:00</updated><id>http://localhost:4000/blog/feed.xml</id><title type="html">Manoj’s Blog</title><subtitle>Writing on ML, engineering, and research.</subtitle><entry><title type="html">A visit to the web3.0 world</title><link href="http://localhost:4000/blog/2023/05/07/a-visit-to-the-web3-0-world/" rel="alternate" type="text/html" title="A visit to the web3.0 world" /><published>2023-05-07T23:30:00-07:00</published><updated>2023-05-07T23:30:00-07:00</updated><id>http://localhost:4000/blog/2023/05/07/a-visit-to-the-web3-0-world</id><content type="html" xml:base="http://localhost:4000/blog/2023/05/07/a-visit-to-the-web3-0-world/"><![CDATA[<blockquote>
+  <p>Learn how to travel and stroll around a web application built in the web3 world!</p>
+</blockquote>
 
-<h2 id="why-a-blog-here">Why a blog here?</h2>
+<p>Before you enter the world of Web3.0, you need a passport, some money and a wallet to keep it. Don’t panic! Trust me, it is going to be a cake walk. Let us begin preparing for the trip.</p>
 
-<p>I already publish to <a href="https://kmmanoj.medium.com">Medium</a>, but I wanted
-a space that lives alongside my portfolio — no paywalls, full control.</p>
+<h3 id="get-awallet">Get a wallet</h3>
 
-<h2 id="what-to-expect">What to expect</h2>
+<p>There are various brands of wallet out there that you choose from. One of them is <a href="https://metamask.io/">Metamask</a>. Go ahead and get one. Navigate to <a href="https://metamask.io/">https://metamask.io/</a> and install the metamask browser extension for your favorite browser.</p>
 
-<p>Posts on topics like:</p>
+<p><img src="/blog/assets/res/a_visit_to_the_web30_world/metamask_setup.png" alt="Metamask setup" />
+<em>Metamask setup</em></p>
+
+<p>Once the Metamask extension is installed you should see a window as shown in the screenshot above. Select ‘Create a new wallet’ and follow through the procedure. By the end of the procedure, you should observe a page displaying your current balance and the account number.</p>
+
+<h3 id="passport">Passport?</h3>
+
+<p>Your wallet already has a new passport in it. Metamask has already provided you with a new identity. You can choose to create more identities if you need, or use the one provided by metamask. In the world of web3.0, a single person can have multiple identities. That is what makes one <a href="https://www.techtarget.com/whatis/definition/pseudonymity">pseudonymous</a> in web3 world.</p>
+
+<h3 id="choose-your-destination">Choose your destination</h3>
+
+<p>Let us visit Sepolia! Sepolia is a blockchain network for testing and development purposes, built on the Ethereum blockchain.</p>
+
+<p>In the home page of your metamask wallet click on the dropdown menu where ‘Ethereum Mainnet’ is selected and click on ‘show/hide test networks’. Configure to show test networks. Now, you should be able to observe a test network by the name ‘Sepolia test network’. Select that network to go ahead.</p>
+
+<p><img src="/blog/assets/res/a_visit_to_the_web30_world/metamask_dashboard.png" alt="Metamask dashboard" />
+<em>Metamask dashboard</em></p>
+
+<h3 id="money">Money?</h3>
+
+<p>It is optional to take money along with you if you are simply going to stroll around Web3.0. You need to buy real money to visit and explore the ethereum mainnet. But, since we are going to Sepolia you can take (yes, I meant ‘take’ and not ‘borrow’) some money from the faucet service. Go to <a href="https://sepolia-faucet.pk910.de/">https://sepolia-faucet.pk910.de/</a>, enter your account address found in Metmask dashboard page (<code class="language-plaintext highlighter-rouge">0xa4E…CB22</code> in the screenshot shown above) in the faucet service ETH address field and start mining some coins.</p>
+
+<blockquote>
+  <p>You need not mine 100s of SepoliaETH coins. A mere 0.01 or less coins are enough for a single interaction as of May 2023.</p>
+</blockquote>
+
+<p>You are ready to enter the world of Web3.0!</p>
+
+<p>You have all the things required to visit more Web3.0 applications. Enjoy your stay at Web3 world!</p>
+
+<h2 id="for-curious-folks">For curious folks …</h2>
+
+<p>Web3.0 is a term used to describe the next evolution of the internet where applications are being built on decentralized technologies such as blockchain. I wrote a <a href="https://blog.kmmanoj.me/web-1-0-2-0-3-0-70d0ac0844bc">blog article</a> describing the evolution of internet from Web1.0, to Web2.0 and now to Web3.0.</p>
+
+<p>Further, the business logic in web3.0 applications is implemented in the form of smart contracts in the blockchain network. I wrote a <a href="https://blog.kmmanoj.me/what-is-a-smart-contract-6895da46c46a">blog article</a> that describes what a web3.0’s smart contract is with respect to a known web2.0 technology.</p>
+
+<p>The Experience and Featured works are smart contracts that stores a list of my experience and my featured works. Only I have the authority to edit the list while anyone in the blockchain network have access to read it. The authentication is enforced by blockchain’s cryptography while the authorization is enforced by the smart contract logic.</p>]]></content><author><name></name></author><category term="blockchain" /><category term="web3" /><summary type="html"><![CDATA[Learn how to travel and stroll around a web application built in the web3 world!]]></summary></entry><entry><title type="html">Web 1.0, 2.0, 3.0 …</title><link href="http://localhost:4000/blog/2023/05/06/web-1-0-2-0-3-0/" rel="alternate" type="text/html" title="Web 1.0, 2.0, 3.0 …" /><published>2023-05-06T23:30:00-07:00</published><updated>2023-05-06T23:30:00-07:00</updated><id>http://localhost:4000/blog/2023/05/06/web-1-0-2-0-3-0</id><content type="html" xml:base="http://localhost:4000/blog/2023/05/06/web-1-0-2-0-3-0/"><![CDATA[<blockquote>
+  <p>What is Web1.0, Web 2.0 and Web 3.0 and how is Web2.0 different from Web3.0?</p>
+</blockquote>
+
+<p>Since the inception of the internet computers and hence users have been interacting with it in different ways. It transformed from Web 1.0, which was static and one-way, to Web 2.0, which was interactive and user-generated, to Web 3.0, which promises to be decentralized and secure.</p>
+
+<p>This article describes the difference between Web1.0, Web2.0 and Web3.0. Further, it describes how the current Web2.0 technology is different from the prospective Web3.0 technology.</p>
+
+<h2 id="web10">Web1.0</h2>
+
+<p>Internet was born in late 1960s with the name ARPANET. It was initially used only for military and research purposes. The natural extension was to make some content available to the world. Hence, certain users of the internet with authority had the power to generate, store and distribute content to the world. These authoritative users maintained servers addressed by IP address (and domain names) which had the content accessible by the world.</p>
+
+<p><img src="/blog/assets/res/web_10_20_30/web1_0_illustration.png" alt="Web1.0: Illustration" />
+<em>Web1.0: Illustration</em></p>
+
+<p>For example, consider the <a href="https://ieeexplore.ieee.org/Xplore/home.jsp">IEEE xplore</a> website. The content present in it are posted by IEEE scholars. The content is accessible to all the users of the internet (behind a paywall).</p>
+
+<h2 id="web20">Web2.0</h2>
+
+<p>Soon, with introduction of web applications such as GMail, Facebook and Twitter the power of generating content reached every user of the internet. Any user of the internet could draft an email and send it to anyone across the internet. Any user of the internet could click a picture and upload it to the internet. Any user of the internet could voice his/her thoughts to the world over the internet. The web applications are now dynamic, interactive and anyone could generate content.</p>
+
+<p><img src="/blog/assets/res/web_10_20_30/web2_0_illustration.png" alt="Web2.0: Illustration" />
+<em>Web2.0: Illustration</em></p>
+
+<h2 id="web30">Web3.0</h2>
+
+<p>To allow users to have more control over the data they generate, and to avoid interacting and paying the intermediaries between two parties that have mutual benefit, and for users favoring democracy over communism, web3.0 was introduced.</p>
+
+<p><img src="/blog/assets/res/web_10_20_30/web3_0_illustration.png" alt="Web3.0: Illustration" />
+<em>Web3.0: Illustration</em></p>
+
+<h2 id="web20-vsweb30">Web2.0 vs Web3.0</h2>
 
 <ul>
-  <li>ML systems and infrastructure</li>
-  <li>Security engineering</li>
-  <li>Research I find worth unpacking</li>
-  <li>Things I built and what I learned</li>
+  <li><strong>Technology</strong>: In web2.0, web application frameworks such as Java Spring boot, Python Django and PHP Laravel enabled development. In web3.0, blockchain forms the core technology that enables development. In addition to blockchain, technologies such as Solidity and Vyper enable development of business logic to process data.</li>
+  <li><strong>Data</strong>: In web2.0, the user generated data are stored in databases owned and maintained by the organization. While, in web3.0 the user generated data is stored in blockchain.</li>
+  <li>**Interaction: **In web2.0, any action (or processing of data) is performed by the server owned and maintained by the organization. A user communicates with the internet through APIs. APIs are exposed by the servers that are capable of processing data. While, in web3.0 most (if not all) the nodes in the blockchain perform the action. A user communicates with the internet through smart contract functions.</li>
 </ul>
 
-<p>Stay tuned.</p>]]></content><author><name></name></author><category term="meta" /><category term="engineering" /><summary type="html"><![CDATA[This is the first post on my new blog. I’ll be writing about machine learning, systems engineering, and research topics I find interesting.]]></summary></entry></feed>
+<p><img src="/blog/assets/res/web_10_20_30/image.png" alt="" /></p>
+
+<p>In web2.0, any dynamic data is stored in the database. This data is retrieved by a computer running a web server such as Java Spring Boot or Python Django. This backend service constitutes business logic that defines rules to process and retrieve data from the database. The frontend built using HTML, CSS and various forms of JS communicates with the backend server through REST APIs (typically JSON) to retrieve data and render them aesthetically to the web users.</p>
+
+<p>Whereas in web3.0, any dynamic data is stored in the blockchain network. Any participant node in the blockchain network can retrieve data. Smart contracts is a mechanism to define rules to process and retrieve data from the blockchain network. The frontend built using HTML, CSS and various forms of JS communicates with the nearest/configured blockchain node to retrieve information and render them aesthetically to the web users.</p>]]></content><author><name></name></author><category term="web3" /><category term="blockchain" /><summary type="html"><![CDATA[What is Web1.0, Web 2.0 and Web 3.0 and how is Web2.0 different from Web3.0?]]></summary></entry><entry><title type="html">Deploy your first smart contract</title><link href="http://localhost:4000/blog/2023/05/06/deploy-your-first-smart-contract/" rel="alternate" type="text/html" title="Deploy your first smart contract" /><published>2023-05-06T23:30:00-07:00</published><updated>2023-05-06T23:30:00-07:00</updated><id>http://localhost:4000/blog/2023/05/06/deploy-your-first-smart-contract</id><content type="html" xml:base="http://localhost:4000/blog/2023/05/06/deploy-your-first-smart-contract/"><![CDATA[<blockquote>
+  <p>With simplest setup possible, deploy your first smart contract in the Ethereum’s official test network!</p>
+</blockquote>
+
+<p>This article describes how to deploy your first smart contract with the simplest setup possible. The following are the steps to be performed, in brief:</p>
+
+<ul>
+  <li>Install and setup Metamask</li>
+  <li>Mine some coins for Sepolia network using faucet service</li>
+  <li>Develop, compile and deploy a smart contract using Remix</li>
+</ul>
+
+<blockquote>
+  <p>I strongly recommend you to read <a href="https://blog.kmmanoj.me/what-is-a-smart-contract-6895da46c46a">my blog article that explains what is a smart contract</a></p>
+</blockquote>
+
+<h2 id="install-and-setupmetamask">Install and setup Metamask</h2>
+
+<p>To interact with a blockchain network you would need a public-private key pair. Your account number is derived from the public key, while you would use the private key to sign and send transactions.</p>
+
+<blockquote>
+  <p>Function calls to smart contracts are also transactions</p>
+</blockquote>
+
+<p>It is important to store your private key information securely. If it is stolen, it is as good as the robber owning all the money you have in that account. If lost, you will not be able to use any money in that account.</p>
+
+<p><a href="https://metamask.io/">Metamask</a> is a wallet application that manages your public-private key pairs. It allows you to interact with web3 applications i.e. with the blockchain network(s).</p>
+
+<p>Navigate to <a href="https://metamask.io/">https://metamask.io/</a> and install the metamask browser extension for your favorite browser.</p>
+
+<p><img src="/blog/assets/res/deploy_your_first_smart_contract/metamask_setup_page.png" alt="Metamask setup page" />
+<em>Metamask setup page</em></p>
+
+<p>Once the Metamask extension is installed you should see a page as shown in the picture above. Select ‘Create a new wallet’ and follow through the procedure. By the end of the procedure, you should observe a page displaying your current balance and the account number, as shown below.</p>
+
+<p><img src="/blog/assets/res/deploy_your_first_smart_contract/image.png" alt="" /></p>
+
+<p>Then, click on the dropdown menu where ‘Ethereum Mainnet’ is selected and click on ‘show/hide test networks’. Configure to show test networks. Now, you should be able to observe a test network by the name ‘Sepolia test network’. Select that network to go ahead.</p>
+
+<h2 id="mine-some-coins-from-faucetservice">Mine some coins from faucet service</h2>
+
+<p>You need virtual money to interact with the blockchain. For test network like Sepolia network, you need SepoliaETH coins to write into the blockchain network. To earn SepoliaETH coins, one can find multiple websites that provide some coins. The service that provides coins is known as the faucet service. One of the services that provide SepoliaETH coins is <a href="https://sepolia-faucet.pk910.de/">https://sepolia-faucet.pk910.de/</a> . Enter your account address found in Metmask dashboard page in the faucet service ETH address field and start mining some coins.</p>
+
+<blockquote>
+  <p>You need not mine 100s of SepoliaETH coins. A mere 0.01 or less coins are enough to deploy a simple smart contract as of May 2023.</p>
+</blockquote>
+
+<h2 id="develop-compile-and-deploy-a-smart-contract-usingremix">Develop, compile and deploy a smart contract using Remix</h2>
+
+<p><a href="https://remix.ethereum.org/">Remix</a> is an web-based IDE that requires no-setup and provides a GUI for developing, compiling and deploying smart contracts.</p>
+
+<h3 id="develop">Develop</h3>
+
+<p>Let us deploy the default provided <code class="language-plaintext highlighter-rouge">1_Storage.sol</code> to SepoliaETH network.</p>
+
+<p><img src="/blog/assets/res/deploy_your_first_smart_contract/remix_ide_1_storage_sol.png" alt="Remix IDE: 1_Storage.sol" />
+<em>Remix IDE: 1_Storage.sol</em></p>
+
+<h3 id="compile">Compile</h3>
+
+<p>Select the third icon on the left vertical navigation bar that says ‘Solidity compiler’ on hover. Click on ‘Compile 1_Storage.sol’ to compile the contract.</p>
+
+<p><img src="/blog/assets/res/deploy_your_first_smart_contract/remix_ide_compiling_1_storage_sol.png" alt="Remix IDE: compiling 1_Storage.sol" />
+<em>Remix IDE: compiling 1_Storage.sol</em></p>
+
+<h3 id="deploy">Deploy</h3>
+
+<p>Then, select the forth icon on the left vertical navigation bar that says ‘Deploy &amp; run transactions’. Select ‘Injected Provider — Metamask’ for the Environment field. Once, an account is connected, the account number should be visible in the dropdown under Account field (marked in red in the picture below). Then, click ‘Deploy’.</p>
+
+<p><img src="/blog/assets/res/deploy_your_first_smart_contract/remix_ide_deploying_1_storage_sol.png" alt="Remix IDE: deploying 1_Storage.sol" />
+<em>Remix IDE: deploying 1_Storage.sol</em></p>
+
+<p>A metamask notification should pop up asking you to sign the transaction to authorize the transaction. The transaction here is deployment of the contract. Once you authorize the transaction, the contract should get deployed in sometime (about less than 30 seconds as of May 2023).</p>
+
+<p>You should be able to observe your contract under the ‘Deployed Contracts’ section. You can interact with the smart contract through the <code class="language-plaintext highlighter-rouge">store</code> and <code class="language-plaintext highlighter-rouge">retrieve</code> functions.</p>
+
+<p>Play with it!</p>]]></content><author><name></name></author><category term="blockchain" /><category term="ethereum" /><category term="web3" /><category term="solidity" /><summary type="html"><![CDATA[With simplest setup possible, deploy your first smart contract in the Ethereum’s official test network!]]></summary></entry><entry><title type="html">What is a smart contract?</title><link href="http://localhost:4000/blog/2023/05/06/what-is-a-smart-contract/" rel="alternate" type="text/html" title="What is a smart contract?" /><published>2023-05-06T23:30:00-07:00</published><updated>2023-05-06T23:30:00-07:00</updated><id>http://localhost:4000/blog/2023/05/06/what-is-a-smart-contract</id><content type="html" xml:base="http://localhost:4000/blog/2023/05/06/what-is-a-smart-contract/"><![CDATA[<blockquote>
+  <p>Understand what a web3.0’s smart contract is with respect to a web2.0 technology</p>
+</blockquote>
+
+<p>A smart contract can be thought of as a digital contract (or) agreement. It is a computer program whose functions define the terms of the agreement and executing functions is analogous to executing a term in the agreement. This computer program is stored in the blockchain network.</p>
+
+<p>Anyone in the blockchain network can create a smart contract. The smart contract is deployed in every node of the blockchain network. When a user triggers a function in the smart contract, the function is executed by all the nodes in the blockchain network and the state change caused is verified and ingrained in a block of the blockchain network.</p>
+
+<blockquote>
+  <p>The fact that every node in the blockchain network execute the function in smart contract when triggered by a single user is why they are termed “self-executing” in most definitions of smart contract</p>
+</blockquote>
+
+<p>This way smart contracts are a transparent, secure and tamper-proof way of creating an agreement.</p>
+
+<h2 id="explanation-with-respect-to-a-web20-technology">Explanation with respect to a web2.0 technology</h2>
+
+<p>Consider the following python flask application that displays the message of the day. It also allows one to edit the message of the day.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Persistent</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="n">identifier</span>
+        <span class="nf">open</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">identifier</span><span class="p">,</span> <span class="sh">'</span><span class="s">w</span><span class="sh">'</span><span class="p">).</span><span class="nf">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">identifier</span><span class="p">,</span> <span class="sh">'</span><span class="s">w</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">f</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="nf">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        <span class="n">f</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="sh">'</span><span class="s">OK</span><span class="sh">'</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nf">open</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">identifier</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">).</span><span class="nf">read</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="n">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="nc">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">motd</span> <span class="o">=</span> <span class="nc">Persistent</span><span class="p">(</span><span class="sh">'</span><span class="s">motd</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="sh">'</span><span class="s">/get</span><span class="sh">'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">motd</span><span class="p">.</span><span class="nf">get</span><span class="p">()</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="sh">'</span><span class="s">/set/&lt;string:motd_string&gt;</span><span class="sh">'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="sh">'</span><span class="s">POST</span><span class="sh">'</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="n">motd_string</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">motd</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="n">motd_string</span><span class="p">)</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">run</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">motd</code> is a persistent variable that can be retrieved and modified through the <code class="language-plaintext highlighter-rouge">get</code> and <code class="language-plaintext highlighter-rouge">set</code> API/function respectively.</p>
+
+<p>Imagine this code to be deployed in every node, and every node is running the flask application listening for calls. The call to any function would be stored in the blockchain and the state change persists on successful function call.</p>
+
+<p>The corresponding solidity code for the above flask application is:</p>
+
+<pre><code class="language-solidity">// SPDX-License-Identifier: SEE LICENSE IN LICENSE
+pragma solidity ^0.8.0;
+
+contract MOTD {
+    string motd;
+
+    function set(string memory motd_string) public returns(string memory) {
+        motd = motd_string;
+        return "OK";
+    }
+
+    function get() public view returns(string memory) {
+        return motd;
+    }
+}
+</code></pre>
+
+<p>The contract <code class="language-plaintext highlighter-rouge">MOTD</code> has a state defined by the string variable <code class="language-plaintext highlighter-rouge">motd</code> . The <code class="language-plaintext highlighter-rouge">set</code> and <code class="language-plaintext highlighter-rouge">get</code> function retrieve and modify the state of the contract respectively.</p>]]></content><author><name></name></author><category term="blockchain" /><category term="ethereum" /><category term="web3" /><summary type="html"><![CDATA[Understand what a web3.0’s smart contract is with respect to a web2.0 technology]]></summary></entry><entry><title type="html">Setting up a local ethereum blockchain network</title><link href="http://localhost:4000/blog/2023/05/04/setting-up-a-local-ethereum-blockchain-network/" rel="alternate" type="text/html" title="Setting up a local ethereum blockchain network" /><published>2023-05-04T23:30:00-07:00</published><updated>2023-05-04T23:30:00-07:00</updated><id>http://localhost:4000/blog/2023/05/04/setting-up-a-local-ethereum-blockchain-network</id><content type="html" xml:base="http://localhost:4000/blog/2023/05/04/setting-up-a-local-ethereum-blockchain-network/"><![CDATA[<blockquote>
+  <p>Setup an ethereum blockchain network in your local computer using geth to learn and develop smart contracts for dApps and more</p>
+</blockquote>
+
+<p>The Ethereum blockchain is similar to the Bitcoin blockchain in that it is a distributed ledger that records all transactions. However, ethereum blockchain provides a platform to build decentralized apps in the form of smart contracts.</p>
+
+<p>Given that the ethereum blockchain is a platform to build decentralized applications, it is key to learn this technology as it may revolutionize the way applications are built.</p>
+
+<p>In this article, we shall go through how to setup a local blockchain network to learn, experiment and build on Ethereum.</p>
+
+<h2 id="installing-geth">Installing geth</h2>
+
+<p>Geth (go-ethereum) is a Go implementation of Ethereum. It is an easy to setup ethereum client. Download and install geth from <a href="https://geth.ethereum.org/downloads">https://geth.ethereum.org/downloads</a></p>
+
+<h2 id="create-the-firstnode">Create the first node</h2>
+
+<p>An ethereum blockchain node is any system that has a storage and is able to perform computation (using processor and memory). In geth world, each geth process can be considered the compute scope of a node, and a directory can be considered as an isolated storage space for that node. Hence, we create first node by creating a directory. Let us call it <code class="language-plaintext highlighter-rouge">node00</code>.</p>
+
+<blockquote>
+  <p><em>For ease of reference,</em> <code class="language-plaintext highlighter-rouge">/rootnet</code> <em>shall be used as the base directory</em></p>
+</blockquote>
+
+<p>Create a directory in the base directory by the name <code class="language-plaintext highlighter-rouge">node00</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> /rootnet/node00
+</code></pre></div></div>
+
+<h2 id="create-the-firstaccount">Create the first account</h2>
+
+<p>An account, technically, is a cryptographic public-private key pair. An account is referenced by a 40-digit (20 bytes) hex code that is derived from the public key.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>address = sha3(publicKey)[-40:]
+</code></pre></div></div>
+
+<p>While, the private key is kept safe and secret by the account holder.</p>
+
+<p>To create an account, run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>geth <span class="nt">--datadir</span> /rootnet/node00 account new
+</code></pre></div></div>
+
+<p>Note down the address of the account displayed.</p>
+
+<h2 id="configure-the-genesisblock">Configure the genesis block</h2>
+
+<p>A genesis block is the very first block in a blockchain network. To create such a block for the blockchain in setup, create a file called <code class="language-plaintext highlighter-rouge">genesis.json</code> in the base directory with the following content:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"config"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"chainId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1337</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"homesteadBlock"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"eip155Block"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"eip158Block"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"eip150Block"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"difficulty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"400000"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"gasLimit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2100000"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"alloc"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"&lt;Acc1 Addr&gt;"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000000000000000000"</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Replace <code class="language-plaintext highlighter-rouge">&lt;Acc1 Addr&gt;</code> with the address of the account created in the previous step. The above configuration allocates <code class="language-plaintext highlighter-rouge">1 ether</code> to the account.</p>
+
+<blockquote>
+  <p>chainId 1337 is typically used for geth private chains</p>
+</blockquote>
+
+<blockquote>
+  <p>EIP stands for Ethereum Improvement Proposal. It is analogous to RFCs in internet world. Refer <a href="https://github.com/ethereum/EIPs/tree/master/EIPS">EIPs github repository</a> to learn more about EIPs.</p>
+</blockquote>
+
+<h2 id="initialize-the-firstnode">Initialize the first node</h2>
+
+<p>Initialise the ethereum blockchain by running geth and feeding it with the genesis block.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>geth <span class="nt">--datadir</span> /rootnet/node00 init /rootnet/genesis.json
+</code></pre></div></div>
+
+<h2 id="optional-ethereum-network-stats-dashboard">[Optional] Ethereum network stats dashboard</h2>
+
+<p>Ethereum network statistics dashboard allows one to visualise the health of different nodes in the ethereum blockchain network. Download ethereum network stats dashboard from github and set it up:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/cubedro/eth-netstats
+<span class="nb">cd </span>eth-netstats
+npm <span class="nb">install
+sudo </span>npm <span class="nb">install</span> <span class="nt">-g</span> grunt-cli
+</code></pre></div></div>
+
+<p>Run the ethereum network stats dashboard:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">WS_SECRET</span><span class="o">=</span>eth-netstats-password npm start
+</code></pre></div></div>
+
+<blockquote>
+  <p><em>You could use a different</em> <code class="language-plaintext highlighter-rouge">WS_SECRET</code> <em>if necessary.</em></p>
+</blockquote>
+
+<p>The ethereum network stats dashboard should be running at <a href="http://localhost:3000">http://localhost:3000</a></p>
+
+<h2 id="optional-block-explorerblockscout">[Optional] Block explorer — Blockscout</h2>
+
+<p>Block explorer helps visualise the blocks created and its related information in the ethereum blockchain. Download blockscout from github:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/blockscout/blockscout.git
+</code></pre></div></div>
+
+<p>Before starting the visualizer, change all occurence of <code class="language-plaintext highlighter-rouge">host.docker.internal</code> under the blockscout directory to the IP address of your computer. Then, run blockscout:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>blockscout/docker-compose
+docker-compose <span class="nt">-f</span> docker-compose-no-build-geth.yml up
+</code></pre></div></div>
+
+<p>The block explorer dashboard should be running at <a href="http://localhost:4000">http://localhost:4000</a></p>
+
+<h2 id="start-thenode">Start the node</h2>
+
+<p>Now run the first node</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>geth <span class="nt">--identity</span> <span class="s2">"node00"</span> <span class="nt">--datadir</span><span class="o">=</span>./node00 <span class="se">\</span>
+    <span class="nt">--networkid</span><span class="o">=</span>1337 <span class="nt">--syncmode</span><span class="o">=</span>full <span class="se">\</span>
+    <span class="nt">--gcmode</span><span class="o">=</span>archive <span class="nt">--http</span> <span class="nt">--http</span>.corsdomain<span class="o">=</span><span class="s2">"*"</span> <span class="se">\</span>
+    <span class="nt">--http</span>.api<span class="o">=</span>web3,eth,debug,personal,net,miner,admin <span class="se">\</span>
+    <span class="nt">--allow-insecure-unlock</span> <span class="nt">--http</span>.addr <span class="s2">"0.0.0.0"</span> <span class="nt">--http</span>.port 8000 <span class="se">\</span>
+    <span class="nt">--authrpc</span>.port 30000 <span class="nt">--port</span> 33000 <span class="se">\</span>
+    <span class="nt">--ethstats</span><span class="o">=</span>node00:eth-netstats-password@localhost:3000 <span class="nt">--mine</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><em>Remove</em> <code class="language-plaintext highlighter-rouge">--ethstats</code> <em>option if you skipped Ethereum network stats dashboard setup.</em></p>
+</blockquote>
+
+<p>Note down the enode number in the logs of the process</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...Started P2P networking self=enode://0123456789abcdef0123456...@127.0.0.1:33000...
+</code></pre></div></div>
+
+<h2 id="setup-and-create-othernodes">Setup and create other nodes</h2>
+
+<p>The other nodes could use <code class="language-plaintext highlighter-rouge">node00</code> as a peer to learn about the blockchain built so far. Hence, in the previous step enode number was noted down so that the new node being created can use <code class="language-plaintext highlighter-rouge">node00</code> as the peer. The <code class="language-plaintext highlighter-rouge">geth.sh</code> file for the node:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+geth <span class="nt">--identity</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="nt">--datadir</span><span class="o">=</span>./<span class="nv">$1</span> <span class="nt">--networkid</span><span class="o">=</span>1337 <span class="se">\</span>
+    <span class="nt">--syncmode</span><span class="o">=</span>full <span class="nt">--gcmode</span><span class="o">=</span>archive <span class="se">\</span>
+    <span class="nt">--http</span> <span class="nt">--http</span>.corsdomain<span class="o">=</span><span class="s2">"*"</span> <span class="nt">--http</span>.api<span class="o">=</span>web3,eth,debug,personal,net,miner <span class="se">\</span>
+    <span class="nt">--allow-insecure-unlock</span> <span class="se">\</span>
+    <span class="nt">--bootnodes</span><span class="o">=</span>enode://&lt;the-saved-enode-addr&gt;@127.0.0.1:33000 <span class="se">\</span>
+    <span class="nt">--http</span>.port <span class="k">$((</span><span class="m">8000</span><span class="o">+</span><span class="nv">$2</span><span class="k">))</span> <span class="nt">--authrpc</span>.port <span class="k">$((</span><span class="m">30000</span><span class="o">+</span><span class="nv">$2</span><span class="k">))</span> <span class="se">\</span>
+    <span class="nt">--port</span> <span class="k">$((</span><span class="m">33000</span><span class="o">+</span><span class="nv">$2</span><span class="k">))</span> <span class="se">\</span>
+    <span class="nt">--ethstats</span><span class="o">=</span><span class="nv">$1</span>:eth-netstats-password@localhost:3000 <span class="nt">--mine</span>
+</code></pre></div></div>
+
+<p>Replace <code class="language-plaintext highlighter-rouge">&lt;the-saved-enode-addr&gt;</code> with the saved enode address.</p>
+
+<p>To create node n (say node n is identified as node0n):</p>
+
+<ul>
+  <li>Create a directory <code class="language-plaintext highlighter-rouge">node0n</code></li>
+  <li>Initialize the node with genesis block:
+<code class="language-plaintext highlighter-rouge">geth --datadir /rootnet/node0n init /rootnet/genesis.json</code></li>
+  <li>Create an account
+<code class="language-plaintext highlighter-rouge">geth --datadir /rootnet/node0n account new</code></li>
+  <li>Run the node
+<code class="language-plaintext highlighter-rouge">./geth.sh node0n</code></li>
+</ul>
+
+<blockquote>
+  <p><em>To get CLI access to a node, say node00, one could run *<code class="language-plaintext highlighter-rouge">*geth attach http://localhost:8000*</code></em>. Identify the HTTP port in which the node is running to connect to that node.*</p>
+</blockquote>
+
+<h2 id="setup-metamask">Setup metamask</h2>
+
+<p>MetaMask is a popular cryptocurrency wallet that enables users to interact with decentralized applications (dApps) on the Ethereum blockchain. It is available in the form of browser extension too.</p>
+
+<p>Download metamask extension for your favorite browser. Then,</p>
+
+<ul>
+  <li>Navigate to <code class="language-plaintext highlighter-rouge">Settings &gt; Networks &gt; Add Network</code></li>
+  <li>Set <code class="language-plaintext highlighter-rouge">New RPC URL</code> to be <code class="language-plaintext highlighter-rouge">http://localhost:8000</code> [ Recall that this is the http server endpoint served by <code class="language-plaintext highlighter-rouge">node00</code> ]</li>
+  <li>Set <code class="language-plaintext highlighter-rouge">Chain ID</code> to be <code class="language-plaintext highlighter-rouge">1337</code></li>
+  <li>Set <code class="language-plaintext highlighter-rouge">Network Name</code> and <code class="language-plaintext highlighter-rouge">Currency symbol</code> of your interest.</li>
+  <li>Set <code class="language-plaintext highlighter-rouge">Block explorer URL</code> to be <code class="language-plaintext highlighter-rouge">http://localhost:4000</code> [ Ensure you followed the steps to setup <code class="language-plaintext highlighter-rouge">blockscout</code> ]</li>
+</ul>
+
+<p>Now, import the account in <code class="language-plaintext highlighter-rouge">node00</code> to metamask.</p>
+
+<ul>
+  <li>Select <code class="language-plaintext highlighter-rouge">Import account</code> option displayed in the dropdown menu when clicked on the profile logo on the right top corner of the window.</li>
+  <li>Find the private key:</li>
+  <li>Install <code class="language-plaintext highlighter-rouge">web3</code> module in python as: <code class="language-plaintext highlighter-rouge">pip3 install web3
+</code>- In a python interpreter, run the following to retrieve the private key:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">web3.auto</span> <span class="kn">import</span> <span class="n">w3</span>
+<span class="n">keyfile</span> <span class="o">=</span> <span class="sh">'</span><span class="s">UTC--...</span><span class="sh">'</span>
+<span class="n">password</span> <span class="o">=</span> <span class="sh">'</span><span class="s">&lt;password&gt;</span><span class="sh">'</span>
+<span class="n">w3</span><span class="p">.</span><span class="n">eth</span><span class="p">.</span><span class="n">account</span><span class="p">.</span><span class="nf">decrypt</span><span class="p">(</span><span class="nf">open</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">/rootnet/node00/keystore/</span><span class="si">{</span><span class="n">keyfile</span><span class="si">}</span><span class="sh">'</span><span class="p">).</span><span class="nf">read</span><span class="p">(),</span> <span class="n">password</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Paste the obtained private key in the dialog box that popped up on metamask as <code class="language-plaintext highlighter-rouge">Import account</code> was clicked.</li>
+</ul>
+
+<h2 id="write-and-deploy-contract-usingremix">Write and deploy contract using remix</h2>
+
+<p>Remix is a web application that allows users to write, compile and deploy smart contracts to ethereum blockchain networks interactively. It is an IDE for decentralized application development.</p>
+
+<ul>
+  <li>Navigate to <a href="https://remix.ethereum.org/">https://remix.ethereum.org/</a></li>
+  <li>Select the <code class="language-plaintext highlighter-rouge">Deploy &amp; run transactions</code> option on the left navigation bar</li>
+  <li>From the <code class="language-plaintext highlighter-rouge">Environment</code> dropdown, select <code class="language-plaintext highlighter-rouge">Injected Provider - MetaMask</code> option</li>
+  <li>The metamask window should pop up asking consent to provide access to remix. Approve it.</li>
+  <li>Observe that your account address is seen in the <code class="language-plaintext highlighter-rouge">account</code> field of the <code class="language-plaintext highlighter-rouge">Deploy &amp; run transactions</code> sub-window.</li>
+</ul>
+
+<p>Now, you can write a contract or use a pre-existing one in the remix IDE, compile and deploy them to your blockchain network.</p>
+
+<h2 id="reference">Reference</h2>
+
+<p>[1] <a href="https://medium.com/datawallet-blog/how-to-deploy-a-local-private-ethereum-blockchain-c2b497f068f4">https://medium.com/datawallet-blog/how-to-deploy-a-local-private-ethereum-blockchain-c2b497f068f4</a></p>]]></content><author><name></name></author><category term="blockchain" /><category term="ethereum" /><category term="web3" /><summary type="html"><![CDATA[Setup an ethereum blockchain network in your local computer using geth to learn and develop smart contracts for dApps and more]]></summary></entry><entry><title type="html">Using GNS3 to learn SDN</title><link href="http://localhost:4000/blog/2023/03/11/using-gns3-to-learn-sdn/" rel="alternate" type="text/html" title="Using GNS3 to learn SDN" /><published>2023-03-11T22:30:00-08:00</published><updated>2023-03-11T22:30:00-08:00</updated><id>http://localhost:4000/blog/2023/03/11/using-gns3-to-learn-sdn</id><content type="html" xml:base="http://localhost:4000/blog/2023/03/11/using-gns3-to-learn-sdn/"><![CDATA[<blockquote>
+  <p>Setup and configure your GNS3 with required elements to learn, develop and test Software Defined Networks.</p>
+</blockquote>
+
+<p><a href="https://www.gns3.com/">GNS3</a> is a network simulation platform for creating and testing virtual networks with routers, switches, and other devices. There are many other alternatives to GNS3, but I personally prefer GNS3 since the UI is user friendly, supports multiple types of network devices and protocols and more importantly has integrations with Docker, VirtualBox and VMware.</p>
+
+<p>In one of my <a href="https://medium.com/@kmmanoj/software-defined-networks-101-30afa7bfebf">previous blog articles</a>, I presented a brief and elementary introduction about Software Defined Networks. In this blog article, we shall walk through setting up GNS3, and further implement a simple controller using <a href="https://ryu.readthedocs.io/en/latest/getting_started.html">RYU framework</a> on a network of SDN switches in GNS3.</p>
+
+<h2 id="setup">Setup</h2>
+
+<h3 id="installing-gns3">Installing GNS3</h3>
+
+<p>Follow the instructions provided in the GNS3 documentation to install GNS3 in your computer system. The following link references a document that walk’s through installation of GNS3 server and client in a linux machine: <a href="https://docs.gns3.com/docs/getting-started/installation/linux">https://docs.gns3.com/docs/getting-started/installation/linux</a>. The navigation bar on the left has installation instructions for other OSes.</p>
+
+<h3 id="downloading-openvswitch">Downloading Open vSwitch</h3>
+
+<p>Once GNS3 is installed on your computer system, let us import Open vSwitch appliance into GNS3.</p>
+
+<blockquote>
+  <p>Note: The following instructions are based on GNS3 macOS client version 2.2.37</p>
+</blockquote>
+
+<ul>
+  <li>On the left vertical navigation bar, select one of the icons to open a drawer showcasing list of available devices. On the bottom of this drawer, click on the button that says “New template”.</li>
+  <li>A new window with the title “New template” opens. Select “Install an appliance from the GNS3 server (recommended)” option (It is selected by default) and click “Next &gt;” on the bottom corner of the window.</li>
+  <li>Click on “Update from online registry” to fill the appliances list.</li>
+  <li>Once the appliance list is filled, find and click “Open vSwitch” under the “Switches” accordion as illustrated in Figure 1. Then click on “Install” found in the bottom corner of the window.</li>
+  <li>For simplicity, use the default settings for the rest of the installation process.</li>
+</ul>
+
+<p><img src="/blog/assets/res/using_gns3_to_learn_sdn/figure_1_filled_appliance_list_as_of_mar_11_2023.png" alt="Figure 1: Filled appliance list (As of Mar 11, 2023)" />
+<em>Figure 1: Filled appliance list (As of Mar 11, 2023)</em></p>
+
+<h3 id="setting-upryu">Setting up RYU</h3>
+
+<p>RYU is going to be set up on your host machine (or, in the gns3 server if you are using one). This section shows how to setup RYU in a linux or *nix based machine.</p>
+
+<ul>
+  <li>Assuming that you have <code class="language-plaintext highlighter-rouge">python3</code> , <code class="language-plaintext highlighter-rouge">pip3</code>, and <code class="language-plaintext highlighter-rouge">virtualenv</code> installed in your host machine, create a virtual environment by running the following command: <code class="language-plaintext highlighter-rouge">virtualenv venv</code></li>
+  <li>Activate the created virtual environment by running: <code class="language-plaintext highlighter-rouge">source ./venv/bin/activate</code></li>
+  <li>Install <code class="language-plaintext highlighter-rouge">ryu</code> for this environment by running: <code class="language-plaintext highlighter-rouge">pip install ryu</code></li>
+</ul>
+
+<blockquote>
+  <p><strong>NOTE</strong>: Before moving forward ensure that ryu is correctly installed and is working by running <code class="language-plaintext highlighter-rouge">ryu-manager</code> in a terminal with <code class="language-plaintext highlighter-rouge">venv</code> active.</p>
+</blockquote>
+
+<h2 id="simple-experiment">Simple Experiment</h2>
+
+<p>In this experiment, a network containing a single Open vSwitch will be used. The Open vSwitch will be connected to the controller (host machine) through a NAT at <code class="language-plaintext highlighter-rouge">eth0</code>. Two host computers will connect to the switch at <code class="language-plaintext highlighter-rouge">eth1</code> and <code class="language-plaintext highlighter-rouge">eth2</code>. The goal is to enable communication between the two hosts through the switch.</p>
+
+<h3 id="configure-openvswitch">Configure Open vSwitch</h3>
+
+<p>Figure 2 illustrates the network topology used for this experiment. Before starting up the Open vSwitch node, right click on the node to “edit config”. Uncomment the section under <code class="language-plaintext highlighter-rouge"># DHCP config for eth0</code> . By this configuration, the switch’s <code class="language-plaintext highlighter-rouge">eth0</code> interface will obtain IP address and other details from the DHCP server which is <code class="language-plaintext highlighter-rouge">NAT1</code> in this case.</p>
+
+<blockquote>
+  <p><strong>Recall</strong>: Other details?</p>
+</blockquote>
+
+<p><img src="/blog/assets/res/using_gns3_to_learn_sdn/figure_2_network_topology_and_ovs_configuration.png" alt="Figure 2: Network topology and OVS configuration" />
+<em>Figure 2: Network topology and OVS configuration</em></p>
+
+<p>Then, start the Open vSwitch node and spawn an Auxiliary console. In the console, enter the following command to instruct the switch to use the specified controller for the specified bridge.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Set controller IP</span>
+ovs-vsctl set-controller br0 tcp:192.168.122.1:6633
+</code></pre></div></div>
+
+<blockquote>
+  <p>Ensure that the IP address used in the above command is in fact the IP address of one of the interfaces on your host machine where GNS3 server is installed.</p>
+</blockquote>
+
+<h3 id="configure-thepcs">Configure the PCs</h3>
+
+<p>Similar to the switch, right click on each PC and edit their configuration. Set manual IP address by inserting the following configuration in PC1 and PC2 respectively:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code># For PC1
+ip 10.0.0.10/24 10.0.0.1
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code># For PC2
+ip 10.0.0.11/24 10.0.0.1
+</code></pre></div></div>
+
+<p>Verify that the two PCs are not be able to ping each other.</p>
+
+<p><img src="/blog/assets/res/using_gns3_to_learn_sdn/figure_3_the_pcs_will_not_be_able_to_ping_each_other.png" alt="Figure 3: The PCs will not be able to ping each other" />
+<em>Figure 3: The PCs will not be able to ping each other</em></p>
+
+<h3 id="configure-the-controller">Configure the controller</h3>
+
+<p>Let us begin by writing the controller framework. In your host machine, create a file by the name <code class="language-plaintext highlighter-rouge">controller.py</code> and fill in with the following code:</p>
+
+<noscript><pre>from ryu.base import app_manager
+from ryu.controller import ofp_event
+from ryu.controller.handler import MAIN_DISPATCHER, CONFIG_DISPATCHER
+from ryu.controller.handler import set_ev_cls
+from ryu.ofproto import ofproto_v1_3
+
+class Hub(app_manager.RyuApp):
+    OFP_VERSIONS = [ ofproto_v1_3.OFP_VERSION ]
+
+    @set_ev_cls(ofp_event.EventOFPSwitchFeatures , CONFIG_DISPATCHER)
+    def switch_features_handler(self , ev):
+        dp = ev.msg.datapath
+        ofproto = dp.ofproto
+        ofp_parser = dp.ofproto_parser
+
+        match = ofp_parser.OFPMatch()
+        actions = [ 
+            ofp_parser.OFPActionOutput(
+                ofproto.OFPP_CONTROLLER, 
+                ofproto.OFPCML_NO_BUFFER
+            ) 
+        ]
+        ins = [ 
+            ofp_parser.OFPInstructionActions(
+                ofproto.OFPIT_APPLY_ACTIONS, 
+                actions
+            ) 
+        ]
+
+        out = ofp_parser.OFPFlowMod(datapath=dp, match=match, instructions=ins)
+        dp.send_msg(out)
+
+    @set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)
+    def packet_in_handler(self, ev):
+        msg = ev.msg
+        dp = msg.datapath
+        ofp = dp.ofproto
+        ofp_parser = dp.ofproto_parser
+
+        actions = [ ofp_parser.OFPActionOutput(ofp.OFPP_FLOOD) ]
+
+        data = None
+        if msg.buffer_id == ofp.OFP_NO_BUFFER:
+             data = msg.data
+
+        out = ofp_parser.OFPPacketOut(
+            datapath=dp, buffer_id=msg.buffer_id, 
+            in_port=msg.match[&#39;in_port&#39;],
+            actions=actions, data = data)
+        dp.send_msg(out)</pre></noscript>
+<script src="https://gist.github.com/kmmanoj/e76f82c45c3fb39c9407bee849da9f2d.js"> </script>
+
+<p>Then, to start the controller process run the following command in the host machine in the terminal where <code class="language-plaintext highlighter-rouge">venv</code> is active: <code class="language-plaintext highlighter-rouge">ryu-manager --verbose controller.py</code> . The logs in the terminal should indicate that the switch registered itself with the controller and is receiving <code class="language-plaintext highlighter-rouge">PacketIn</code> events from the switch.</p>
+
+<p><img src="/blog/assets/res/using_gns3_to_learn_sdn/figure_4_ryu_controller_process_and_its_logs.png" alt="Figure 4: RYU controller process and its logs" />
+<em>Figure 4: RYU controller process and its logs</em></p>
+
+<h2 id="explanation">Explanation</h2>
+
+<p>RYU is built on an event-based framework. The above code responds to two events: <code class="language-plaintext highlighter-rouge">SwitchFeatures</code> and <code class="language-plaintext highlighter-rouge">PacketIn</code> events. The <code class="language-plaintext highlighter-rouge">SwitchFeatures</code> event is triggered by the switch when it registers itself with the controller. The <code class="language-plaintext highlighter-rouge">PacketIn</code> event is triggered by the switch when it sees a packet that does not match any flow rule but the fallback rule. The fallback rule is set during the registration phase of the switch (as implemented in line 12–31). While, for each packet flowing in the data plane the <code class="language-plaintext highlighter-rouge">packet_in_handler</code> function is called. The controller instructs the switch to broadcast the packet (line 40) to all the ports other than the port in which the packet was received i.e. <code class="language-plaintext highlighter-rouge">in_port</code> .</p>
+
+<h2 id="verification">Verification</h2>
+
+<p>Now, ping <code class="language-plaintext highlighter-rouge">PC2</code> from <code class="language-plaintext highlighter-rouge">PC1</code> and vice-versa. Observe that the two hosts are able to communicate with each other, as shown in Figure 5 (Unlike shown in Figure 2).</p>
+
+<p><img src="/blog/assets/res/using_gns3_to_learn_sdn/figure_5_the_pcs_will_be_able_to_ping_each_other.png" alt="Figure 5: The PCs will be able to ping each other" />
+<em>Figure 5: The PCs will be able to ping each other</em></p>
+
+<p>Further, in the GNS3 UI right click on the link connecting the NAT and the Open vSwitch, and select capture packets. Then, run ping from one of the PCs to the other PC. Observe that there are OpenFlow packets surrounding the ICMP request and reply packets that makes the communication between PCs possible.</p>
+
+<blockquote>
+  <p><strong>Think</strong>: Why does the link connecting NAT and Open vSwitch see ICMP packets between the two PCs?</p>
+</blockquote>
+
+<p><img src="/blog/assets/res/using_gns3_to_learn_sdn/figure_6_snippet_of_wireshark_packet_capture.png" alt="Figure 6: Snippet of wireshark packet capture" />
+<em>Figure 6: Snippet of wireshark packet capture</em></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The above blog article demonstrates the usage of GNS3 to setup, build and simulate SDN networks. To build a multi-switch topology one could use a standard ethernet switch to connect the NAT to all the Open vSwitches, as shown in Figure 7.</p>
+
+<p><img src="/blog/assets/res/using_gns3_to_learn_sdn/figure_7_topology_idea_for_multiple_open_vswitches.png" alt="Figure 7: Topology idea for multiple Open vSwitches" />
+<em>Figure 7: Topology idea for multiple Open vSwitches</em></p>
+
+<p>The controller code used here performs no more than the job of a network hub. I would strongly suggest you to learn how to develop a controller that performs L2 switching. Further, learn how to develop a controller that performs L3 switching. What about a controller that manages a cluster of switches performing L2 and L3 switching?</p>
+
+<p>I hope this blog article helped you clear up your obliviousness for SDN and enabled you to take the first step towards learning SDN. Learn by doing!</p>]]></content><author><name></name></author><category term="networking" /><category term="sdn" /><summary type="html"><![CDATA[Setup and configure your GNS3 with required elements to learn, develop and test Software Defined Networks.]]></summary></entry><entry><title type="html">Software Defined Networks 101</title><link href="http://localhost:4000/blog/2023/03/10/software-defined-networks-101/" rel="alternate" type="text/html" title="Software Defined Networks 101" /><published>2023-03-10T22:30:00-08:00</published><updated>2023-03-10T22:30:00-08:00</updated><id>http://localhost:4000/blog/2023/03/10/software-defined-networks-101</id><content type="html" xml:base="http://localhost:4000/blog/2023/03/10/software-defined-networks-101/"><![CDATA[<blockquote>
+  <p>A (very) brief introduction about Software Defined Networks</p>
+</blockquote>
+
+<p>Software Defined Networking, abbreviated as SDN, is an approach to networking that separates the control plane from the data plane. This architecture allows for management and configuration of network by administrators through software rather than through hardware. Overall, SDN allows for easier scaling and management of the network, and consequently allows development of better network automation capabilities. Further, similar to how virtualization revolutionized utilization of compute systems, SDN in conjunction with NFV (Network Function Virtualization) better utilizes the compute systems for networking.</p>
+
+<p>Before diving into technical details of SDN, one needs to understand the difference between control plane and data plane.</p>
+
+<h2 id="control-plane-vs-dataplane">Control plane vs Data plane</h2>
+
+<p>The control plane is a subset of the network that deals with functional traffic. The functional traffic includes those packets and protocols used to learn about the network and use that information to handle and route packets coming to it. For example, the L3 (OSI level 3 — network layer) network switches exchange OSPF packets in control plane and use this information to learn about the network and evaluate the next hop for packets flowing in the data plane. The data plane is the other subset of the network that deals with consumer traffic. The consumer traffic includes those packets that are exchanged for business purposes. For example, a HTTP packet from a computer to medium.com server asking for the Medium blog home page runs on the data plane.</p>
+
+<h3 id="analogies-for-control-plane-vs-dataplane">Analogies for control plane vs data plane</h3>
+
+<ul>
+  <li>The time spent to chart an action plan happens in control plane, while the time spent in executing the action plan happens in data plane.</li>
+  <li>In a business setting, the services and money involved between the organization and the employees happen in control plane. While, the services and money involved between the organization and the customers happen in data plane.</li>
+  <li>In a computer systems setting, the CPU utilized by the Operating System happens in control plane, while the CPU utilized for user processes happen in data plane.</li>
+</ul>
+
+<h2 id="traditional-network-vs-software-definednetwork">Traditional Network vs Software Defined Network</h2>
+
+<p>In a traditional network, the control plane traffic and the data plane intersect significantly as soon in the illustration below. The brain of the network is distributed across different network devices, and they work in tandem to move packets in data plane from one end to another end.</p>
+
+<p><img src="/blog/assets/res/software_defined_networks_101/traditional_network.png" alt="Traditional Network" />
+<em>Traditional Network</em></p>
+
+<p>While, in SDN the control plane is separated from the data plane as shown in the illustration below. The brain of the network is centralized at the SDN controller. The SDN switches and routers consult the SDN controller to determine what action to take for this packet.</p>
+
+<p>To avoid burdening the SDN controller for every packet by every switch, the SDN controller could install rules in SDN switches and routers which could be of the (simplest) form (in RYU controller):</p>
+
+<p><code class="language-plaintext highlighter-rouge">if(condition X) perform action Y</code></p>
+
+<p>For example, condition X can be, packet is entering port <code class="language-plaintext highlighter-rouge">swt0</code> and the corresponding action Y can be packet should exit port <code class="language-plaintext highlighter-rouge">swt1</code>. This way whenever an SDN switch that has the above rule installed receives a packet from port <code class="language-plaintext highlighter-rouge">swt0</code> it would route the packet to port <code class="language-plaintext highlighter-rouge">swt1</code> without consulting the SDN controller.</p>
+
+<p><img src="/blog/assets/res/software_defined_networks_101/sdn_network.png" alt="SDN Network" />
+<em>SDN Network</em></p>
+
+<p>That is a short introduction about Software Defined Networks. I hope you gained a basic understanding of SDN is different from traditional networks and what are the basic constructs and components of an SDN network.</p>]]></content><author><name></name></author><category term="networking" /><category term="sdn" /><summary type="html"><![CDATA[A (very) brief introduction about Software Defined Networks]]></summary></entry><entry><title type="html">What can go wrong in a cryptographic system?</title><link href="http://localhost:4000/blog/2022/10/29/what-can-go-wrong-in-a-cryptographic-system/" rel="alternate" type="text/html" title="What can go wrong in a cryptographic system?" /><published>2022-10-29T23:30:00-07:00</published><updated>2022-10-29T23:30:00-07:00</updated><id>http://localhost:4000/blog/2022/10/29/what-can-go-wrong-in-a-cryptographic-system</id><content type="html" xml:base="http://localhost:4000/blog/2022/10/29/what-can-go-wrong-in-a-cryptographic-system/"><![CDATA[<blockquote>
+  <p>An enumeration and brief description of parameters that should be considered while designing and developing a secure cryptographic system.</p>
+</blockquote>
+
+<p>Recall, cryptography is the study of techniques to securely exchange information between sender and an intended recipient. Encryption is the act of converting plain text into cipher text based on the input key and one or more parameters that make the cipher text non-deterministic. While, decryption is the act of converting a given cipher text back to plain text based on the key that was used for encryption to evaluate the cipher text.</p>
+
+<h2 id="how-cryptographic-systemswork">How cryptographic systems work?</h2>
+
+<p><em>The scope of this article is limited to symmetric key block cipher cryptography.</em></p>
+
+<p>A <strong>key</strong>, which is known both to the sender and the receiver is used as an input to a <strong>block cipher</strong>. A block cipher can be thought of as a function that takes message block and key as input and returns a (pseudo-)random string of 0s and 1s as output. (“Pseudo-” random, because during the decryption process this string with the key should return the message block back). The message that needs to be transferred securely is broken down into blocks of specific size known as the <strong>block size</strong>. The last block is <strong>padded</strong> to fit the block size. Each message block is optionally-preprocessed using “some <strong>randomization</strong>”. The processed message block is the other input to the block cipher. The output of the block cipher is a part of the cipher text. A <strong>mode</strong> is defined that dictates how multiple block ciphers combine to provide the complete cipher text for the long message.</p>
+
+<p><img src="/blog/assets/res/what_can_go_wrong_in_a_cryptographic_system/general_cryptographic_system_encryption.jpeg" alt="General cryptographic system (Encryption)" />
+<em>General cryptographic system (Encryption)</em></p>
+
+<h3 id="example-aes-256-cbc-using-randomiv">Example: AES-256-CBC using random IV</h3>
+
+<p><img src="/blog/assets/res/what_can_go_wrong_in_a_cryptographic_system/aes_cbc_with_random_iv_encryption.jpeg" alt="AES CBC with random IV (Encryption)" />
+<em>AES CBC with random IV (Encryption)</em></p>
+
+<p>The above image shows the block diagram of AES CBC using a random IV. Here,</p>
+
+<ul>
+  <li><strong>AES</strong> is the encryption algorithm used by the <strong>block cipher</strong>.</li>
+  <li><strong>256</strong> is the <strong>key size</strong>. In other words, the length of the key is 256 bits.</li>
+  <li><strong>CBC</strong> stands for Cipher Block Chaining mode. It is a <strong>mode</strong> wherein the previous cipher text block is used as randomization vector for the following block.</li>
+  <li><strong>Random IV</strong> stands for <strong>random</strong> Initialization Vector. The initialization vector is chosen in random by the sender. This randomly chosen IV is used for preprocessing with the first message block.</li>
+  <li>The block size for AES is 128 bits. Each message block and the Initialization Vector is 128 bits long.</li>
+</ul>
+
+<h2 id="it-is-easy-said-thandone">It is easy said than done!</h2>
+
+<p>Now that we understand different building blocks of a cryptographic system and certain terminologies, let us now look into what can go wrong in such systems.</p>
+
+<h3 id="the-blockcipher">The block cipher</h3>
+
+<p>The concepts of Pseudo Random Function (PRF) and Pseudo Random Permutation (PRP) are key to understanding security of block ciphers. <a href="https://crypto.stanford.edu/~dabo/cs255/lectures/PRP-PRF.pdf#page=13">https://crypto.stanford.edu/~dabo/cs255/lectures/PRP-PRF.pdf#page=13</a></p>
+
+<p>A block cipher (also known as PRP) is considered secure if it is indistinguishable from a PRF. The experiment focused on distinguishing the output as an output of a block cipher or that of a random function is known by the term Secure PRF test. 
+<a href="https://crypto.stanford.edu/~dabo/cs255/lectures/PRP-PRF.pdf#page=16">https://crypto.stanford.edu/~dabo/cs255/lectures/PRP-PRF.pdf#page=16</a></p>
+
+<p>DES, 3DES and AES algorithms are considered to be PRF secure (As of October 30, 2022). However, DES is not used in practice due to its small key size.</p>
+
+<h3 id="the-pesudo-random-generators">The pesudo random generators</h3>
+
+<p>Pseudo random generators (PRGs) are functions that output series of 0s and 1s that can be reproducible, but at the same time random enough to disallow an adversary to reproduce it. Similar to block ciphers PRG functions accept a seed and a key to generate a streaming bit string. In fact, secure PRF block ciphers are used to generate random bit strings.</p>
+
+<p>But, what happens if an adversary is able to guess the bit string generated by PRGs? Recall the use of “random” IV in certain modes of encryption. If the random IV is guessable then the fact of considering such encryption mode to be more secure than a mode that uses predefined IV is pointless.</p>
+
+<h3 id="the-mode">The mode</h3>
+
+<p>Similar to Secure PRF test for block ciphers and PRGs, modes are tested for Indistinguishably under Chosen Plain text Attack (IND-CPA) and Indistinguishably under Chosen Cipher text Attack (IND-CCA). This experiment focuses on identifying which of the two input message got encrypted based on the output cipher text returned by an “oracle” ( = E(K,.)) that encrypts one of the two input messages. Intuitively, it means that the experiment ensures that the cipher text does not leak any information regarding the input message(s).</p>
+
+<p>Consider Electronic Code Book (ECB) mode. In this mode of operation, equal messages output the same cipher text. It implies that an adversary collecting a considerable amount of plain text-cipher text pairs can evaluate plain text for future cipher texts. The following slide shows the weakness of ECB mode. <a href="https://crypto.stanford.edu/~dabo/cs255/lectures/PRP-PRF.pdf#page=24">https://crypto.stanford.edu/~dabo/cs255/lectures/PRP-PRF.pdf#page=24</a>. Here is a working example guide for breaking AES ECB mode: <a href="https://cryptopals.com/sets/2/challenges/12">https://cryptopals.com/sets/2/challenges/12</a></p>
+
+<p>With evolving security research new schemes are designed and broken, new provable security notions are developed continuously. However, for adoption by industry CBC mode, its variants or better are used. Even though there exists vulnerabilities and weakness in these schemes the exploitation of such systems are handled by the defense in depth, such as by the Intrusion Detection Systems and similar.</p>
+
+<h3 id="the-keys">The keys</h3>
+
+<p>Study of symmetric cryptography assumes that the sender and the receiver already have a shared secret. The shared secret is the key component of the symmetric cryptographic system. Compromise of the key implies compromise of the whole symmetric key cryptographic system.</p>
+
+<p>The challenges that industry faces in terms of storing, using and exchanging keys securely is handled by asymmetric key cryptography and Key Management Systems domains.</p>
+
+<h2 id="concluding-thoughts">Concluding thoughts</h2>
+
+<p>In summary, the challenges faced by industry in using symmetric key cryptographic systems are:</p>
+
+<ul>
+  <li>Use of a secure proven block cipher, pseudo random generators and encryption/decryption modes.</li>
+  <li>Handling and managing keys and other parameters (such as random IV) used in symmetric key encryption and decryption.</li>
+</ul>
+
+<p>The field of security is ever changing. It is demanding for organizations to keep up with the latest weaknesses and attacks on cryptographic system. Similar to any vulnerabilities and exploitation, the organization would first respond to it by installing detection rules in its monitoring and detection systems, develop (or) identify a patch to resolve the vulnerability, and develop and deploy the solution across all the subsystem of the organization. It takes days to months to control a vulnerability to its stable state depending on its severity and priority. However, the focus of the organization is to keep the business running while ensuring trust with its customers.</p>]]></content><author><name></name></author><category term="security" /><category term="cryptography" /><summary type="html"><![CDATA[An enumeration and brief description of parameters that should be considered while designing and developing a secure cryptographic system.]]></summary></entry><entry><title type="html">How complex can Authorization get?</title><link href="http://localhost:4000/blog/2022/03/19/how-complex-can-authorization-get/" rel="alternate" type="text/html" title="How complex can Authorization get?" /><published>2022-03-19T23:30:00-07:00</published><updated>2022-03-19T23:30:00-07:00</updated><id>http://localhost:4000/blog/2022/03/19/how-complex-can-authorization-get</id><content type="html" xml:base="http://localhost:4000/blog/2022/03/19/how-complex-can-authorization-get/"><![CDATA[<blockquote>
+  <p>Builds on the Authorization component of Identity and Access Management system from zero to how systems implement today</p>
+</blockquote>
+
+<p><strong>I</strong>dentity and <strong>A</strong>ccess <strong>M</strong>anagement system deals with “who” should get “what” level of access to an object (entity) or a function. The subsystem that defines “who” is called Authentication (Identity), while the subsystem that defines “what” level of access is called <strong>Authorization</strong> (Access).</p>
+
+<p>Building an IAM system can get very complex quickly. No wonder “Broken Authentication” and “Broken Authorization” are listed in <a href="https://owasp.org/www-project-top-ten/">OWASP Top Ten WebApp Security risks</a> and <a href="https://owasp.org/www-project-api-security/">OWASP Top Ten API Security risks</a>. Security risks in IAM system arises due to flawed or missed logic, or due to gap in the implementation and design due to it’s complexity.</p>
+
+<p>This article explains the evolution of the Authorization component of an IAM system with the growth of the software. Let us consider a content management system (such as <a href="https://medium.com">Medium</a>) for example while we build it up. Here,</p>
+
+<ul>
+  <li>Let <em>V1</em> be the visitor (unauthenticated) user, and <em>M1 … M3</em> be the member (authenticated) users.</li>
+  <li>Let <em>B1 … B5</em> be the Blog entities</li>
+  <li>Let Read (<em>R</em>), Write (<em>W</em>) and Clap (<em>C</em>) be the actions that can be performed on the entities</li>
+</ul>
+
+<p>The notation:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{u, v} can {a, b} on {m, n}
+</code></pre></div></div>
+
+<p>Implies, a nested Cartesian product:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{Set of users} can (perform) {Set of actions} on {Set of Entities}
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>u can a on m, u can a on n, u can b on m, u can b on n, v can a on m, v can a on n, v can b on m, v can b on n
+</code></pre></div></div>
+
+<h2 id="unprotected-systems">Unprotected systems</h2>
+
+<p>Let us begin from zero. A system in which anyone has access to anything. There is no authentication nor authorization in place. A system with such characteristics defines the starting point for IAM. IAM does not exist or does nothing in such a system.</p>
+
+<p>The CMS in this state has all the blogs readable, writable and clap-able by any visitor and/or member.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{V1, M1, M2, M3} can {R, W, C} on {B1, B2, B3, B4, B5}
+</code></pre></div></div>
+
+<h2 id="all-or-nothing">All-or-Nothing</h2>
+
+<p>In such systems, there are two access levels for entities: public and private. Certain entities may be tagged public which implies that this entity can be acted upon by any user. While, certain entities can be tagged private which implies that this entity can be acted only upon by a specific user. To identify a specific user authentication is required.</p>
+
+<p>Let, blog <em>B1</em> be a private blog to <em>M1</em>,* B2* be a private blog to <em>M2</em> while the rest be public. Then,</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{V1, M1, M2, M3} can {R, W, C} on {B3, B4, B5}, or
+{M1} can {R, W, C} on {B1}, or
+{M2} can {R, W, C} on {B2}
+</code></pre></div></div>
+
+<h2 id="controlled-sharing">Controlled Sharing</h2>
+
+<p>This is where IAM starts to become complex. To enable collaboration and feedback, restricting access levels for entities to only public and private may not be valuable. To better understand the build up of controlled sharing let us break it down into the multiple sub-phases.</p>
+
+<h3 id="controlled-sharing-all-or-nothing">Controlled Sharing: All-or-Nothing</h3>
+
+<p>Customers of CMS complain that private blogs are too restrictive. They want to be able to share the blog(s) only to a certain specific set of users for collaboration.</p>
+
+<p>In such systems, there are three access levels for entities: public, shared and private. Public and private continue to hold the definitions from All-or-Nothing system. A shared entity is an entity that can be acted upon only by a specific set of users.</p>
+
+<p>Let <em>B1</em> be a private blog to <em>M1</em>, <em>B2</em> be a private blog to <em>M2</em>, <em>B3</em> be a shared blog to <em>M2</em> and <em>M3</em>, while the rest be public. Then,</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{V1, M1, M2, M3} can {R, W, C} on {B4, B5}, or
+{M1} can {R, W, C} on {B1}, or
+{M2} can {R, W, C} on {B2, B3}, or
+{M3} can {R, W, C} on {B3}
+</code></pre></div></div>
+
+<h3 id="nested-controlled-sharing">Nested Controlled Sharing</h3>
+
+<p>Customers now complain of shared blogs being too open to the authorized set of users. They want to be able to restrict the set of actions a specific subset of the authorized users can perform. For example, “while I have full access to the blog, I want my peer(s) to only read it and not be able to edit it.”</p>
+
+<p>In such systems, there again exists three levels of access: public, private and shared, with private and public continuing to hold it’s definition from All-or-Nothing system. The shared access level, which used to deal with only one parameter i.e Entity, now deals with two parameters i.e. Action and Entity. <strong>Side Note</strong>: The (Action, Entity) tuple is called a permission.</p>
+
+<p>Let <em>B1</em> be a private blog to <em>M1</em>, <em>B2</em> be a private blog to <em>M2</em>, <em>B3</em> be a shared blog to <em>M2</em> and <em>M3</em>, with <em>M2</em> having the ability to perform only <em>R</em>, and <em>C</em> actions, while <em>M3</em> be able to perform <em>R</em>, <em>W</em> and <em>C</em> actions on it. Meanwhile, let the rest of the entities be public. Then,</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{V1, M1, M2, M3} can {R, W, C} on {B4, B5}, or
+{M1} can {R, W, C} on {B2}, or
+{M2} can {R, W, C} on {B2}, or
+{M2} can {R, C} on {B3}, or
+{M3} can {R, W, C} on {B3}
+</code></pre></div></div>
+
+<h3 id="dynamic-nested-controlled-sharing">Dynamic Nested Controlled Sharing</h3>
+
+<p>All this while we have been looking at static rules to define authorization. It would be unmanageable and cumbersome to contact the service provider to edit the authorization rules with new entities, new users and new requirements (changing users/entities).</p>
+
+<p>This introduces a new action, Grant (<em>G</em>), on actions that can be performed on an entity. For example, Grant Read (<em>GR</em>) is defined as the ability to grant read access to the entity in reference to any other user.</p>
+
+<p>Consider the same scenario as mentioned in the Nested Controlled Sharing case. The new set of authorization rules would then be,</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{V1, M1, M2, M3} can {R, W, C, GR, GW, GC} on {B4, B5}, or
+{M1} can {R, W, C, GR, GW, GC} on {B2}, or
+{M2} can {R, W, C, GR, GW, GC} on {B2}, or
+{M2} can {R, C} on {B3}, or
+{M3} can {R, W, C, GR, GW, GC} on {B3}
+</code></pre></div></div>
+
+<h3 id="conclusion-on-controlled-sharing">Conclusion on Controlled Sharing</h3>
+
+<p>At this point, it is worth mentioning about different Access Control schemes.</p>
+
+<ul>
+  <li><strong>Discretionary Access Control (DAC)</strong>: The owner (creator) of the entity possess grant permissions (Recall, permission is (Action, Entity) tuple).
+For example, in the CMS system with <code class="language-plaintext highlighter-rouge">{V1, M1, M2, M3}</code> users, <code class="language-plaintext highlighter-rouge">{R, W, C}</code> actions and <code class="language-plaintext highlighter-rouge">{}</code> blogs, when <em>M1</em> creates a blog <em>B1</em>, the authorization rules are:</li>
+</ul>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{V1, M1, M2, M3} can {R, W, C, GR, GW, GC} on {}, or
+{M1} can {R, W, C, GR, GW, GC} on {B1}
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Mandatory Access Control (MAC)</strong>: A specific administrator has access to grant permissions.
+For example, in the CMS system with <code class="language-plaintext highlighter-rouge">{V1, M1, M2, M3}</code> users, <code class="language-plaintext highlighter-rouge">{R, W, C}</code> actions and <code class="language-plaintext highlighter-rouge">{}</code> blogs, and <em>M1</em> being the administrator, when <em>M2</em> creates a blog <em>B1</em>, the authorization rules are:</li>
+</ul>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{V1, M1, M2, M3} can {R, W, C, GR, GW, GC} on {}, or
+{M1} can {GR, GW, GC} on {B1}
+{M2} can {R, W, C} on {B1}
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Role-Based Access Control (RBAC)</strong>: A complex access control scheme that includes Role as an Entity, in addition to blog. The actions on the Role are: assume (A) (For simplicity) (Other actions on the role includes read, write, update, delete etc.). Similar to any other actions, assume action can also be granted (GA). In this scheme, a user/role cannot act independently on entities. A user can independently only assume a role. A user on assuming a role can act on an entity, including another role.
+For example, in the CMS system with <code class="language-plaintext highlighter-rouge">{V1, M1, M2, M3}</code> users, <code class="language-plaintext highlighter-rouge">{R, W, C}</code> actions on blogs and <code class="language-plaintext highlighter-rouge">{A}</code> actions on roles, <code class="language-plaintext highlighter-rouge">{}</code> blogs and <code class="language-plaintext highlighter-rouge">{R1, R2}</code> roles.
+Let <em>R1 *be a role that can perform anything to any role, while *R2</em> be a role that can perform anything on any blog. Let <em>R1 *be assumable only by *M1</em>, <em>R2 *be assumable by any authenticated user, *M2</em> assumes <em>R2</em> and creates a blog <em>B1</em>.</li>
+</ul>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{R1} can {GA} on {R1, R2}
+{R2} can {R, W, C, GR, GW, GC} on {B1}, or
+---
+{V1} can {R, W, C, A} on {}, or
+{M1, M2, M3} can {R, W, C} on {}, or
+{M1, M2, M3} can {A} on {R2}, or
+{M1} can {A} on {R1}
+</code></pre></div></div>
+
+<h2 id="user-programmed-controlled-sharing">User-programmed controlled sharing</h2>
+
+<p>So far we have been looking at permissions to those entities that are stored. Consider the case when the CMS wants to display the total number of blogs that exists in their system be it public, shared or private to any visitor/member. Further, it wants to display the total number of public, private and shared blogs individually. Though a visitor (unauthenticated) user is not allowed to access the private and shared blogs, he/she should be able to see the above statistics. Moreover, these statistics may or may not be stored. It may be calculated on demand. Access control to such “actions” on such “entities” are categorized into User-programmed controlled sharing.</p>
+
+<p><strong>Side note</strong>: Hence there exists two different security risks in OWASP top ten, namely: Broken “object” level authorization and broken “function” level authorization.</p>
+
+<p><strong>Attribute Based Access Control</strong> <strong>(ABAC)</strong> is an access control scheme that involves user-programmed controlled sharing. Consider the case when access to a specific object is given only during a certain time period, say between 9 am to 5 pm IST. And/Or, access to a specific object is given only when the user is located in a specific area, say in a circle with center at (37.7858846, -122.4074781) coordinates and radius 250 m.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Designing an access control system highly depends on the customer’s needs. Most mature products have dynamic nested controlled sharing capabilities while there are certain features that uses User-programmed controlled sharing. However, critical systems such as military, government, healthcare and finance technology software do have advanced access control systems implemented and enforced. One such advanced access control is “<a href="https://csrc.nist.gov/glossary/term/separation_of_duty">Separation of duty</a>”: A single user cannot individually execute a critical action.</p>
+
+<p>The complexity in designing an access control system is present in identifying:</p>
+
+<ul>
+  <li>The access control scheme (DAC, MAC, RBAC, ABAC, hybrid or custom?)</li>
+  <li>The entities and the granularity to which it needs to be access controlled</li>
+  <li>The actions that can be performed on the entity</li>
+  <li>The storage schema for the identified entities, actions, and users</li>
+  <li>Sequence flow to perform authorization rule check, and</li>
+  <li>Other system design choices</li>
+</ul>
+
+<h2 id="reference">Reference</h2>
+
+<p>J. H. Saltzer and M. D. Schroeder, “<a href="https://ieeexplore.ieee.org/document/1451869">The protection of information in computer systems</a>,” in Proceedings of the IEEE, vol. 63, no. 9, pp. 1278–1308, Sept. 1975, doi: 10.1109/PROC.1975.9939.</p>]]></content><author><name></name></author><category term="security" /><category term="authorization" /><summary type="html"><![CDATA[Builds on the Authorization component of Identity and Access Management system from zero to how systems implement today]]></summary></entry><entry><title type="html">Man-in-the-middle: A tale of a hoax DHCP server</title><link href="http://localhost:4000/blog/2021/12/06/man-in-the-middle-a-tale-of-a-hoax-dhcp-server/" rel="alternate" type="text/html" title="Man-in-the-middle: A tale of a hoax DHCP server" /><published>2021-12-06T22:30:00-08:00</published><updated>2021-12-06T22:30:00-08:00</updated><id>http://localhost:4000/blog/2021/12/06/man-in-the-middle-a-tale-of-a-hoax-dhcp-server</id><content type="html" xml:base="http://localhost:4000/blog/2021/12/06/man-in-the-middle-a-tale-of-a-hoax-dhcp-server/"><![CDATA[<blockquote>
+  <p>Learn how a user can act like a hoax DHCP server and situate himself as a man in the middle, and how one can prevent such attacks.</p>
+</blockquote>
+
+<p>DHCP, Dynamic Host Configuration Protocol, is a network protocol that offers IP address and additional details such as the gateway IP and the DNS IP to a host requesting to be a part of the network. A detailed description of the protocol and its structure is documented in <a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol">this</a> wiki page. A DHCP server is a management server that maintains a pool of IP addresses, listens to requests for IP address from client joining the network and responds to them with an IP address offer on demand.</p>
+
+<p>In a curious experiment where two independent DHCP servers are setup in the same physical network to observe how the system behaves led to an interesting outcome. This article explains the behavior of this system when two independently working DHCP servers are in the same physical network, how can a malicious user exploit by leveraging this opportunity, and what can network administrators do to prevent exploitation by this method.</p>
+
+<h2 id="story">Story</h2>
+
+<p>There was a peaceful network where clients frequently join and leave, and the DHCP server serves new incoming clients with IP address for them to be a part of the network. One day a rogue client entered the network. As a routine the DHCP server served the client an IP address. As soon as it set itself up, the rogue client began executing its evil plans. It claimed itself to be a DHCP server too! But poor clients! They have been taught that when they enter a network the one who serves them the IP address is the DHCP server. The rogue client is leveraging this principle to try and be the first one to present the client with an IP address. This way the rogue client can let the incoming client know that the gateway to the internet and the domain name resolution server is itself. But, in fact this rogue client is forwarding the requests to the actual gateway and DNS server of the network, which it learned from the genuine DHCP server thus fulfilling client’s communication needs. The rogue client has successfully set itself up as a man-in-the-middle, overhearing the client’s communication with the internet and possibly manipulating them in transit!</p>
+
+<h2 id="setup">Setup</h2>
+
+<p><img src="/blog/assets/res/maninthemiddle_a_tale_of_a_hoax_dhcp_server/setup.png" alt="setup" />
+<em>setup</em></p>
+
+<p>GNS3 is used in setting up the required infrastructure. Ubuntu docker containers are used as clients, while DHCP servers are Ubuntu docker containers with ISC DHCP server module installed. A simple switch is used to connect the four components of the network.</p>
+
+<h3 id="the-genuine-dhcpserver">The genuine DHCP server</h3>
+
+<ul>
+  <li>Navigate to <code class="language-plaintext highlighter-rouge">/etc/dhcp</code> directory in the DHCP server console, once it starts up.</li>
+  <li>Append the following contents to the <code class="language-plaintext highlighter-rouge">dhcpd.conf</code> file:</li>
+</ul>
+
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">subnet</span> <span class="m">192</span>.<span class="m">168</span>.<span class="m">1</span>.<span class="m">0</span> <span class="n">netmask</span> <span class="m">255</span>.<span class="m">255</span>.<span class="m">255</span>.<span class="m">0</span> {
+ <span class="n">range</span> <span class="m">192</span>.<span class="m">168</span>.<span class="m">1</span>.<span class="m">150</span> <span class="m">192</span>.<span class="m">168</span>.<span class="m">1</span>.<span class="m">160</span>;
+ <span class="n">option</span> <span class="n">routers</span> <span class="m">192</span>.<span class="m">168</span>.<span class="m">1</span>.<span class="m">1</span>;
+ <span class="n">option</span> <span class="n">domain</span>-<span class="n">name</span>-<span class="n">servers</span> <span class="m">192</span>.<span class="m">168</span>.<span class="m">1</span>.<span class="m">1</span>;
+ <span class="n">option</span> <span class="n">domain</span>-<span class="n">name</span> <span class="s2">"example.org"</span>;
+}
+</code></pre></div></div>
+
+<ul>
+  <li>Create an empty file, for the DHCP server to hold the leased IP addresses, by running the command: <code class="language-plaintext highlighter-rouge">touch /var/lib/dhcp/dhcpd.lease</code>.</li>
+  <li>Then assign a static IP address(within the same subnet as in the DHCP configuration) to the primary network interface:
+<code class="language-plaintext highlighter-rouge">ifconfig eth0 192.168.1.1/24</code></li>
+  <li>Finally, start the DHCP server by running: <code class="language-plaintext highlighter-rouge">dhcpd</code></li>
+</ul>
+
+<h3 id="the-malicious-dhcpserver">The malicious DHCP server</h3>
+
+<p><img src="/blog/assets/res/maninthemiddle_a_tale_of_a_hoax_dhcp_server/image.png" alt="" /></p>
+
+<ul>
+  <li>Before starting up this DHCP server, ensure that this device has at least 2 network interfaces. And, one of the interfaces is configured to fetch IP address via DHCP (from the genuine DHCP server).</li>
+  <li>Start the server.</li>
+  <li>Observe that the <code class="language-plaintext highlighter-rouge">eth1</code> interface obtained IP address from the genuine DHCP server.</li>
+  <li>Follow similar steps as mentioned in the genuine DHCP server for configuration, but with a different subnet, say <code class="language-plaintext highlighter-rouge">192.168.2.1/24</code> . Ensure range, routers and domain-name-server fields are aligned to the subnet.</li>
+  <li>Assign the primary network interface with a static IP address (within the same subnet as in the DHCP configuration):
+<code class="language-plaintext highlighter-rouge">ifconfig eth0 192.168.2.1/24</code></li>
+  <li>Then start the DHCP server by running: <code class="language-plaintext highlighter-rouge">dhcpd</code></li>
+</ul>
+
+<h2 id="run">Run</h2>
+
+<p>Start up multiple clients in the network. Ensure that their network interfaces are configured to fetch IP address via DHCP. Observe the IP address of each client.</p>
+
+<p><img src="/blog/assets/res/maninthemiddle_a_tale_of_a_hoax_dhcp_server/ip_address_of_different_clients.png" alt="IP address of different clients" />
+<em>IP address of different clients</em></p>
+
+<p>Client-1 obtained 192.168.1.154 from the genuine DHCP server, while Client-2 obtained 192.168.2.160 from the rogue DHCP server. Client-2 has fallen victim!</p>
+
+<p>Observe that in spite of the two clients being in the same collision domain, they will not be able to communicate with each other. The reason is that these two subnets (one maintained by the genuine DHCP server and the other by the rogue DHCP server) form <strong>different overlay networks</strong> over the same L2 network.</p>
+
+<p>Soon one may realize that this is an <strong>opportunistic</strong> attack. It is a race between the genuine DHCP server and the rogue DHCP server as to whose DHCP offer the client will accept. The following image shows the filtered network capture of a new client joining the network. Observe the packet number 4 and 5. Both the rogue DHCP server and the genuine DHCP server race to serve the client. In this fortunate and unfortunate case, the client accepted the IP address offer from the genuine DHCP server (evident from packet number 7).</p>
+
+<p><img src="/blog/assets/res/maninthemiddle_a_tale_of_a_hoax_dhcp_server/dhcp_filtered_network_capture_of_a_new_incoming_client.png" alt="DHCP filtered network capture of a new incoming client" />
+<em>DHCP filtered network capture of a new incoming client</em></p>
+
+<h2 id="inherent-defenses-and-prevention-techniques">Inherent defenses and Prevention techniques</h2>
+
+<p>A malicious user situation himself as a man-in-the-middle lets him overhear all the communication the victim is in with the internet.</p>
+
+<p>However, with today’s secure systems most of the applications communicate over encrypted channels. The key exchange also happens over a secured channel. For example, TLS is used for setting up a HTTPS connection with a server while browsing, and similarly TLS is used for setting up a secure shell with a remote server. Hence, <strong>the risk of this attack is low</strong>.</p>
+
+<p>When building a network, the DHCP server are placed in a predictable and static location. They are connected to a specific port in a switch and the connection rarely changes. Hence, to explicitly prevent such attacks, network switches should be configured to accept DHCP offer and DHCP ACK packets only from a <strong>specified port</strong>. The switch can easily filter off the DHCP offer and ACK packets from other ports, thereby stopping the attack from happening at all.</p>]]></content><author><name></name></author><category term="networking" /><category term="security" /><category term="dhcp" /><summary type="html"><![CDATA[Learn how a user can act like a hoax DHCP server and situate himself as a man in the middle, and how one can prevent such attacks.]]></summary></entry></feed>

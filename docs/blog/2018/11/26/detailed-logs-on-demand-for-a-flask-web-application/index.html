@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>"Detailed logs on demand" for a flask web application — Manoj Vignesh K M</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/blog/assets/css/style.css" />
+</head>
+<body>
+  <header class="blog-header">
+    <a href="/" class="back-link">← Portfolio</a>
+    <a href="/blog/" class="blog-title">Manoj's Blog</a>
+  </header>
+  <main class="blog-content">
+    <article class="post">
+  <header class="post-header">
+    <h1>"Detailed logs on demand" for a flask web application</h1>
+    <time datetime="2018-11-26T22:30:00-08:00">
+      November 26, 2018
+    </time>
+    
+    <div class="post-tags">
+      <span class="tag">flask</span><span class="tag">logging</span><span class="tag">python</span>
+    </div>
+    
+  </header>
+
+  <div class="post-layout">
+    <aside class="post-toc" id="toc">
+      <p class="toc-title">Contents</p>
+      <nav id="toc-nav"></nav>
+    </aside>
+
+    <div class="post-body" id="post-body">
+      <blockquote>
+  <p>Toggle debug logging on demand using Unix signals.</p>
+</blockquote>
+
+<h2 id="the-problem">The Problem</h2>
+
+<p>Logging is a great challenge while developing a web application. Too fewer logs are as good as nothing, it does not provide enough information to troubleshoot a bug. Too many log statements burden the server with huge log files, and the troubleshooting personnel may have to search through the logs to find when exactly the bug played its part, and process them to figure out the trouble point.</p>
+
+<p>I would constantly be bombarded with this issue. My flask application logs in to a SaaS application and makes REST APIs calls to it, to process the data and interpret the results. Keeping in mind the performance of the web application, the session token and the authorization tokens are generated on demand, i.e. the flask application doesn’t log in to SaaS Application for every request that it gets, to access APIs from the SaaS application; instead, it reuses the session cookie until it expires. The change in SaaS application API’s response is unknown until an Internal Server Error pops up on one of the client machines — it can be a genuine bug, a failure in session cookie refresh, or something else entirely.</p>
+
+<p>What if deep debug log statements are revealed on demand, without having to restart the web application?
+(If restarted, the environment — state of the variables etc. — will be refreshed, and the bug may occur only when that particular state re-occurs.)</p>
+
+<h2 id="the-solution-unix-signals">The Solution: Unix Signals</h2>
+
+<p>Using <strong>signals</strong> we can do this elegantly.</p>
+
+<p>A <strong>Signal</strong> is a notification sent by the Operating System or a process to another process, indicating a notice. By overriding the signal handler for <code class="language-plaintext highlighter-rouge">USR1</code>, we can toggle a <code class="language-plaintext highlighter-rouge">DEBUG</code> flag at runtime — no restart required.</p>
+
+<h2 id="the-implementation">The Implementation</h2>
+
+<p>We develop a simple Flask application wrapped with a Gunicorn WSGI. The Flask app has one endpoint that returns the current time after a deliberate delay, simulating a long request.</p>
+
+<noscript><pre>from flask import Flask
+import time 
+import signal
+
+app = Flask(__name__)
+
+DEBUG = False
+def debug(*args, **kwargs):
+    if DEBUG:
+        print(&quot;DEBUG:&quot;, *args, **kwargs)
+    
+def handler(signalnum, frame):
+    global DEBUG
+    DEBUG = not DEBUG
+    print(&quot;DEBUG is set to&quot;, DEBUG)
+
+signal.signal(signal.SIGUSR1, handler)
+
+@app.route(&quot;/&quot;) 
+def index():
+    debug(&quot;in function one&quot;)
+    for i in range(10):
+        debug(&quot;in for loop&quot;, i)
+        time.sleep(1)
+        debug(&quot;end of the loop&quot;, i)
+    debug(&quot;end of the function&quot;)
+    return time.ctime()
+
+
+if __name__ == &quot;__main__&quot;:
+    app.run(host=&quot;0.0.0.0&quot;, port=8000)
+
+if __name__ == &quot;app&quot;:
+    from werkzeug.wsgi import DispatcherMiddleware
+    app = DispatcherMiddleware(app)</pre></noscript>
+<script src="https://gist.github.com/kmmanoj/69888f86881ac6c9c88cc054fdac174e.js"> </script>
+
+<h3 id="key-observations">Key observations</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">debug</code> is a function that prints only if the global constant <code class="language-plaintext highlighter-rouge">DEBUG</code> is <code class="language-plaintext highlighter-rouge">True</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">app</code> is a Flask object with one endpoint that takes at least 10 seconds to respond.</li>
+  <li><code class="language-plaintext highlighter-rouge">handler</code> toggles the value of <code class="language-plaintext highlighter-rouge">DEBUG</code> and logs the change.</li>
+  <li>The signal handler for <code class="language-plaintext highlighter-rouge">USR1</code> is overridden to call <code class="language-plaintext highlighter-rouge">handler</code>.</li>
+  <li>The program works both as a standalone Python process and as a Gunicorn-imported module.</li>
+</ul>
+
+<h2 id="running-as-a-python-process">Running as a Python Process</h2>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kmmanoj $ python app.py
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+WARNING: Do not use the development server in a production environment.
+Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://0.0.0.0:8000/ (Press CTRL+C to quit)
+DEBUG is set to True
+DEBUG is set to False
+DEBUG is set to True
+DEBUG: end of the loop 2
+DEBUG: in for loop 3
+DEBUG: end of the loop 3
+DEBUG: in for loop 4
+DEBUG: end of the loop 4
+DEBUG: in for loop 5
+DEBUG: end of the loop 5
+DEBUG: in for loop 6
+DEBUG is set to False
+DEBUG is set to True
+DEBUG: end of the loop 8
+DEBUG: in for loop 9
+DEBUG: end of the loop 9
+DEBUG: end of the function
+127.0.0.1 - - [27/Nov/2018 23:37:24] "GET / HTTP/1.1" 200 -
+</code></pre></div></div>
+
+<p>The signal <code class="language-plaintext highlighter-rouge">USR1</code> is sent to the process as:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">kill</span> <span class="nt">-s</span> USR1 &lt;pid&gt;
+</code></pre></div></div>
+
+<h2 id="running-with-gunicorn">Running with Gunicorn</h2>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kmmanoj $ gunicorn -b 0.0.0.0:8000 app:app
+[2018-11-27 23:41:18 +0530] [28892] [INFO] Starting gunicorn 19.8.1
+[2018-11-27 23:41:18 +0530] [28892] [INFO] Listening at: http://0.0.0.0:8000 (28892)
+[2018-11-27 23:41:18 +0530] [28892] [INFO] Using worker: sync
+[2018-11-27 23:41:18 +0530] [28895] [INFO] Booting worker with pid: 28895
+[2018-11-27 23:41:33 +0530] [28892] [INFO] Handling signal: usr1
+DEBUG is set to True
+DEBUG: end of the loop 2
+DEBUG: in for loop 3
+DEBUG: end of the loop 3
+DEBUG: in for loop 4
+DEBUG: end of the loop 4
+DEBUG: in for loop 5
+[2018-11-27 23:41:37 +0530] [28892] [INFO] Handling signal: usr1
+DEBUG is set to False
+[2018-11-27 23:41:41 +0530] [28892] [INFO] Handling signal: usr1
+DEBUG is set to True
+DEBUG: end of the loop 9
+DEBUG: end of the function
+</code></pre></div></div>
+
+<p>Send the signal to the master Gunicorn worker:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">kill</span> <span class="nt">-s</span> USR1 28892
+</code></pre></div></div>
+
+<p>Toggle it at different times to see the debug output switch on and off dynamically.</p>
+
+<h2 id="a-note-on-usr1-in-gunicorn">A Note on USR1 in Gunicorn</h2>
+
+<p>Gunicorn uses <code class="language-plaintext highlighter-rouge">USR1</code> internally to reopen log files. If that behaviour is critical to your deployment, choose a different signal to override — <code class="language-plaintext highlighter-rouge">USR2</code> or <code class="language-plaintext highlighter-rouge">WINCH</code> for example. See the <a href="http://docs.gunicorn.org/en/stable/signals.html">Gunicorn signal docs</a> for the full list.</p>
+
+    </div>
+  </div>
+</article>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('#post-body h2, #post-body h3, #post-body h4');
+  if (headings.length === 0) {
+    document.getElementById('toc').style.display = 'none';
+    return;
+  }
+
+  var nav = document.getElementById('toc-nav');
+  var ul = document.createElement('ul');
+  ul.className = 'toc-list';
+
+  headings.forEach(function (h, i) {
+    if (!h.id) h.id = 'heading-' + i;
+
+    var li = document.createElement('li');
+    li.className = 'toc-item toc-' + h.tagName.toLowerCase();
+
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc-link';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  nav.appendChild(ul);
+
+  // Move leading blockquote to header as subtitle
+  var body = document.getElementById('post-body');
+  var first = body.firstElementChild;
+  if (first && first.tagName === 'BLOCKQUOTE') {
+    var subtitle = document.createElement('p');
+    subtitle.className = 'post-subtitle';
+    subtitle.textContent = first.textContent.trim();
+    document.querySelector('.post-header').appendChild(subtitle);
+    first.remove();
+  }
+
+  // Highlight active heading on scroll
+  var links = nav.querySelectorAll('.toc-link');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        links.forEach(function (l) { l.classList.remove('active'); });
+        var active = nav.querySelector('a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '0px 0px -80% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+}());
+</script>
+
+  </main>
+  <footer class="blog-footer">
+    <p>Manoj Vignesh K M · <a href="/">Portfolio</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What is a smart contract? — Manoj Vignesh K M</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/blog/assets/css/style.css" />
+</head>
+<body>
+  <header class="blog-header">
+    <a href="/" class="back-link">← Portfolio</a>
+    <a href="/blog/" class="blog-title">Manoj's Blog</a>
+  </header>
+  <main class="blog-content">
+    <article class="post">
+  <header class="post-header">
+    <h1>What is a smart contract?</h1>
+    <time datetime="2023-05-06T23:30:00-07:00">
+      May 6, 2023
+    </time>
+    
+    <div class="post-tags">
+      <span class="tag">blockchain</span><span class="tag">ethereum</span><span class="tag">web3</span>
+    </div>
+    
+  </header>
+
+  <div class="post-layout">
+    <aside class="post-toc" id="toc">
+      <p class="toc-title">Contents</p>
+      <nav id="toc-nav"></nav>
+    </aside>
+
+    <div class="post-body" id="post-body">
+      <blockquote>
+  <p>Understand what a web3.0’s smart contract is with respect to a web2.0 technology</p>
+</blockquote>
+
+<p>A smart contract can be thought of as a digital contract (or) agreement. It is a computer program whose functions define the terms of the agreement and executing functions is analogous to executing a term in the agreement. This computer program is stored in the blockchain network.</p>
+
+<p>Anyone in the blockchain network can create a smart contract. The smart contract is deployed in every node of the blockchain network. When a user triggers a function in the smart contract, the function is executed by all the nodes in the blockchain network and the state change caused is verified and ingrained in a block of the blockchain network.</p>
+
+<blockquote>
+  <p>The fact that every node in the blockchain network execute the function in smart contract when triggered by a single user is why they are termed “self-executing” in most definitions of smart contract</p>
+</blockquote>
+
+<p>This way smart contracts are a transparent, secure and tamper-proof way of creating an agreement.</p>
+
+<h2 id="explanation-with-respect-to-a-web20-technology">Explanation with respect to a web2.0 technology</h2>
+
+<p>Consider the following python flask application that displays the message of the day. It also allows one to edit the message of the day.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Persistent</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="n">identifier</span>
+        <span class="nf">open</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">identifier</span><span class="p">,</span> <span class="sh">'</span><span class="s">w</span><span class="sh">'</span><span class="p">).</span><span class="nf">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">identifier</span><span class="p">,</span> <span class="sh">'</span><span class="s">w</span><span class="sh">'</span><span class="p">)</span>
+        <span class="n">f</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="nf">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        <span class="n">f</span><span class="p">.</span><span class="nf">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="sh">'</span><span class="s">OK</span><span class="sh">'</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nf">open</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">identifier</span><span class="p">,</span> <span class="sh">'</span><span class="s">r</span><span class="sh">'</span><span class="p">).</span><span class="nf">read</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="n">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="nc">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">motd</span> <span class="o">=</span> <span class="nc">Persistent</span><span class="p">(</span><span class="sh">'</span><span class="s">motd</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="sh">'</span><span class="s">/get</span><span class="sh">'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">motd</span><span class="p">.</span><span class="nf">get</span><span class="p">()</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="sh">'</span><span class="s">/set/&lt;string:motd_string&gt;</span><span class="sh">'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="sh">'</span><span class="s">POST</span><span class="sh">'</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="n">motd_string</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">motd</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="n">motd_string</span><span class="p">)</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">run</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">motd</code> is a persistent variable that can be retrieved and modified through the <code class="language-plaintext highlighter-rouge">get</code> and <code class="language-plaintext highlighter-rouge">set</code> API/function respectively.</p>
+
+<p>Imagine this code to be deployed in every node, and every node is running the flask application listening for calls. The call to any function would be stored in the blockchain and the state change persists on successful function call.</p>
+
+<p>The corresponding solidity code for the above flask application is:</p>
+
+<pre><code class="language-solidity">// SPDX-License-Identifier: SEE LICENSE IN LICENSE
+pragma solidity ^0.8.0;
+
+contract MOTD {
+    string motd;
+
+    function set(string memory motd_string) public returns(string memory) {
+        motd = motd_string;
+        return "OK";
+    }
+
+    function get() public view returns(string memory) {
+        return motd;
+    }
+}
+</code></pre>
+
+<p>The contract <code class="language-plaintext highlighter-rouge">MOTD</code> has a state defined by the string variable <code class="language-plaintext highlighter-rouge">motd</code> . The <code class="language-plaintext highlighter-rouge">set</code> and <code class="language-plaintext highlighter-rouge">get</code> function retrieve and modify the state of the contract respectively.</p>
+
+    </div>
+  </div>
+</article>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('#post-body h2, #post-body h3, #post-body h4');
+  if (headings.length === 0) {
+    document.getElementById('toc').style.display = 'none';
+    return;
+  }
+
+  var nav = document.getElementById('toc-nav');
+  var ul = document.createElement('ul');
+  ul.className = 'toc-list';
+
+  headings.forEach(function (h, i) {
+    if (!h.id) h.id = 'heading-' + i;
+
+    var li = document.createElement('li');
+    li.className = 'toc-item toc-' + h.tagName.toLowerCase();
+
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc-link';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  nav.appendChild(ul);
+
+  // Move leading blockquote to header as subtitle
+  var body = document.getElementById('post-body');
+  var first = body.firstElementChild;
+  if (first && first.tagName === 'BLOCKQUOTE') {
+    var subtitle = document.createElement('p');
+    subtitle.className = 'post-subtitle';
+    subtitle.textContent = first.textContent.trim();
+    document.querySelector('.post-header').appendChild(subtitle);
+    first.remove();
+  }
+
+  // Highlight active heading on scroll
+  var links = nav.querySelectorAll('.toc-link');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        links.forEach(function (l) { l.classList.remove('active'); });
+        var active = nav.querySelector('a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '0px 0px -80% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+}());
+</script>
+
+  </main>
+  <footer class="blog-footer">
+    <p>Manoj Vignesh K M · <a href="/">Portfolio</a></p>
+  </footer>
+</body>
+</html>

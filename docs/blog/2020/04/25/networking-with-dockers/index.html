@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Networking with dockers — Manoj Vignesh K M</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/blog/assets/css/style.css" />
+</head>
+<body>
+  <header class="blog-header">
+    <a href="/" class="back-link">← Portfolio</a>
+    <a href="/blog/" class="blog-title">Manoj's Blog</a>
+  </header>
+  <main class="blog-content">
+    <article class="post">
+  <header class="post-header">
+    <h1>Networking with dockers</h1>
+    <time datetime="2020-04-25T23:30:00-07:00">
+      April 25, 2020
+    </time>
+    
+    <div class="post-tags">
+      <span class="tag">docker</span><span class="tag">networking</span>
+    </div>
+    
+  </header>
+
+  <div class="post-layout">
+    <aside class="post-toc" id="toc">
+      <p class="toc-title">Contents</p>
+      <nav id="toc-nav"></nav>
+    </aside>
+
+    <div class="post-body" id="post-body">
+      <blockquote>
+  <p>Can Docker containers route packets across different subnets?</p>
+</blockquote>
+
+<p><a href="https://www.docker.com/">Docker</a> enables developers to create <em>containers</em> to host microservice applications in the most easiest way possible. Docker provides networking support, with the help of which two or more containers can communicate with each other.</p>
+
+<p>Alright, so if the docker containers are in the same subnet, then the single broadcast domain will ensure communication between containers by <em>switching</em> packets. But, what if the containers are in different subnets (in different broadcast domains)? Does docker have the capability of <em>routing</em> packets too?</p>
+
+<h2 id="the-magic">The Magic</h2>
+
+<p>Consider two hosts in two different subnets: <em>10.10.10.0/24</em> and <em>192.168.10.0/24</em>.</p>
+
+<p>To ensure that the shells on the right top corner and bottom left corner are docker shells, observe that process number 1 is <strong>not</strong> <em>‘init’</em>.</p>
+
+<p><img src="/blog/assets/res/networking_with_dockers/image_2.png" alt="" /></p>
+
+<h2 id="how-it-works">How it Works</h2>
+
+<h3 id="setting-up-the-environment">Setting up the environment</h3>
+
+<p>Create two docker networks:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># tty0: docker engine node</span>
+docker network create left <span class="nt">--subnet</span> 10.10.10.0/24
+docker network create right <span class="nt">--subnet</span> 192.168.10.0/24
+</code></pre></div></div>
+
+<p>Create a container in the <em>left</em> subnet:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># tty1: left host</span>
+docker run <span class="nt">-it</span> <span class="nt">--network</span> left <span class="nt">--name</span> left_host <span class="nt">--cap-add</span> NET_ADMIN busybox
+</code></pre></div></div>
+
+<p>Create a container in the <em>right</em> subnet:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># tty2: right host</span>
+docker run <span class="nt">-it</span> <span class="nt">--network</span> right <span class="nt">--name</span> right_host <span class="nt">--cap-add</span> NET_ADMIN busybox
+<span class="c"># What's cap-add option? Patience! The answer will be revealed when its time!</span>
+</code></pre></div></div>
+
+<p>Let’s check if <em>right_host</em> is reachable from <em>left_host</em>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># tty2: right host</span>
+/ <span class="c"># ifconfig</span>
+eth0    Link encap:Ethernet  HWaddr 02:42:AC:11:00:02
+        inet addr:192.168.10.2  Bcast:192.168.10.255  Mask:255.255.255.0
+        UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+        RX packets:14 errors:0 dropped:0 overruns:0 frame:0
+        TX packets:5 errors:0 dropped:0 overruns:0 carrier:0
+        collisions:0 txqueuelen:0
+        RX bytes:1088 <span class="o">(</span>1.0 KiB<span class="o">)</span>  TX bytes:434 <span class="o">(</span>434.0 B<span class="o">)</span>
+lo      Link encap:Local Loopback
+        inet addr:127.0.0.1  Mask:255.0.0.0
+        UP LOOPBACK RUNNING  MTU:65536  Metric:1
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># tty1: left host</span>
+/ <span class="c"># ping 192.168.10.2 -c 3 -I 10.10.10.2</span>
+PING 192.168.10.2 <span class="o">(</span>192.168.10.2<span class="o">)</span> from 10.10.10.2: 56 data bytes
+<span class="nt">---</span> 192.168.10.2 ping statistics <span class="nt">---</span>
+3 packets transmitted, 0 packets received, 100% packet loss
+</code></pre></div></div>
+
+<p>Oh no! Docker doesn’t have <em>routing</em> capabilities by default.</p>
+
+<h3 id="adding-a-router-container">Adding a router container</h3>
+
+<p>To enable communication across broadcast domains, a <strong>router</strong> is required. Instead of a software-defined router, we can use another Docker container with <strong>two</strong> network adapters — one in <em>left</em>, one in <em>right</em>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># tty4: router</span>
+docker run <span class="nt">-it</span> <span class="nt">--network</span> left <span class="nt">--name</span> router <span class="nt">--cap-add</span> NET_ADMIN busybox
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># tty0: docker engine node</span>
+<span class="c"># Connect the router container to the right network too</span>
+docker network connect right router
+</code></pre></div></div>
+
+<p>Now add routing rules on each host to send cross-subnet traffic through the router:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># tty1: left host</span>
+/ <span class="c"># ip route add 192.168.10.0/24 via 10.10.10.3 dev eth0</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># tty2: right host</span>
+/ <span class="c"># ip route add 10.10.10.0/24 via 192.168.10.3 dev eth0</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>Note:</strong> The <code class="language-plaintext highlighter-rouge">ip route</code> commands require <code class="language-plaintext highlighter-rouge">NET_ADMIN</code> capability — that’s what <code class="language-plaintext highlighter-rouge">--cap-add NET_ADMIN</code> was for!</p>
+</blockquote>
+
+<p>The following image shows the state of the containers after configuration:</p>
+
+<p><img src="/blog/assets/res/networking_with_dockers/image_3.png" alt="" /></p>
+
+<p>That’s it! Now try reaching <em>right_host</em> from <em>left_host</em> and vice-versa.</p>
+
+<p><img src="/blog/assets/res/networking_with_dockers/1*Xs7cJ8V66ZR0OtbF-U8S1g.png" alt="" /></p>
+
+<h2 id="food-for-thought">Food for Thought</h2>
+
+<ul>
+  <li>Create three different subnets with two routers between the hosts and enable the hosts to communicate with each other:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;host1&gt; — network1 — &lt;router1&gt; — network2 — &lt;router2&gt; — network3 — &lt;host2&gt;
+</code></pre></div></div>
+
+<ul>
+  <li><a href="https://docs.docker.com/network/network-tutorial-standalone/#use-user-defined-bridge-networks">Docker supports DNS resolution</a> of container names to their IP address within a network. Can you create a custom DNS that resolves inter-subnet queries?</li>
+</ul>
+
+<p>I hope you enjoyed this. More of this to come, stay tuned!</p>
+
+    </div>
+  </div>
+</article>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('#post-body h2, #post-body h3, #post-body h4');
+  if (headings.length === 0) {
+    document.getElementById('toc').style.display = 'none';
+    return;
+  }
+
+  var nav = document.getElementById('toc-nav');
+  var ul = document.createElement('ul');
+  ul.className = 'toc-list';
+
+  headings.forEach(function (h, i) {
+    if (!h.id) h.id = 'heading-' + i;
+
+    var li = document.createElement('li');
+    li.className = 'toc-item toc-' + h.tagName.toLowerCase();
+
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc-link';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  nav.appendChild(ul);
+
+  // Move leading blockquote to header as subtitle
+  var body = document.getElementById('post-body');
+  var first = body.firstElementChild;
+  if (first && first.tagName === 'BLOCKQUOTE') {
+    var subtitle = document.createElement('p');
+    subtitle.className = 'post-subtitle';
+    subtitle.textContent = first.textContent.trim();
+    document.querySelector('.post-header').appendChild(subtitle);
+    first.remove();
+  }
+
+  // Highlight active heading on scroll
+  var links = nav.querySelectorAll('.toc-link');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        links.forEach(function (l) { l.classList.remove('active'); });
+        var active = nav.querySelector('a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '0px 0px -80% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+}());
+</script>
+
+  </main>
+  <footer class="blog-footer">
+    <p>Manoj Vignesh K M · <a href="/">Portfolio</a></p>
+  </footer>
+</body>
+</html>

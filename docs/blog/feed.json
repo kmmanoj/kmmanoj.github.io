@@ -1,11 +1,155 @@
 [
   
   {
-    "title": "Hello World",
-    "date": "2026-05-09",
-    "url": "/blog/2026/05/09/hello-world/",
-    "excerpt": "This is the first post on my new blog. I’ll be writing about machine learning,\nsystems engineering, and research topics I find interesting.\n",
-    "tags": ["meta","engineering"]
+    "title": "A visit to the web3.0 world",
+    "date": "2023-05-07",
+    "url": "/blog/2023/05/07/a-visit-to-the-web3-0-world/",
+    "excerpt": "\n  Learn how to travel and stroll around a web application built in the web3 world!\n\n",
+    "tags": ["blockchain","web3"]
+  },
+  
+  {
+    "title": "What is a smart contract?",
+    "date": "2023-05-06",
+    "url": "/blog/2023/05/06/what-is-a-smart-contract/",
+    "excerpt": "\n  Understand what a web3.0’s smart contract is with respect to a web2.0 technology\n\n",
+    "tags": ["blockchain","ethereum","web3"]
+  },
+  
+  {
+    "title": "Web 1.0, 2.0, 3.0 …",
+    "date": "2023-05-06",
+    "url": "/blog/2023/05/06/web-1-0-2-0-3-0/",
+    "excerpt": "\n  What is Web1.0, Web 2.0 and Web 3.0 and how is Web2.0 different from Web3.0?\n\n",
+    "tags": ["web3","blockchain"]
+  },
+  
+  {
+    "title": "Deploy your first smart contract",
+    "date": "2023-05-06",
+    "url": "/blog/2023/05/06/deploy-your-first-smart-contract/",
+    "excerpt": "\n  With simplest setup possible, deploy your first smart contract in the Ethereum’s official test network!\n\n",
+    "tags": ["blockchain","ethereum","web3","solidity"]
+  },
+  
+  {
+    "title": "Setting up a local ethereum blockchain network",
+    "date": "2023-05-04",
+    "url": "/blog/2023/05/04/setting-up-a-local-ethereum-blockchain-network/",
+    "excerpt": "\n  Setup an ethereum blockchain network in your local computer using geth to learn and develop smart contracts for dApps and more\n\n",
+    "tags": ["blockchain","ethereum","web3"]
+  },
+  
+  {
+    "title": "Using GNS3 to learn SDN",
+    "date": "2023-03-11",
+    "url": "/blog/2023/03/11/using-gns3-to-learn-sdn/",
+    "excerpt": "\n  Setup and configure your GNS3 with required elements to learn, develop and test Software Defined Networks.\n\n",
+    "tags": ["networking","sdn"]
+  },
+  
+  {
+    "title": "Software Defined Networks 101",
+    "date": "2023-03-10",
+    "url": "/blog/2023/03/10/software-defined-networks-101/",
+    "excerpt": "\n  A (very) brief introduction about Software Defined Networks\n\n",
+    "tags": ["networking","sdn"]
+  },
+  
+  {
+    "title": "What can go wrong in a cryptographic system?",
+    "date": "2022-10-29",
+    "url": "/blog/2022/10/29/what-can-go-wrong-in-a-cryptographic-system/",
+    "excerpt": "\n  An enumeration and brief description of parameters that should be considered while designing and developing a secure cryptographic system.\n\n",
+    "tags": ["security","cryptography"]
+  },
+  
+  {
+    "title": "How complex can Authorization get?",
+    "date": "2022-03-19",
+    "url": "/blog/2022/03/19/how-complex-can-authorization-get/",
+    "excerpt": "\n  Builds on the Authorization component of Identity and Access Management system from zero to how systems implement today\n\n",
+    "tags": ["security","authorization"]
+  },
+  
+  {
+    "title": "Man-in-the-middle: A tale of a hoax DHCP server",
+    "date": "2021-12-06",
+    "url": "/blog/2021/12/06/man-in-the-middle-a-tale-of-a-hoax-dhcp-server/",
+    "excerpt": "\n  Learn how a user can act like a hoax DHCP server and situate himself as a man in the middle, and how one can prevent such attacks.\n\n",
+    "tags": ["networking","security","dhcp"]
+  },
+  
+  {
+    "title": "How I do Machine Learning at work",
+    "date": "2021-03-25",
+    "url": "/blog/2021/03/25/how-i-do-machine-learning-at-work/",
+    "excerpt": "\n  A method used among group of data scientists to identify and refine feature set for a machine learning problem\n\n",
+    "tags": ["machine-learning","data-science"]
+  },
+  
+  {
+    "title": "FMEA of a microservice that uses third-party APIs",
+    "date": "2021-01-22",
+    "url": "/blog/2021/01/22/fmea-of-a-microservice-that-uses-third-party-apis/",
+    "excerpt": "\n  How do I simulate failure of an API endpoint that I don’t have control over while performing Failure Mode and Effect Analysis?\n\n",
+    "tags": ["architecture","microservices","reliability"]
+  },
+  
+  {
+    "title": "DHCP starvation attack without making any DHCP requests",
+    "date": "2020-08-19",
+    "url": "/blog/2020/08/19/dhcp-starvation-attack-without-making-any-dhcp-requests/",
+    "excerpt": "\n  Most defense systems filter out repeated DHCP requests. What if you could perform DHCP starvation without sending a DCHP request?\n\n",
+    "tags": ["networking","security","dhcp"]
+  },
+  
+  {
+    "title": "Gain access to an internal machine using Port forwarding",
+    "date": "2020-08-08",
+    "url": "/blog/2020/08/08/gain-access-to-an-internal-machine-using-port-forwarding/",
+    "excerpt": "\n  Set up a penetration testing environment using docker containers in docker networks to learn various types of port forwarding techniques.\n\n",
+    "tags": ["networking","security","penetration-testing"]
+  },
+  
+  {
+    "title": "ARP Spoofing using Scapy",
+    "date": "2020-08-01",
+    "url": "/blog/2020/08/01/arp-spoofing-using-scapy/",
+    "excerpt": "\n  Learn and try out ARP spoofing all by yourself in a Docker network using Scapy!\n\n",
+    "tags": ["networking","security","scapy"]
+  },
+  
+  {
+    "title": "Networking with dockers",
+    "date": "2020-04-25",
+    "url": "/blog/2020/04/25/networking-with-dockers/",
+    "excerpt": "\n  Can Docker containers route packets across different subnets?\n\n",
+    "tags": ["docker","networking"]
+  },
+  
+  {
+    "title": "Math Behind Euclid’s Theorem",
+    "date": "2020-04-25",
+    "url": "/blog/2020/04/25/math-behind-euclid-s-theorem/",
+    "excerpt": "\n  Why does Euclid’s GCD algorithm actually work?\n\n",
+    "tags": ["math","algorithms"]
+  },
+  
+  {
+    "title": "\"Detailed logs on demand\" for a flask web application",
+    "date": "2018-11-26",
+    "url": "/blog/2018/11/26/detailed-logs-on-demand-for-a-flask-web-application/",
+    "excerpt": "\n  Toggle debug logging on demand using Unix signals.\n\n",
+    "tags": ["flask","logging","python"]
+  },
+  
+  {
+    "title": "Deploying a scalable Flask app using Gunicorn and Nginx, in Docker",
+    "date": "2018-11-20",
+    "url": "/blog/2018/11/20/deploying-a-scalable-flask-app-using-gunicorn-and-nginx-in-docker/",
+    "excerpt": "\n  Flask + Gunicorn + Nginx + Docker Swarm, step by step.\n\n",
+    "tags": ["flask","docker","devops","python"]
   }
   
 ]

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FMEA of a microservice that uses third-party APIs — Manoj Vignesh K M</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/blog/assets/css/style.css" />
+</head>
+<body>
+  <header class="blog-header">
+    <a href="/" class="back-link">← Portfolio</a>
+    <a href="/blog/" class="blog-title">Manoj's Blog</a>
+  </header>
+  <main class="blog-content">
+    <article class="post">
+  <header class="post-header">
+    <h1>FMEA of a microservice that uses third-party APIs</h1>
+    <time datetime="2021-01-22T22:30:00-08:00">
+      January 22, 2021
+    </time>
+    
+    <div class="post-tags">
+      <span class="tag">architecture</span><span class="tag">microservices</span><span class="tag">reliability</span>
+    </div>
+    
+  </header>
+
+  <div class="post-layout">
+    <aside class="post-toc" id="toc">
+      <p class="toc-title">Contents</p>
+      <nav id="toc-nav"></nav>
+    </aside>
+
+    <div class="post-body" id="post-body">
+      <blockquote>
+  <p>How do I simulate failure of an API endpoint that I don’t have control over while performing Failure Mode and Effect Analysis?</p>
+</blockquote>
+
+<p>Microservice architecture is an architectural style wherein an application is broken down into independent components that are capable of providing a specific service. When a chain of these components is invoked, a business logic of the application is serviced.</p>
+
+<p>Be it any architecture style, the quality of the software is crucial in providing flawless and trust-worthy service. Intensive testing is key to releasing a quality software. Software engineers perform multiple levels of testing to ensure that the microservice, business logic and eventually the whole application does not misbehave in any case. One such testing process is called the <a href="https://en.wikipedia.org/wiki/Failure_mode_and_effects_analysis"><strong>FMEA</strong></a>.</p>
+
+<p><strong>FMEA</strong> stands for Failure Mode and Effect Analysis. It is a process involved in quality testing where one or more components of an application is intentionally brought down (or) the connection failure is simulated to study the behavior of the microservice that depends on the called microservice that failed. This process is critical in ensuring that there is no cascading of failures among the microservices involved in a business logic. Failing to perform FMEA could drift an application to an unstable state or worse display server error containing potentially sensitive information to the end user.</p>
+
+<p>Well, it is relatively easy to bring down a self-owned microservice in the test stage to study the behavior of the dependent microservice in the test stage. What about FMEA of a microservice that depends on a third-party API? One does not have control over the operational status of the third-party API. So, that scopes down to simulating failure of third-party APIs.</p>
+
+<p><strong>Following up, how do I simulate failure of an API endpoint that I don’t have control over?</strong></p>
+
+<h2 id="methodology">Methodology</h2>
+
+<p>Recall or observe a typical implementation of a microservice. There are parts of the code that performs a HTTP(S) request (or could be any other protocol) to an API endpoint. The API endpoint is represented as a constant in the form of a domain name in the implementation. Do you find something interesting in the previous statement?</p>
+
+<p><em>The API endpoint is represented in the form of a <strong>*domain name</strong></em> and <strong><em>not</em></strong> in the form of an <strong><em>IP address</em></strong>.*</p>
+
+<p>Leveraging this pattern seen among the implementations, what if one could point the API endpoint domain name to an IP address that is not running the service? Doesn’t it simulate a API call failure?</p>
+
+<p>For example, consider a third-party API endpoint <code class="language-plaintext highlighter-rouge">api.example.com</code> that resolves to <code class="language-plaintext highlighter-rouge">1.2.3.4</code> and provides weather information of a queried location on port 443. A microservice being analysed should be made to believe that <code class="language-plaintext highlighter-rouge">api.example.com</code> resolves to <code class="language-plaintext highlighter-rouge">127.0.0.1</code> , where no service is running at port 443. Consequently, when the microservice is run, it attempts to make an API call to <code class="language-plaintext highlighter-rouge">api.example.com</code> and eventually fails since <code class="language-plaintext highlighter-rouge">127.0.0.1</code> is not running the weather information service at port 443.</p>
+
+<h3 id="how-do-we-dothat">How do we do that?</h3>
+
+<p>DNS cache poisoning!</p>
+
+<p>Let’s analyse how a DNS resolution of a domain name happens in a host. A host crafts a DNS request for the domain name and passes it to the network driver. At this point, the host tries to resolve the query by finding the domain name in its local DNS cache. If not found, then it recursively queries the gateway which checks its local DNS cache (capable of resolving DNS), then to ISP gateway and so on to the actual DNS servers. Observe, we <strong>do</strong> have control over the host, so let’s attempt to tamper the DNS cache of the host to point the third-party API domain name to an IP address that does not run the specified service, for example, <code class="language-plaintext highlighter-rouge">api.example.com</code> to <code class="language-plaintext highlighter-rouge">127.0.0.1</code> .</p>
+
+<p>There is a special text file <code class="language-plaintext highlighter-rouge">/etc/hosts </code>in *nix based systems and <code class="language-plaintext highlighter-rouge">C:\Windows\System32\Drivers\etc\hosts</code> in windows systems, which is an extension of the local DNS cache. This is the first place that a host looks up to resolve a DNS query. Bullseye!</p>
+
+<p><strong>Thus, by adding a new row in the <code class="language-plaintext highlighter-rouge">/etc/hosts</code> file with the third-party API endpoint pointing to an IP address that is not running the specified service, one could simulate third-party API failure.</strong></p>
+
+<h2 id="dont-talk-show-me-thecode">Don’t talk, show me the code</h2>
+
+<p>Consider a microservice that checks if an input string is a pokemon and/or a python module. For example,</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /tensorflow
+</code></pre></div></div>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"is_python_module"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"is_pokemon"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="development">Development</h3>
+
+<p>The following code shows the implementation of the microservice. Observe the two third-party APIs being used, namely:</p>
+
+<ul>
+  <li><strong>pypi.org</strong>: To identify if the input string is a python module</li>
+  <li><strong>pokeapi.co</strong>: To identify if the input string is a pokemon</li>
+</ul>
+
+<p>It queries the two API endpoint for details pertaining to the input string. Using the obtained information, the microservice updates the response accordingly and returns the result.</p>
+
+<noscript><pre>import requests
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route(&quot;/&lt;input_string&gt;&quot;)
+def microservice(input_string):
+    pypi_endpoint = &quot;https://pypi.org/simple/{module_name}&quot;
+    poke_api_endpoint = &quot;https://pokeapi.co/api/v2/pokemon/{pokemon}&quot;
+    response = dict(
+        is_python_module=None,
+        is_pokemon=None
+    )
+    try:
+        pypi_response = requests.get(
+            pypi_endpoint.format(
+                module_name=input_string
+            ), 
+            timeout=15
+        )
+        py_module_status_code = pypi_response.status_code
+        response[&#39;is_python_module&#39;] = py_module_status_code//100 == 2
+    except Exception:
+        pass
+    
+    try:
+        poke_response = requests.get(
+            poke_api_endpoint.format(
+                pokemon=input_string
+            ), 
+            timeout=15
+        )
+        if poke_response.content.decode() == &#39;Not Found&#39;:
+            response[&#39;is_pokemon&#39;] = False
+        elif &#39;id&#39; in poke_response.json():
+            response[&#39;is_pokemon&#39;] = True
+    except Exception:
+        pass
+
+    return response 
+
+if __name__ == &#39;__main__&#39;:
+    app.run()</pre></noscript>
+<script src="https://gist.github.com/kmmanoj/972a0b27ea5bb3e7b1ff047ea6b0e5d9.js"> </script>
+
+<h3 id="testing">Testing</h3>
+
+<p>The following code shows the FMEA test automation for three scenarios (for *nix based systems):</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">pokeapi.co</code> is <strong>down</strong>, while <code class="language-plaintext highlighter-rouge">pypi.org</code> is <strong>healthy</strong></li>
+  <li><code class="language-plaintext highlighter-rouge">pokeapi.co</code> is <strong>healthy</strong>, while <code class="language-plaintext highlighter-rouge">pypi.org</code> is <strong>down</strong></li>
+  <li><code class="language-plaintext highlighter-rouge">pokeapi.co</code> is <strong>down</strong>, and <code class="language-plaintext highlighter-rouge">pypi.org</code> is <strong>down</strong></li>
+</ul>
+
+<blockquote>
+  <p><strong>NOTE</strong>: the test case when both APIs are healthy is skipped intentionally.</p>
+</blockquote>
+
+<noscript><pre>import unittest
+import os
+
+from check_pk_and_py import microservice
+
+class TestPokeOnlyDown(unittest.TestCase):
+    def setUp(self):
+        os.system(&#39;cp /etc/hosts /etc/hosts.orig&#39;)
+        os.system(&#39;echo &quot;127.0.0.1\tpokeapi.co&quot; &gt;&gt; /etc/hosts&#39;)
+    
+    def test_poke_down(self):
+        output = microservice(&#39;pikachu&#39;)
+        with self.subTest():
+            self.assertIsNotNone(output[&#39;is_python_module&#39;])
+        with self.subTest():
+            self.assertIsNone(output[&#39;is_pokemon&#39;])
+
+    def tearDown(self):
+        os.system(&#39;cp /etc/hosts.orig /etc/hosts&#39;)
+        os.system(&#39;rm /etc/hosts.orig&#39;)
+
+class TestPypiOnlyDown(unittest.TestCase):
+    def setUp(self):
+        os.system(&#39;cp /etc/hosts /etc/hosts.orig&#39;)
+        os.system(&#39;echo &quot;127.0.0.1\tpypi.org&quot; &gt;&gt; /etc/hosts&#39;)
+
+    def test_pypi_down(self):
+        output = microservice(&#39;tensorflow&#39;)
+        with self.subTest():
+            self.assertIsNone(output[&#39;is_python_module&#39;])
+        with self.subTest():
+            self.assertIsNotNone(output[&#39;is_pokemon&#39;])
+
+    def tearDown(self):
+        os.system(&#39;cp /etc/hosts.orig /etc/hosts&#39;)
+        os.system(&#39;rm /etc/hosts.orig&#39;)
+
+class TestPypiPokeDown(unittest.TestCase):
+    def setUp(self):
+        os.system(&#39;cp /etc/hosts /etc/hosts.orig&#39;)
+        os.system(&#39;echo &quot;127.0.0.1\tpypi.org&quot; &gt;&gt; /etc/hosts&#39;)
+        os.system(&#39;echo &quot;127.0.0.1\tpokeapi.co&quot; &gt;&gt; /etc/hosts&#39;)
+
+    def test_pypi_poke_down(self):
+        output = microservice(&#39;ditto&#39;)
+        with self.subTest():
+            self.assertIsNone(output[&#39;is_python_module&#39;])
+        with self.subTest():
+            self.assertIsNone(output[&#39;is_pokemon&#39;])
+
+    def tearDown(self):
+        os.system(&#39;cp /etc/hosts.orig /etc/hosts&#39;)
+        os.system(&#39;rm /etc/hosts.orig&#39;)</pre></noscript>
+<script src="https://gist.github.com/kmmanoj/c5a123ced4127bbc6b9c5244a8d449f0.js"> </script>
+
+<p>Running the tests as a user (such as root) who is allowed to edit <code class="language-plaintext highlighter-rouge">/etc/hosts</code> file.</p>
+
+<p><img src="/blog/assets/res/fmea_of_a_microservice_that_uses_thirdparty_apis/test_output.png" alt="Test output" />
+<em>Test output</em></p>
+
+<p>Yay! All three tests passed. The quality of the software is maintained!</p>
+
+    </div>
+  </div>
+</article>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('#post-body h2, #post-body h3, #post-body h4');
+  if (headings.length === 0) {
+    document.getElementById('toc').style.display = 'none';
+    return;
+  }
+
+  var nav = document.getElementById('toc-nav');
+  var ul = document.createElement('ul');
+  ul.className = 'toc-list';
+
+  headings.forEach(function (h, i) {
+    if (!h.id) h.id = 'heading-' + i;
+
+    var li = document.createElement('li');
+    li.className = 'toc-item toc-' + h.tagName.toLowerCase();
+
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc-link';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  nav.appendChild(ul);
+
+  // Move leading blockquote to header as subtitle
+  var body = document.getElementById('post-body');
+  var first = body.firstElementChild;
+  if (first && first.tagName === 'BLOCKQUOTE') {
+    var subtitle = document.createElement('p');
+    subtitle.className = 'post-subtitle';
+    subtitle.textContent = first.textContent.trim();
+    document.querySelector('.post-header').appendChild(subtitle);
+    first.remove();
+  }
+
+  // Highlight active heading on scroll
+  var links = nav.querySelectorAll('.toc-link');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        links.forEach(function (l) { l.classList.remove('active'); });
+        var active = nav.querySelector('a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '0px 0px -80% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+}());
+</script>
+
+  </main>
+  <footer class="blog-footer">
+    <p>Manoj Vignesh K M · <a href="/">Portfolio</a></p>
+  </footer>
+</body>
+</html>

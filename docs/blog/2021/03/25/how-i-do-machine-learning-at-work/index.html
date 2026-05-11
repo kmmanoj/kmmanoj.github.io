@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How I do Machine Learning at work — Manoj Vignesh K M</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/blog/assets/css/style.css" />
+</head>
+<body>
+  <header class="blog-header">
+    <a href="/" class="back-link">← Portfolio</a>
+    <a href="/blog/" class="blog-title">Manoj's Blog</a>
+  </header>
+  <main class="blog-content">
+    <article class="post">
+  <header class="post-header">
+    <h1>How I do Machine Learning at work</h1>
+    <time datetime="2021-03-25T23:30:00-07:00">
+      March 25, 2021
+    </time>
+    
+    <div class="post-tags">
+      <span class="tag">machine-learning</span><span class="tag">data-science</span>
+    </div>
+    
+  </header>
+
+  <div class="post-layout">
+    <aside class="post-toc" id="toc">
+      <p class="toc-title">Contents</p>
+      <nav id="toc-nav"></nav>
+    </aside>
+
+    <div class="post-body" id="post-body">
+      <blockquote>
+  <p>A method used among group of data scientists to identify and refine feature set for a machine learning problem</p>
+</blockquote>
+
+<p>I still recall the moment when I was part of the first machine learning project that our team was working on. The requirement was to identify that part of the text that potentially contained date and time information. We were a set of amateur’s in data science aiming to build this date time pattern recognizer. Suddenly from nowhere, I wonder what struck us, we found a fun filled methodology to build and evaluate a model. Technically, we devised a methodology to evaluate if the set of features extracted out of the raw data is sufficient enough for a machine learning algorithm to output satisfactory results. In this blog, I shall explain, with an example, the methodology to evaluate if the feature set is sufficient to build a good machine learning model.</p>
+
+<h2 id="the-example-problem-statement">The Example: Problem statement</h2>
+
+<p>Consider the problem of identifying parts of a text that contains date and time information. The following shows some example texts, with emboldened phrases that resembles what the supervised machine learning model is expected to output.</p>
+
+<ul>
+  <li>I won’t be available at <strong>4 pm on 21st of March</strong>.</li>
+  <li>I will be taking off from <strong>20th March to 25th March 2021</strong>.</li>
+  <li>Exactly at <strong>18:30 IST</strong>, the show starts!</li>
+</ul>
+
+<blockquote>
+  <p><strong>NOTE:</strong> You may observe that the example texts do not cover all the cases. The takeaway from this blog is the methodology and not a solution to the date time parsing problem.</p>
+</blockquote>
+
+<h2 id="initial-conversation-the-obvious-visiblefeatures">Initial Conversation: The obvious visible features</h2>
+
+<p>The team decides to go word by word and extract features out of each word (token). Each member pitches a lot of features by observing the example texts. Here are some that were concluded to start with:</p>
+
+<ol>
+  <li>Number of digits in the token.</li>
+  <li>Number of alphabets in the token.</li>
+  <li>Length of the token.</li>
+  <li>Number of /(slash) or -(hyphen) or :(colon) or .(dot).</li>
+  <li>Is it <em>am</em> or <em>pm</em>?</li>
+  <li>Does it end with <em>st</em>, <em>nd</em>, <em>rd</em> or <em>th</em>?</li>
+</ol>
+
+<p>Alright! We have enough features to get started.</p>
+
+<h2 id="methodology-refining-the-featureset">Methodology: Refining the feature set</h2>
+
+<p>For simplicity, let us consider that the team size is 2 and the members are Alice and Bob. The vocal conversation they make are written in standard format, while their thoughts are formatted in italics.</p>
+
+<p>Here is the game!</p>
+
+<ul>
+  <li>Alice thinks of a token and evaluates the decided features for the token in her mind.</li>
+  <li>Alice then presents the feature values to Bob, without revealing the token.</li>
+  <li>Bob speaks his thought process aloud and uses these features to call out either a yes or a no. Yes signifies that the token is part of a potential date and time and a no signifies that the token is not part of a potential date and time.</li>
+  <li>Alice then reveals the token and scores Bob if he is right or wrong.</li>
+  <li>Finally, the feature set is refined i.e more features are added, one or more features are removed, or one or more existing features are modified, and they reverse their roles and repeat the steps from the beginning.</li>
+</ul>
+
+<p>Observe that the intention of this game is to make the opponent find it difficult to make the right classification.</p>
+
+<h3 id="hear-this-conversation">Hear this conversation …</h3>
+
+<p><strong>Alice</strong>: Let me begin! </p>
+
+<p><strong>Alice</strong>: <em>Given these features, let me think of a month. March! So the features of March are (0, 5, 5, 0, no, no).</em></p>
+
+<p><strong>Alice</strong>: So, the features are (0, 5, 5, 0, no, no). Is this a part of date time or not?</p>
+
+<p><strong>Bob</strong>: There are no digits, so it shouldn’t be value of date or time. A 5-letter word with all of them being alphabets. I can think of many! Words like: value, Alice, games, and months like March, April. I am confused, may be it is NOT a part of date time? Am I right?</p>
+
+<p><strong>Alice</strong>: No! I was thinking of the word “March”. You got it wrong. Let’s refine our feature set. As you were verbalizing your thoughts, I stretched my thoughts a little and came up with this feature. What about a feature that depicts if the token contains the word “Jan”, “Feb”, “Mar”, “Apr” … “Dec” in any case, that is, upper or lower?</p>
+
+<p><strong>Bob</strong>: Yes, that’s great! So feature number 7, Does the token have the word “Jan”, “Feb”, “Mar” … “Dec”.</p>
+
+<p><strong>Bob</strong>: It’s my turn now!</p>
+
+<p><strong>Bob</strong>: <em>Hmm! Where else will I find numbers? Street numbers! Bullseye, I will get “st”, “nd”, “rd” and “th” in it too. Let me think of “3rd” in “3rd block”. The features set for this is (1, 2, 3, 0, no, yes, no).</em></p>
+
+<p><strong>Bob</strong>: Here are the features of the token I thought of, (1, 2, 3, 0, no, yes, no).</p>
+
+<p><strong>Alice</strong>: One digit, two alphabets and it is one of the “st”, “nd”, and “rd”. That’s enough information! I got it! It should be something like “1st”, “2nd”, “4th” etc. So, YES, it IS a part of date and time! </p>
+
+<p><strong>Bob</strong>: Your thought process was right! But, I exploited it 😉! You identified it wrong! I thought of the word “3rd” as in street names. I think we need to look ahead and may be look behind also. Such as a 3-gram? and/or we could use recurrent neural networks.</p>
+
+<p><strong>Alice</strong>: What is a 3-gram? What is recurrent neural networks?</p>
+
+<p><strong>Bob</strong>: <em>… explains what is a 3-gram in the context of Natural Language Processing and Recurrent Neural Networks …</em></p>
+
+<p><strong>Alice</strong>: Amazing! Now, I will ask you, Bob!</p>
+
+<p><strong>Alice</strong>: <em>Hmm! It’s getting difficult for me to think of corner cases now! Let me think of something close! “The 42nd Janitor?” I think he will be able to identify it right. Length of “January” is different from “Janitor”. What about in times. Hmm … “The student scored 99.00 3 times this semester in mathematics.” So, the features for “scored 99.00 3” is ((0, 6, 6, 0, no, no, no), (4, 0, 5, 1, no, no, no), (1, 0, 1, 0, no, no, no)).</em></p>
+
+<p><strong>Alice</strong>: The features for the 3-gram token is ((0, 6, 6, 0, no, no, no), (4, 0, 5, 1, no, no, no), (1, 0, 1, 0, no, no, no)).</p>
+
+<p><strong>Bob</strong>: Interesting! The token contains 4 digits and a dot, or colon, or hyphen, or slash. It must be a half date like 03/21 or time 20:00. It is like a start of a date or time, if at all it is, so I can safely ignore look behind. Looking ahead, I would expect “am” or “pm” in case of a 12 hour clock. But, look ahead seems to be a single number. May be it is something like 16:00 3 March? Is there ways in which it cannot be a date time? Hmm. Percentage? Aha! But, the length of the token should be 6, not 5, if the token contains “%”, as in “11.11%”, or if it is a case of “11.11<space>%” the next token should not be a digit. So, I conclude, it IS part of date and time!</space></p>
+
+<p><strong>Alice</strong>: Incredible thinking! You were close, but still you identified it wrong. I was thinking of the phrase “scored 99.00 3” in the text “He scored 99.00 3 times.” Let’s think of a feature that differentiates these kind of inputs. I believe we also need features to check if the token numbers are in range 0–60, 0–24, and 1–31, to help classify better. But, your thought process made me think that percentage values can also be like time, such as 12.00. Here, is my thought. Let us separate :(colon) count from the other symbols’ counts. The reason being, I observe that dates can have .(dot), /(slash) or -(hyphen) as separators, while time can mostly have :(colon) as separator. We would compromise on outlying times that have symbols other than :(colon) as separator, worse being an input similar to what I thought, “the show is scheduled for 16.00 3 March 2021.” But, this outlier can be ignored for now. It’s not well formed, isn’t it? Probably, as we go along with this conversation we should find ways to tackle these situations too. So to conclude, we modify the feature number 4 to “Number of /(slash) or -(hyphen) or .(dot).” And, we shall add a new feature that depicts “Number of :(colon).” Also, to help classify better, three more features: “Is there a number in token that is in the range 0–60?”, “Is there a number in token that is in the range 0–24?”, “Is there a number in token that is in the range 1–31?”</p>
+
+<p><strong>Alice</strong>: So we are left with these feature, so far -</p>
+
+<ol>
+  <li>Number of digits in the token.</li>
+  <li>Number of alphabets in the token.</li>
+  <li>Length of the token.</li>
+  <li>Number of /(slash) or -(hyphen) or .(dot).</li>
+  <li>Number of :(colon).</li>
+  <li>Is it <em>am</em> or <em>pm</em>?</li>
+  <li>Does it end with <em>st</em>, <em>nd</em>, <em>rd</em> or <em>th</em>?</li>
+  <li>Does it contain “Jan”, “Feb”, “Mar”, … “Dec”?</li>
+  <li>Is there a number in range 0–60?</li>
+  <li>Is there a number in range 0–24?</li>
+  <li>Is there a number in range 1–31?</li>
+</ol>
+
+<p>And, the conversation continues. Alice and Bob are finally happy with the list of features they got. They train a model using the developed features and obtain an amazing model that captures most of the dates and times in text.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This is one of the ways one could build on features for a machine learning problems.</p>
+
+<p>It enables group of people to work together on a single machine learning problem. And, the way the features are extracted have a strong basis on human thought, hence debugging the machine learning model after training it should be easy. On the other hand, as with every other methodology, there are shortcomings in this too. Human brain can consider only a handful of features while working towards evaluating the classification, so it is not very scalable.</p>
+
+<p>Doesn’t this methodology sound familiar? You should have probably got it by now! This is how a Generative Adversarial Network deep learning model is trained! The questioner being the generator and responder being the discriminator. Alice and Bob were proud of themselves. They believe that they would have introduced the world to GAN, if GAN was not already devised.</p>
+
+<p>I hope you learned the methodology I use at work to build machine learning models. I hope you use it too, to work together and build better machine learning models.</p>
+
+    </div>
+  </div>
+</article>
+
+<script>
+(function () {
+  var headings = document.querySelectorAll('#post-body h2, #post-body h3, #post-body h4');
+  if (headings.length === 0) {
+    document.getElementById('toc').style.display = 'none';
+    return;
+  }
+
+  var nav = document.getElementById('toc-nav');
+  var ul = document.createElement('ul');
+  ul.className = 'toc-list';
+
+  headings.forEach(function (h, i) {
+    if (!h.id) h.id = 'heading-' + i;
+
+    var li = document.createElement('li');
+    li.className = 'toc-item toc-' + h.tagName.toLowerCase();
+
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'toc-link';
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  nav.appendChild(ul);
+
+  // Move leading blockquote to header as subtitle
+  var body = document.getElementById('post-body');
+  var first = body.firstElementChild;
+  if (first && first.tagName === 'BLOCKQUOTE') {
+    var subtitle = document.createElement('p');
+    subtitle.className = 'post-subtitle';
+    subtitle.textContent = first.textContent.trim();
+    document.querySelector('.post-header').appendChild(subtitle);
+    first.remove();
+  }
+
+  // Highlight active heading on scroll
+  var links = nav.querySelectorAll('.toc-link');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        links.forEach(function (l) { l.classList.remove('active'); });
+        var active = nav.querySelector('a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '0px 0px -80% 0px' });
+
+  headings.forEach(function (h) { observer.observe(h); });
+}());
+</script>
+
+  </main>
+  <footer class="blog-footer">
+    <p>Manoj Vignesh K M · <a href="/">Portfolio</a></p>
+  </footer>
+</body>
+</html>

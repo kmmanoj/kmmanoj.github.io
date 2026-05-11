@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blog — Manoj Vignesh K M</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/blog/assets/css/style.css" />
 </head>
 <body>
@@ -13,17 +16,470 @@
   </header>
   <main class="blog-content">
     <h1>Posts</h1>
-<ul class="post-list">
-  
-  <li>
-    <a href="/blog/2026/05/09/hello-world/">Hello World</a>
-    <div class="post-meta">May 9, 2026</div>
-    <p class="excerpt">This is the first post on my new blog. I’ll be writing about machine learning,
-systems engineering, and research topics I find interesting.
+
+<div class="blog-layout">
+  <aside class="blog-sidebar">
+    <input type="search" id="search" placeholder="Search posts…" autocomplete="off" />
+    <div class="tag-filter" id="tag-filter">
+      <button class="tag active" data-tag="all" data-count="19">All</button>
+      
+      <button class="tag" data-tag="flask" data-count="2">
+        flask<span class="tag-badge">2</span>
+      </button>
+      
+      <button class="tag" data-tag="docker" data-count="2">
+        docker<span class="tag-badge">2</span>
+      </button>
+      
+      <button class="tag" data-tag="devops" data-count="1">
+        devops<span class="tag-badge">1</span>
+      </button>
+      
+      <button class="tag" data-tag="python" data-count="2">
+        python<span class="tag-badge">2</span>
+      </button>
+      
+      <button class="tag" data-tag="logging" data-count="1">
+        logging<span class="tag-badge">1</span>
+      </button>
+      
+      <button class="tag" data-tag="math" data-count="1">
+        math<span class="tag-badge">1</span>
+      </button>
+      
+      <button class="tag" data-tag="algorithms" data-count="1">
+        algorithms<span class="tag-badge">1</span>
+      </button>
+      
+      <button class="tag" data-tag="networking" data-count="7">
+        networking<span class="tag-badge">7</span>
+      </button>
+      
+      <button class="tag" data-tag="security" data-count="6">
+        security<span class="tag-badge">6</span>
+      </button>
+      
+      <button class="tag" data-tag="scapy" data-count="1">
+        scapy<span class="tag-badge">1</span>
+      </button>
+      
+      <button class="tag" data-tag="penetration-testing" data-count="1">
+        penetration-testing<span class="tag-badge">1</span>
+      </button>
+      
+      <button class="tag" data-tag="dhcp" data-count="2">
+        dhcp<span class="tag-badge">2</span>
+      </button>
+      
+      <button class="tag" data-tag="architecture" data-count="1">
+        architecture<span class="tag-badge">1</span>
+      </button>
+      
+      <button class="tag" data-tag="microservices" data-count="1">
+        microservices<span class="tag-badge">1</span>
+      </button>
+      
+      <button class="tag" data-tag="reliability" data-count="1">
+        reliability<span class="tag-badge">1</span>
+      </button>
+      
+      <button class="tag" data-tag="machine-learning" data-count="1">
+        machine-learning<span class="tag-badge">1</span>
+      </button>
+      
+      <button class="tag" data-tag="data-science" data-count="1">
+        data-science<span class="tag-badge">1</span>
+      </button>
+      
+      <button class="tag" data-tag="authorization" data-count="1">
+        authorization<span class="tag-badge">1</span>
+      </button>
+      
+      <button class="tag" data-tag="cryptography" data-count="1">
+        cryptography<span class="tag-badge">1</span>
+      </button>
+      
+      <button class="tag" data-tag="sdn" data-count="2">
+        sdn<span class="tag-badge">2</span>
+      </button>
+      
+      <button class="tag" data-tag="blockchain" data-count="5">
+        blockchain<span class="tag-badge">5</span>
+      </button>
+      
+      <button class="tag" data-tag="ethereum" data-count="3">
+        ethereum<span class="tag-badge">3</span>
+      </button>
+      
+      <button class="tag" data-tag="web3" data-count="5">
+        web3<span class="tag-badge">5</span>
+      </button>
+      
+      <button class="tag" data-tag="solidity" data-count="1">
+        solidity<span class="tag-badge">1</span>
+      </button>
+      
+    </div>
+  </aside>
+
+  <ul class="post-list" id="post-list">
+    
+    <li data-tags="blockchain,web3">
+      <a href="/blog/2023/05/07/a-visit-to-the-web3-0-world/">A visit to the web3.0 world</a>
+      <div class="post-meta">
+        May 7, 2023
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="blockchain">blockchain</button><button class="tag" data-tag="web3">web3</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  Learn how to travel and stroll around a web application built in the web3 world!
+
 </p>
-  </li>
-  
-</ul>
+    </li>
+    
+    <li data-tags="blockchain,ethereum,web3">
+      <a href="/blog/2023/05/06/what-is-a-smart-contract/">What is a smart contract?</a>
+      <div class="post-meta">
+        May 6, 2023
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="blockchain">blockchain</button><button class="tag" data-tag="ethereum">ethereum</button><button class="tag" data-tag="web3">web3</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  Understand what a web3.0’s smart contract is with respect to a web2.0 technology
+
+</p>
+    </li>
+    
+    <li data-tags="web3,blockchain">
+      <a href="/blog/2023/05/06/web-1-0-2-0-3-0/">Web 1.0, 2.0, 3.0 …</a>
+      <div class="post-meta">
+        May 6, 2023
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="web3">web3</button><button class="tag" data-tag="blockchain">blockchain</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  What is Web1.0, Web 2.0 and Web 3.0 and how is Web2.0 different from Web3.0?
+
+</p>
+    </li>
+    
+    <li data-tags="blockchain,ethereum,web3,solidity">
+      <a href="/blog/2023/05/06/deploy-your-first-smart-contract/">Deploy your first smart contract</a>
+      <div class="post-meta">
+        May 6, 2023
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="blockchain">blockchain</button><button class="tag" data-tag="ethereum">ethereum</button><button class="tag" data-tag="web3">web3</button><button class="tag" data-tag="solidity">solidity</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  With simplest setup possible, deploy your first smart contract in the Ethereum’s official test network!
+
+</p>
+    </li>
+    
+    <li data-tags="blockchain,ethereum,web3">
+      <a href="/blog/2023/05/04/setting-up-a-local-ethereum-blockchain-network/">Setting up a local ethereum blockchain network</a>
+      <div class="post-meta">
+        May 4, 2023
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="blockchain">blockchain</button><button class="tag" data-tag="ethereum">ethereum</button><button class="tag" data-tag="web3">web3</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  Setup an ethereum blockchain network in your local computer using geth to learn and develop smart contracts for dApps and more
+
+</p>
+    </li>
+    
+    <li data-tags="networking,sdn">
+      <a href="/blog/2023/03/11/using-gns3-to-learn-sdn/">Using GNS3 to learn SDN</a>
+      <div class="post-meta">
+        March 11, 2023
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="networking">networking</button><button class="tag" data-tag="sdn">sdn</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  Setup and configure your GNS3 with required elements to learn, develop and test Software Defined Networks.
+
+</p>
+    </li>
+    
+    <li data-tags="networking,sdn">
+      <a href="/blog/2023/03/10/software-defined-networks-101/">Software Defined Networks 101</a>
+      <div class="post-meta">
+        March 10, 2023
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="networking">networking</button><button class="tag" data-tag="sdn">sdn</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  A (very) brief introduction about Software Defined Networks
+
+</p>
+    </li>
+    
+    <li data-tags="security,cryptography">
+      <a href="/blog/2022/10/29/what-can-go-wrong-in-a-cryptographic-system/">What can go wrong in a cryptographic system?</a>
+      <div class="post-meta">
+        October 29, 2022
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="security">security</button><button class="tag" data-tag="cryptography">cryptography</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  An enumeration and brief description of parameters that should be considered while designing and developing a secure cryptographic system.
+
+</p>
+    </li>
+    
+    <li data-tags="security,authorization">
+      <a href="/blog/2022/03/19/how-complex-can-authorization-get/">How complex can Authorization get?</a>
+      <div class="post-meta">
+        March 19, 2022
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="security">security</button><button class="tag" data-tag="authorization">authorization</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  Builds on the Authorization component of Identity and Access Management system from zero to how systems implement today
+
+</p>
+    </li>
+    
+    <li data-tags="networking,security,dhcp">
+      <a href="/blog/2021/12/06/man-in-the-middle-a-tale-of-a-hoax-dhcp-server/">Man-in-the-middle: A tale of a hoax DHCP server</a>
+      <div class="post-meta">
+        December 6, 2021
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="networking">networking</button><button class="tag" data-tag="security">security</button><button class="tag" data-tag="dhcp">dhcp</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  Learn how a user can act like a hoax DHCP server and situate himself as a man in the middle, and how one can prevent such attacks.
+
+</p>
+    </li>
+    
+    <li data-tags="machine-learning,data-science">
+      <a href="/blog/2021/03/25/how-i-do-machine-learning-at-work/">How I do Machine Learning at work</a>
+      <div class="post-meta">
+        March 25, 2021
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="machine-learning">machine-learning</button><button class="tag" data-tag="data-science">data-science</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  A method used among group of data scientists to identify and refine feature set for a machine learning problem
+
+</p>
+    </li>
+    
+    <li data-tags="architecture,microservices,reliability">
+      <a href="/blog/2021/01/22/fmea-of-a-microservice-that-uses-third-party-apis/">FMEA of a microservice that uses third-party APIs</a>
+      <div class="post-meta">
+        January 22, 2021
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="architecture">architecture</button><button class="tag" data-tag="microservices">microservices</button><button class="tag" data-tag="reliability">reliability</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  How do I simulate failure of an API endpoint that I don’t have control over while performing Failure Mode and Effect Analysis?
+
+</p>
+    </li>
+    
+    <li data-tags="networking,security,dhcp">
+      <a href="/blog/2020/08/19/dhcp-starvation-attack-without-making-any-dhcp-requests/">DHCP starvation attack without making any DHCP requests</a>
+      <div class="post-meta">
+        August 19, 2020
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="networking">networking</button><button class="tag" data-tag="security">security</button><button class="tag" data-tag="dhcp">dhcp</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  Most defense systems filter out repeated DHCP requests. What if you could perform DHCP starvation without sending a DCHP request?
+
+</p>
+    </li>
+    
+    <li data-tags="networking,security,penetration-testing">
+      <a href="/blog/2020/08/08/gain-access-to-an-internal-machine-using-port-forwarding/">Gain access to an internal machine using Port forwarding</a>
+      <div class="post-meta">
+        August 8, 2020
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="networking">networking</button><button class="tag" data-tag="security">security</button><button class="tag" data-tag="penetration-testing">penetration-testing</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  Set up a penetration testing environment using docker containers in docker networks to learn various types of port forwarding techniques.
+
+</p>
+    </li>
+    
+    <li data-tags="networking,security,scapy">
+      <a href="/blog/2020/08/01/arp-spoofing-using-scapy/">ARP Spoofing using Scapy</a>
+      <div class="post-meta">
+        August 1, 2020
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="networking">networking</button><button class="tag" data-tag="security">security</button><button class="tag" data-tag="scapy">scapy</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  Learn and try out ARP spoofing all by yourself in a Docker network using Scapy!
+
+</p>
+    </li>
+    
+    <li data-tags="docker,networking">
+      <a href="/blog/2020/04/25/networking-with-dockers/">Networking with dockers</a>
+      <div class="post-meta">
+        April 25, 2020
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="docker">docker</button><button class="tag" data-tag="networking">networking</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  Can Docker containers route packets across different subnets?
+
+</p>
+    </li>
+    
+    <li data-tags="math,algorithms">
+      <a href="/blog/2020/04/25/math-behind-euclid-s-theorem/">Math Behind Euclid’s Theorem</a>
+      <div class="post-meta">
+        April 25, 2020
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="math">math</button><button class="tag" data-tag="algorithms">algorithms</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  Why does Euclid’s GCD algorithm actually work?
+
+</p>
+    </li>
+    
+    <li data-tags="flask,logging,python">
+      <a href="/blog/2018/11/26/detailed-logs-on-demand-for-a-flask-web-application/">"Detailed logs on demand" for a flask web application</a>
+      <div class="post-meta">
+        November 26, 2018
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="flask">flask</button><button class="tag" data-tag="logging">logging</button><button class="tag" data-tag="python">python</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  Toggle debug logging on demand using Unix signals.
+
+</p>
+    </li>
+    
+    <li data-tags="flask,docker,devops,python">
+      <a href="/blog/2018/11/20/deploying-a-scalable-flask-app-using-gunicorn-and-nginx-in-docker/">Deploying a scalable Flask app using Gunicorn and Nginx, in Docker</a>
+      <div class="post-meta">
+        November 20, 2018
+        
+        <span class="post-tags">
+          <button class="tag" data-tag="flask">flask</button><button class="tag" data-tag="docker">docker</button><button class="tag" data-tag="devops">devops</button><button class="tag" data-tag="python">python</button>
+        </span>
+        
+      </div>
+      <p class="excerpt">
+  Flask + Gunicorn + Nginx + Docker Swarm, step by step.
+
+</p>
+    </li>
+    
+  </ul>
+</div>
+
+<script>
+(function () {
+  var activeTag = 'all';
+  var searchQuery = '';
+
+  function applyFilters() {
+    document.querySelectorAll('#post-list li').forEach(function (li) {
+      var tags = li.dataset.tags ? li.dataset.tags.split(',') : [];
+      var tagMatch = activeTag === 'all' || tags.indexOf(activeTag) !== -1;
+      var searchMatch = !searchQuery || li.dataset.search.indexOf(searchQuery) !== -1;
+      li.style.display = (tagMatch && searchMatch) ? '' : 'none';
+    });
+  }
+
+  function setActiveTag(tag) {
+    activeTag = tag;
+    document.querySelectorAll('.tag-filter .tag').forEach(function (btn) {
+      btn.classList.toggle('active', btn.dataset.tag === tag);
+    });
+    applyFilters();
+  }
+
+  // Sort tag filter buttons by count descending (keep All first)
+  var filterBar = document.getElementById('tag-filter');
+  var tagBtns = Array.from(filterBar.querySelectorAll('[data-tag]:not([data-tag="all"])'));
+  tagBtns.sort(function (a, b) { return +b.dataset.count - +a.dataset.count; });
+  tagBtns.forEach(function (btn) { filterBar.appendChild(btn); });
+
+  // Build search index from title + excerpt text
+  document.querySelectorAll('#post-list li').forEach(function (li) {
+    var title = li.querySelector('a').textContent;
+    var excerpt = li.querySelector('.excerpt') ? li.querySelector('.excerpt').textContent : '';
+    var tags = li.dataset.tags || '';
+    li.dataset.search = (title + ' ' + excerpt + ' ' + tags).toLowerCase();
+  });
+
+  document.getElementById('search').addEventListener('input', function () {
+    searchQuery = this.value.toLowerCase().trim();
+    applyFilters();
+  });
+
+  document.querySelectorAll('.tag[data-tag]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var tag = this.dataset.tag;
+      setActiveTag(tag === activeTag && tag !== 'all' ? 'all' : tag);
+    });
+  });
+}());
+</script>
 
   </main>
   <footer class="blog-footer">
