@@ -2,7 +2,6 @@ import React, { useState, useCallback, useMemo } from "react";
 import { Container, Tab } from "semantic-ui-react";
 
 import Introduction from "./components/Introduction";
-import Experience from "./components/Experience";
 import Work from "./components/Work";
 import Blog from "./components/Blog";
 import SiteFooter from "./components/SiteFooter";
@@ -23,10 +22,6 @@ const App = () => {
     const [activeIndex, setActiveIndex] = useState(getLastActiveIndex);
 
     const panes = useMemo(() => [
-        {
-            menuItem: "Experience",
-            render: () => <Experience />
-        },
         {
             menuItem: "Work",
             render: () => <Work />

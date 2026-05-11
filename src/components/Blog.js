@@ -1,22 +1,27 @@
 import React, { useEffect, useState, useCallback, memo } from "react";
-import { Container, Header, Loader, List, Label } from "semantic-ui-react";
+import { Container, Header, Loader } from "semantic-ui-react";
+import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
+import { TfiWrite } from "react-icons/tfi";
 
-const PostItem = memo(({ title, date, excerpt, url, tags }) => (
-    <List.Item style={{ padding: "1rem 0", borderBottom: "1px solid #eee" }}>
-        <List.Icon name="write" size="large" verticalAlign="middle" />
-        <List.Content>
-            <List.Header as="a" href={url} style={{ fontSize: "1.05rem" }}>
-                {title}
-            </List.Header>
-            <List.Description style={{ marginTop: "0.3rem", color: "#666", fontSize: "0.85rem" }}>
-                {date}
-            </List.Description>
-            <p style={{ marginTop: "0.5rem", marginBottom: "0.5rem" }}>{excerpt}</p>
-            {tags && tags.map(tag => (
-                <Label key={tag} size="mini" style={{ marginRight: "4px" }}>{tag}</Label>
-            ))}
-        </List.Content>
-    </List.Item>
+import "react-vertical-timeline-component/style.min.css";
+
+const PostItem = memo(({ title, date, excerpt, url }) => (
+    <VerticalTimelineElement
+        className="vertical-timeline-element--blog"
+        contentStyle={{ border: "1px solid #000" }}
+        contentArrowStyle={{ borderRight: "7px solid #000" }}
+        date={new Date(date).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
+        iconStyle={{ background: "#fff", border: "0px" }}
+        icon={<TfiWrite />}
+    >
+        <Header as="h3" style={{ margin: 0 }}>
+            {title}
+        </Header>
+        <p style={{ margin: "10px" }}>
+            {excerpt.trim()} <br />
+            <a href={url} target="_blank" rel="noreferrer">Read more</a>
+        </p>
+    </VerticalTimelineElement>
 ));
 
 PostItem.displayName = "PostItem";
@@ -69,13 +74,11 @@ const Blog = () => {
                     <p>No posts yet. Check back soon.</p>
                 </Container>
             ) : (
-                <Container text>
-                    <List relaxed style={{ marginTop: "1rem" }}>
-                        {posts.map((post, i) => (
-                            <PostItem key={`${post.title}-${i}`} {...post} />
-                        ))}
-                    </List>
-                </Container>
+                <VerticalTimeline lineColor="black" layout="1-column-left">
+                    {posts.map((post, i) => (
+                        <PostItem key={`${post.title}-${i}`} {...post} />
+                    ))}
+                </VerticalTimeline>
             )}
         </div>
     );

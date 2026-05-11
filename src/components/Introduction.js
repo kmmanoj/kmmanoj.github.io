@@ -1,5 +1,5 @@
-import React, { memo } from "react";
-import { Container, Header } from "semantic-ui-react";
+import { memo } from "react";
+import { Container } from "semantic-ui-react";
 
 import "semantic-ui-css/semantic.min.css";
 
@@ -7,13 +7,11 @@ const Introduction = memo(() => {
     return (
         <div style={{ padding: "2% 0" }}>
             <Container text>
-                <Header as="small">I'm</Header>
                 <p style={{ paddingTop: "10px" }}>
-                    Manoj Vignesh K M, an application security engineer with a provable experience in web application security and software engineering.
-                    I love breaking and fixing computers and software, building applications and writing about my learnings.
+                    Security engineer and researcher with roots in software engineering and identity & access management. I spend my time breaking applications, poking at infrastructure, and studying how systems fail — currently as a security engineer at Postman.
                 </p>
                 <p>
-                    Check out my <a href="https://kmmanoj.medium.com" target="_blank" rel="noreferrer">blog articles</a> where I explain claims and concepts by application.
+                    Lately, my focus has shifted to LLMs: building systems to prevent attacks on AI agents, using AI agents to defend against cyber threats, and studying guardrails to protect future generations from the harms of AI-generated content.
                 </p>
             </Container>
         </div>
