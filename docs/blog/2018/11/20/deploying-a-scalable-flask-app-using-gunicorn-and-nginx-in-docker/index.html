@@ -74,10 +74,10 @@ New technology such as Elastic search, or complicated setup such as for OpenStac
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html&gt;</span>
     <span class="nt">&lt;head&gt;</span>
-        <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">""</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"{{ url_for('static', filename='css/styles.css') }}"</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;/head&gt;</span>
     <span class="nt">&lt;body&gt;</span>
-        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">""</span><span class="nt">&gt;&lt;/script&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"{{ url_for('static', filename='js/index.js') }}"</span><span class="nt">&gt;&lt;/script&gt;</span>
     <span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/html&gt;</span>
 </code></pre></div></div>
